@@ -87,22 +87,7 @@ int main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    ll n,x,y;
-    cin>>n;
 
-    if(n & 1){
-        x=(n*n+1)/2;
-        y=x-1;
-    }
-    else{
-        x=n*n/4+1;
-        y=x-2;
-    }
-
-    if(y)
-        cout<<x<<" "<<y<<endl;
-    else
-        cout<<-1<<endl;
 
     return 0;
 }
