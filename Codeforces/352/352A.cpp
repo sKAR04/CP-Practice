@@ -90,40 +90,27 @@ int main(){
     int n;
     cin>>n;
 
-    int arr[5];
-    fill(arr,arr+5,0);
-
+    int fiveCnt=0,zeroCnt=0;
     REP(i,n){
         int temp;
         cin>>temp;
-        ++arr[temp];
+        if(temp)
+            ++fiveCnt;
+        else
+            ++zeroCnt;
     }
 
-    int ans=0;
-    ans+=arr[4];
-    ans+=(arr[2]/2);
-    arr[4]=0;
-    arr[2]%=2;
-
-    int temp=min(arr[3],arr[1]);
-    ans+=temp;
-    arr[3]-=temp;
-    arr[1]-=temp;
-
-    if(!arr[1])
-        ans+=arr[3]+arr[2];
-    else{
-        ans+=arr[1]/4;
-        arr[1]%=4;
-        if(arr[2]){
-            ans+=1;
-            arr[1]-=min(arr[1],1);
-        }
-
-        ans+=ceil(arr[1]*1.0/4.0);
+    if(zeroCnt){
+        int effFive=(fiveCnt/9)*9;
+        if(!effFive)
+            zeroCnt=1;
+        REP(i,effFive)
+            cout<<5;
+        REP(i,zeroCnt)
+            cout<<0;
     }
-
-    cout<<ans<<endl;
-    
+    else
+        cout<<-1;
+    cout<<endl;
     return 0;
 }

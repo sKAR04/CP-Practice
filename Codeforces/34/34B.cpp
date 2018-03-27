@@ -87,43 +87,22 @@ int main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n;
-    cin>>n;
+    int n,m;
+    cin>>n>>m;
 
-    int arr[5];
-    fill(arr,arr+5,0);
+    int arr[n];
+    REP(i,n)
+        cin>>arr[i];
+    sort(arr,arr+n);
 
-    REP(i,n){
-        int temp;
-        cin>>temp;
-        ++arr[temp];
-    }
+    int maxSum=0;
+    REP(i,m)
+        if(arr[i]<0)
+            maxSum+=arr[i];
+        else
+            break;
 
-    int ans=0;
-    ans+=arr[4];
-    ans+=(arr[2]/2);
-    arr[4]=0;
-    arr[2]%=2;
+    cout<<maxSum*-1<<endl;
 
-    int temp=min(arr[3],arr[1]);
-    ans+=temp;
-    arr[3]-=temp;
-    arr[1]-=temp;
-
-    if(!arr[1])
-        ans+=arr[3]+arr[2];
-    else{
-        ans+=arr[1]/4;
-        arr[1]%=4;
-        if(arr[2]){
-            ans+=1;
-            arr[1]-=min(arr[1],1);
-        }
-
-        ans+=ceil(arr[1]*1.0/4.0);
-    }
-
-    cout<<ans<<endl;
-    
     return 0;
 }
