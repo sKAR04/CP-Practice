@@ -48,7 +48,7 @@ typedef long long ll;
 
 //If using cin and cout
 #define IOS ios::sync_with_stdio(false)
-#define TIE cin.tie(NULL)
+#define TIE cin.tie(NULL);cout.tie(NULL)
 
 //queue
 #define di deque<int>
@@ -81,26 +81,54 @@ void getFoo(T1 &x,T2 &y,T3 &z){
     getFoo(z);
 }
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+vector<vi > ans;
+qi end0,end1;
 //Main function
 int main(){
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    ll n,x,y;
-    cin>>n;
+    IOS;
+    TIE;
 
-    if(n & 1){
-        x=(n*n+1)/2;
-        y=x-1;
-    }
-    else{
-        x=n*n/4+1;
-        y=x-2;
+    string str;
+    cin>>str;
+
+    int len=str.length();
+    REP(i,len){
+        if(str[i]==48){
+            if(end1.E){
+                end0.push(ans.size());
+                ans.pb(vi{i});
+            }
+            else{
+                ans[end1.front()].pb(i);
+                end0.push(end1.front());
+                end1.pop();
+            }
+        }
+        else{
+            if(end0.E){
+                cout<<-1<<endl;
+                return 0;
+            }
+            else{
+                ans[end0.front()].pb(i);
+                end1.push(end0.front());
+                end0.pop();
+            }
+        }
     }
 
-    if(y)
-        cout<<x<<" "<<y<<endl;
+    if(end1.E){
+        cout<<ans.size()<<endl;
+
+        for(auto v : ans){
+            cout<<v.size()<<" ";
+
+            for(auto x : v)
+                cout<<x+1<<" ";
+
+            cout<<endl;
+        }
+    }
     else
         cout<<-1<<endl;
 

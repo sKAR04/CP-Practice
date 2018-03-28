@@ -48,7 +48,7 @@ typedef long long ll;
 
 //If using cin and cout
 #define IOS ios::sync_with_stdio(false)
-#define TIE cin.tie(NULL)
+#define TIE cin.tie(NULL);cout.tie(NULL)
 
 //queue
 #define di deque<int>
@@ -81,13 +81,25 @@ void getFoo(T1 &x,T2 &y,T3 &z){
     getFoo(z);
 }
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+int dp[2010][2010];
 //Main function
 int main(){
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    IOS;
+    TIE;
+    int c,n;
+    cin>>c>>n;
 
+    pi items[n+1];
+    FOR(i,1,n+1)
+        cin>>items[i].F>>items[i].S;
 
+    FOR(i,1,n+1)
+        REP(j,c+1)
+            if(j<items[i].F)
+                dp[i][j]=dp[i-1][j];
+            else
+                dp[i][j]=max(dp[i-1][j],dp[i-1][j-items[i].F]+items[i].S);
+
+    cout<<dp[n][c]<<endl;
     return 0;
 }

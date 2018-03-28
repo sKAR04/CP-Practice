@@ -48,7 +48,7 @@ typedef long long ll;
 
 //If using cin and cout
 #define IOS ios::sync_with_stdio(false)
-#define TIE cin.tie(NULL)
+#define TIE cin.tie(NULL);cout.tie(NULL)
 
 //queue
 #define di deque<int>
@@ -84,9 +84,8 @@ void getFoo(T1 &x,T2 &y,T3 &z){
 
 //Main function
 int main(){
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    IOS;
+    TIE;
 
 
     return 0;
