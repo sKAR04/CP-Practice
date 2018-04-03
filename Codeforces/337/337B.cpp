@@ -4,7 +4,7 @@
 #####################################################
 */
 
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
 //save time
@@ -58,13 +58,53 @@ typedef long long ll;
 //general
 #define E empty()
 
-//Declare all variables and methods needed between this comment and the next one(OCD lol)
+//Input methods
+template <typename T>
+void getFoo(T &x){
+    x=0;
+    register char c=gc();
+    for(;c<48 || c>57;c=gc());
+    for(;c>47 && c<58;c=gc())
+        x=(x<<1)+(x<<3)+c-48;
+}
 
+template <typename T1,typename T2>
+void getFoo(T1 &x,T2 &y){
+    getFoo(x);
+    getFoo(y);
+}
+
+template <typename T1,typename T2,typename T3>
+void getFoo(T1 &x,T2 &y,T3 &z){
+    getFoo(x);
+    getFoo(y);
+    getFoo(z);
+}
+//Declare all variables and methods needed between this comment and the next one(OCD lol)
+int gcd(int a,int b){
+    if(b==0)
+        return a;
+    return gcd(b,a%b);
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int a,b,c,d;
+    cin>>a>>b>>c>>d;
+
+    int p,q;
+    if(a*d>=b*c){
+        p=a*d-b*c;
+        q=a*d;
+    }
+    else{
+        p=b*c-a*d;
+        q=b*c;
+    }
+
+    cout<<p/gcd(p,q)<<"/"<<q/gcd(p,q)<<endl;
 
     return 0;
 }

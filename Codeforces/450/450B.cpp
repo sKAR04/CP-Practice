@@ -4,7 +4,7 @@
 #####################################################
 */
 
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
 //save time
@@ -58,6 +58,28 @@ typedef long long ll;
 //general
 #define E empty()
 
+//Input methods
+template <typename T>
+void getFoo(T &x){
+    x=0;
+    register char c=gc();
+    for(;c<48 || c>57;c=gc());
+    for(;c>47 && c<58;c=gc())
+        x=(x<<1)+(x<<3)+c-48;
+}
+
+template <typename T1,typename T2>
+void getFoo(T1 &x,T2 &y){
+    getFoo(x);
+    getFoo(y);
+}
+
+template <typename T1,typename T2,typename T3>
+void getFoo(T1 &x,T2 &y,T3 &z){
+    getFoo(x);
+    getFoo(y);
+    getFoo(z);
+}
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
 
 //Main function
@@ -65,6 +87,23 @@ int main(){
     IOS;
     TIE;
 
+    ll x,y;
+    cin>>x>>y;
+
+    ll n;
+    cin>>n;
+
+    ll ans;
+    switch(n%6){
+        case 0:ans=x-y;break;
+        case 1:ans=x;break;
+        case 2:ans=y;break;
+        case 3:ans=y-x;break;
+        case 4:ans=-x;break;
+        case 5:ans=-y;break;
+    }
+
+    cout<<(ans+3LL*MOD)%MOD<<endl;
 
     return 0;
 }

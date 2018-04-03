@@ -4,7 +4,7 @@
 #####################################################
 */
 
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
 //save time
@@ -58,6 +58,28 @@ typedef long long ll;
 //general
 #define E empty()
 
+//Input methods
+template <typename T>
+void getFoo(T &x){
+    x=0;
+    register char c=gc();
+    for(;c<48 || c>57;c=gc());
+    for(;c>47 && c<58;c=gc())
+        x=(x<<1)+(x<<3)+c-48;
+}
+
+template <typename T1,typename T2>
+void getFoo(T1 &x,T2 &y){
+    getFoo(x);
+    getFoo(y);
+}
+
+template <typename T1,typename T2,typename T3>
+void getFoo(T1 &x,T2 &y,T3 &z){
+    getFoo(x);
+    getFoo(y);
+    getFoo(z);
+}
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
 
 //Main function
@@ -65,6 +87,33 @@ int main(){
     IOS;
     TIE;
 
+    int n,v;
+    cin>>n>>v;
+
+    pi tree[n];
+    REP(i,n)
+        cin>>tree[i].F>>tree[i].S;
+
+    int cnt=0;
+    int ripe=0,withering=0;
+    FOR(i,1,3010){
+        REP(j,n)
+            if(tree[j].F==i)
+                ripe+=tree[j].S;
+
+        if(withering>=v)
+            cnt+=v;
+        else{
+            cnt+=withering;
+            cnt+=min(ripe,v-withering);
+            ripe-=min(ripe,v-withering);
+        }
+
+        withering=ripe;
+        ripe=0;
+    }
+
+    cout<<cnt<<endl;
 
     return 0;
 }

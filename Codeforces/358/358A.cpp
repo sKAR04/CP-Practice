@@ -4,7 +4,7 @@
 #####################################################
 */
 
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
 //save time
@@ -58,6 +58,28 @@ typedef long long ll;
 //general
 #define E empty()
 
+//Input methods
+template <typename T>
+void getFoo(T &x){
+    x=0;
+    register char c=gc();
+    for(;c<48 || c>57;c=gc());
+    for(;c>47 && c<58;c=gc())
+        x=(x<<1)+(x<<3)+c-48;
+}
+
+template <typename T1,typename T2>
+void getFoo(T1 &x,T2 &y){
+    getFoo(x);
+    getFoo(y);
+}
+
+template <typename T1,typename T2,typename T3>
+void getFoo(T1 &x,T2 &y,T3 &z){
+    getFoo(x);
+    getFoo(y);
+    getFoo(z);
+}
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
 
 //Main function
@@ -65,6 +87,34 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
 
+    int arr[n];
+    REP(i,n)
+        cin>>arr[i];
+
+    if(n==1)
+        cout<<"no"<<endl;
+    else{
+        bool flag=false;
+        vii temp;
+
+        FOR(i,1,n){
+            pi cur=mp(min(arr[i-1],arr[i]),max(arr[i-1],arr[i]));
+            for(auto p : temp)
+                if(cur.F<p.F && cur.S>p.F && cur.S<p.S)
+                    flag=true;
+                else if(cur.F>p.F && cur.F<p.S && cur.S>p.S)
+                    flag=true;
+
+            temp.pb(cur);
+        }
+
+        if(flag)
+            cout<<"yes"<<endl;
+        else
+            cout<<"no"<<endl;
+    }
     return 0;
 }
