@@ -4,7 +4,9 @@
 #####################################################
 */
 
-#include <bits/stdc++.h>
+#include <iostream>
+#include <string>
+#include <queue>
 using namespace std;
 
 //Optimizations
@@ -70,6 +72,34 @@ int main(){
     IOS;
     TIE;
 
+    string str;
+    cin>>str;
+
+    int cnt[4]={0};
+    int len=str.length();
+    REP(i,len)
+        if(str[i]==49 || str[i]==50 || str[i]==51)
+            ++cnt[str[i]-48];
+
+    qi ans;
+    while(cnt[1]--)
+        ans.push(1);
+
+    while(cnt[2]--)
+        ans.push(2);
+
+    while(cnt[3]--)
+        ans.push(3);
+
+    cout<<ans.front();
+    ans.pop();
+
+    while(!ans.E){
+        cout<<"+"<<ans.front();
+        ans.pop();
+    }
+
+    cout<<endl;
 
     return 0;
 }

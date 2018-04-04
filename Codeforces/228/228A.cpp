@@ -4,7 +4,8 @@
 #####################################################
 */
 
-#include <bits/stdc++.h>
+#include <iostream>
+#include <set>
 using namespace std;
 
 //Optimizations
@@ -70,6 +71,15 @@ int main(){
     IOS;
     TIE;
 
+    set<int> fml;
+    int a,b,c,d;
+    cin>>a>>b>>c>>d;
 
+    fml.insert(a);
+    fml.insert(b);
+    fml.insert(c);
+    fml.insert(d);
+
+    cout<<4-fml.size()<<endl;
     return 0;
 }

@@ -4,13 +4,9 @@
 #####################################################
 */
 
-#include <bits/stdc++.h>
+#include <iostream>
+#include <string>
 using namespace std;
-
-//Optimizations
-#pragma comment(linker, "/stack:200000000")
-#pragma GCC optimize("Ofast")
-#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
 
 //save time
 #define endl '\n'
@@ -70,6 +66,13 @@ int main(){
     IOS;
     TIE;
 
+    string str;
+    cin>>str;
+
+    if(str[0]>96)
+        str[0]-=32;
+
+    cout<<str<<endl;
 
     return 0;
 }

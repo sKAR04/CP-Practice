@@ -4,13 +4,10 @@
 #####################################################
 */
 
-#include <bits/stdc++.h>
-using namespace std;
+#include <iostream>
+#include <cstring>
 
-//Optimizations
-#pragma comment(linker, "/stack:200000000")
-#pragma GCC optimize("Ofast")
-#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
+using namespace std;
 
 //save time
 #define endl '\n'
@@ -64,12 +61,40 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
+bool isPrime[110];
 
+void sieve(){
+    memset(isPrime,true,sizeof(isPrime));
+
+    isPrime[0]=isPrime[1]=false;
+    
+    REP(i,110)
+        if(isPrime[i])
+            for(int j=2*i;j<110;j+=i)
+                isPrime[j]=false;
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    sieve();
+
+    int x,y;
+    cin>>x>>y;
+
+    if(!isPrime[y]){
+        cout<<"NO"<<endl;
+        return 0;
+    }
+
+    FOR(i,x+1,y)
+        if(isPrime[i]){
+            cout<<"NO"<<endl;
+            return 0;
+        }
+
+    cout<<"YES"<<endl;
 
     return 0;
 }

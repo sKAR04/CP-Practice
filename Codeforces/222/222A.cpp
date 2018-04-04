@@ -70,6 +70,24 @@ int main(){
     IOS;
     TIE;
 
+    int n,k;
+    cin>>n>>k;
+
+    int arr[n];
+    REP(i,n)
+        cin>>arr[i];
+
+    FOR(i,k-1,n)
+        if(arr[i]!=arr[n-1]){
+            cout<<-1<<endl;
+            return 0;
+        }
+
+    int idx=k-2;
+    while(idx>-1 && arr[idx]==arr[n-1])
+        --idx;
+
+    cout<<idx+1<<endl;
 
     return 0;
 }

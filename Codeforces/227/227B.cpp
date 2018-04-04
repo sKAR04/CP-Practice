@@ -4,7 +4,7 @@
 #####################################################
 */
 
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 //Optimizations
@@ -64,12 +64,33 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+ll arr[100010];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
 
+    FOR(i,1,n+1){
+        ll temp;
+        cin>>temp;
+        arr[temp]=i;
+    }
+
+    int q;
+    cin>>q;
+
+    ll vasya=0,petya=0;
+    while(q--){
+        ll val;
+        cin>>val;
+        vasya+=arr[val];
+        petya+=(n-arr[val]+1);
+    }
+
+    cout<<vasya<<" "<<petya<<endl;
+    
     return 0;
 }

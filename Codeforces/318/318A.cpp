@@ -4,7 +4,7 @@
 #####################################################
 */
 
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 //Optimizations
@@ -70,6 +70,16 @@ int main(){
     IOS;
     TIE;
 
+    ll n,k;
+    cin>>n>>k;
+
+    if(n & 1)
+        ++n;
+
+    if(k>n/2)
+        cout<<(k-n/2LL)*2LL<<endl;
+    else
+        cout<<2LL*k-1LL<<endl;
 
     return 0;
 }

@@ -4,7 +4,7 @@
 #####################################################
 */
 
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 //Optimizations
@@ -70,6 +70,14 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
 
+    cout<<n<<" ";
+    FOR(i,1,n)
+        cout<<i<<" ";
+
+    cout<<endl;
+    
     return 0;
 }

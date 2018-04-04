@@ -4,7 +4,7 @@
 #####################################################
 */
 
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 //Optimizations
@@ -70,6 +70,22 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    int sum=0;
+    REP(i,n){
+        int temp;
+        cin>>temp;
+        sum+=temp;
+    }
+
+    int cnt=0;
+    REP(i,5)
+        if((sum+i)%(n+1))
+            ++cnt;
+
+    cout<<cnt<<endl;
 
     return 0;
 }

@@ -4,7 +4,7 @@
 #####################################################
 */
 
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 //Optimizations
@@ -70,6 +70,22 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    int arr[n];
+    REP(i,n)
+        cin>>arr[i];
+
+    int minDiff=2000;
+    int idx=-1;
+    REP(i,n)
+        if(abs(arr[i]-arr[(i+1)%n])<minDiff){
+            idx=i;
+            minDiff=abs(arr[i]-arr[(i+1)%n]);
+        }
+
+    cout<<idx+1<<" "<<(idx+1)%n+1<<endl;
 
     return 0;
 }

@@ -70,6 +70,20 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    int days[7];
+    REP(i,7)
+        cin>>days[i];
+
+    int idx=0;
+    while(n>days[idx]){
+        n-=days[idx];
+        idx=(idx+1)%7;
+    }
+
+    cout<<idx+1<<endl;
 
     return 0;
 }

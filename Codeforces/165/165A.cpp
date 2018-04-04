@@ -4,7 +4,9 @@
 #####################################################
 */
 
-#include <bits/stdc++.h>
+#include <iostream>
+#include <utility>
+
 using namespace std;
 
 //Optimizations
@@ -70,6 +72,39 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    pi points[n];
+    REP(i,n)
+        cin>>points[i].F>>points[i].S;
+
+    int cnt=0;
+    for(pi p : points){
+        bool flags[4]={false};
+        for(auto p1 : points){
+            if(p.F==p1.F){
+                if(p.S<p1.S)
+                    flags[0]=true;
+                else if(p.S>p1.S)
+                    flags[1]=true;
+            }
+            else if(p.S==p1.S){
+                if(p.F<p1.F)
+                    flags[2]=true;
+                else if(p.F>p1.F)
+                    flags[3]=true;
+            }
+        }
+
+        bool flag=true;
+        REP(i,4)
+            flag &=flags[i];
+
+        cnt+=flag;
+    }
+
+    cout<<cnt<<endl;
 
     return 0;
 }

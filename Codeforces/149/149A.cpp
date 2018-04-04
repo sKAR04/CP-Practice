@@ -4,7 +4,8 @@
 #####################################################
 */
 
-#include <bits/stdc++.h>
+#include <iostream>
+#include <algorithm>
 using namespace std;
 
 //Optimizations
@@ -70,6 +71,28 @@ int main(){
     IOS;
     TIE;
 
+    int k;
+    cin>>k;
 
+    int arr[12];
+    REP(i,12)
+        cin>>arr[i];
+
+    sort(arr,arr+12);
+
+    int cnt=0;
+    DFOR(i,11,0)
+        if(k<=0)
+            break;
+        else{
+            k-=arr[i];
+            ++cnt;
+        }
+
+    if(k<=0)
+        cout<<cnt<<endl;
+    else
+        cout<<-1<<endl;
+        
     return 0;
 }

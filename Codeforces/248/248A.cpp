@@ -4,7 +4,7 @@
 #####################################################
 */
 
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 //Optimizations
@@ -70,6 +70,18 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    int lCnt=0,rCnt=0;
+    REP(i,n){
+        int l,r;
+        cin>>l>>r;
+        lCnt+=l;
+        rCnt+=r;
+    }
+
+    cout<<min(lCnt,n-lCnt)+min(rCnt,n-rCnt)<<endl;
 
     return 0;
 }

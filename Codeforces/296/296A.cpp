@@ -64,12 +64,28 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+int cnt[1010];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    REP(i,n){
+        int temp;
+        cin>>temp;
+        ++cnt[temp];
+    }
+
+    REP(i,1010)
+        if(cnt[i]>(n+1)/2){
+            cout<<"NO"<<endl;
+            return 0;
+        }
+
+    cout<<"YES"<<endl;
 
     return 0;
 }

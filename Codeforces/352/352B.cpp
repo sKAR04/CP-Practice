@@ -64,12 +64,45 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+vi pos[100010];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    REP(i,n){
+        int temp;
+        cin>>temp;
+        pos[temp].pb(i);
+    }
+
+    vii ans;
+    FOR(i,1,100010){
+        int len=pos[i].size();
+        if(len){
+            if(len==1)
+                ans.pb(mp(i,0));
+            else{
+                bool flag=true;
+                int diff=pos[i][1]-pos[i][0];
+                FOR(j,2,len)
+                    if(pos[i][j]-pos[i][j-1]!=diff){
+                        flag=false;
+                        break;
+                    }
+
+                if(flag)
+                    ans.pb(mp(i,diff));
+            }
+        }
+    }
+
+    cout<<ans.size()<<endl;
+    for(pi p : ans)
+        cout<<p.F<<" "<<p.S<<endl;
 
     return 0;
 }

@@ -4,7 +4,8 @@
 #####################################################
 */
 
-#include <bits/stdc++.h>
+#include <iostream>
+#include <queue>
 using namespace std;
 
 //Optimizations
@@ -70,6 +71,25 @@ int main(){
     IOS;
     TIE;
 
+    int n,m;
+    cin>>n>>m;
+
+    int arr[n+1];
+    FOR(i,1,n+1)
+        cin>>arr[i];
+
+    queue<int> q;
+    FOR(i,1,n+1)
+        q.push(i);
+
+    while(q.size()!=1){
+        arr[q.front()]-=m;
+        if(arr[q.front()]>0)
+            q.push(q.front());
+        q.pop();
+    }
+
+    cout<<q.front()<<endl;
 
     return 0;
 }

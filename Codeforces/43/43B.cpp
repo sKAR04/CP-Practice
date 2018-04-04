@@ -64,12 +64,43 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+int alphaLower[26],alphaUpper[26];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    char cur=gc();
+    while(cur!='\n'){
+        if(cur!=' '){
+            if(cur>96)
+                ++alphaLower[cur-97];
+            else
+                ++alphaUpper[cur-65];
+        }
+
+        cur=gc();
+    }
+
+    cur=gc();
+    while(cur!='\n'){
+        if(cur!=' '){
+            if(cur>96)
+                --alphaLower[cur-97];
+            else
+                --alphaUpper[cur-65];
+        }
+
+        cur=gc();
+    }
+
+    REP(i,26)
+        if(alphaLower[i]<0 || alphaUpper[i]<0){
+            cout<<"NO"<<endl;
+            return 0;
+        }
+
+    cout<<"YES"<<endl;
 
     return 0;
 }

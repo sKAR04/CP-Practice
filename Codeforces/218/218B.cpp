@@ -4,7 +4,10 @@
 #####################################################
 */
 
-#include <bits/stdc++.h>
+#include <iostream>
+#include <queue>
+#include <vector>
+
 using namespace std;
 
 //Optimizations
@@ -58,7 +61,7 @@ typedef long long ll;
 //queue
 #define di deque<int>
 #define qi queue<int>
-#define PQ priority_queue
+#define pq priority_queue
 
 //general
 #define E empty()
@@ -70,6 +73,44 @@ int main(){
     IOS;
     TIE;
 
+    pq<int,vi,greater<int> > minQ;
+    pq<int> maxQ;
+
+    int n,m;
+    cin>>n>>m;
+
+    REP(i,m){
+        int temp;
+        cin>>temp;
+        minQ.push(temp);
+        maxQ.push(temp);
+    }
+
+    int minCnt=0;
+    int maxCnt=0;
+
+    REP(i,n){
+        minCnt+=minQ.top();
+        maxCnt+=maxQ.top();
+
+        if(minQ.top()==1)
+            minQ.pop();
+        else{
+            int temp=minQ.top();
+            minQ.pop();
+            minQ.push(temp-1);
+        }
+
+        if(maxQ.top()==1)
+            maxQ.pop();
+        else{
+            int temp=maxQ.top();
+            maxQ.pop();
+            maxQ.push(temp-1);
+        }
+    }
+
+    cout<<maxCnt<<" "<<minCnt<<endl;
 
     return 0;
 }

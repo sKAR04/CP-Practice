@@ -70,6 +70,26 @@ int main(){
     IOS;
     TIE;
 
+    int happiness[6][6];
+    FOR(i,1,6)
+        FOR(j,1,6)
+            cin>>happiness[i][j];
+
+    vi order{1,2,3,4,5};
+
+    int maxSum=0;
+    do{
+        int tempSum=0;
+        tempSum+=happiness[order[0]][order[1]]+happiness[order[1]][order[0]]+happiness[order[2]][order[3]]+happiness[order[3]][order[2]];
+        tempSum+=happiness[order[1]][order[2]]+happiness[order[2]][order[1]]+happiness[order[3]][order[4]]+happiness[order[4]][order[3]];
+        tempSum+=happiness[order[2]][order[3]]+happiness[order[3]][order[2]];
+        tempSum+=happiness[order[3]][order[4]]+happiness[order[4]][order[3]];
+
+        maxSum=max(maxSum,tempSum);
+    }
+    while(next_permutation(all(order)));
+
+    cout<<maxSum<<endl;
 
     return 0;
 }

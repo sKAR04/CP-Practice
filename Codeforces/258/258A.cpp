@@ -70,6 +70,25 @@ int main(){
     IOS;
     TIE;
 
+    string str;
+    cin>>str;
+
+    int len=str.length();
+    int idx=0;
+    while(idx<len-1){
+        if(!(str[idx]-48))
+            break;
+        else
+            cout<<str[idx];
+        ++idx;
+    }
+
+    if(idx!=len-1){
+        ++idx;
+        while(idx<len)
+            cout<<str[idx++];
+    }
+    cout<<endl;
 
     return 0;
 }

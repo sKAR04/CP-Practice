@@ -4,7 +4,7 @@
 #####################################################
 */
 
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 //Optimizations
@@ -64,12 +64,36 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+int cnt[10010];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    int arr[n];
+    REP(i,n)
+        cin>>arr[i];
+
+    int m;
+    cin>>m;
+
+    REP(i,m){
+        int temp;
+        cin>>temp;
+
+        REP(j,n)
+            if(temp%arr[j]==0)
+                ++cnt[temp/arr[j]];
+    }
+
+    DFOR(i,10000,1)
+        if(cnt[i]){
+            cout<<cnt[i]<<endl;
+            break;
+        }
 
     return 0;
 }
