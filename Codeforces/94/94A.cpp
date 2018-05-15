@@ -64,38 +64,31 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-ll gcd(ll a,ll b){
-    if(!b)
-        return a;
-    return gcd(b,a%b);
-}
+
 //Main function
 int main(){
     IOS;
     TIE;
 
-    int q;
-    cin>>q;
+    string str;
+    cin>>str;
 
-    while(q--){
-        ll p,q,b;
-        cin>>p>>q>>b;
+    string digits[10];
+    REP(i,10)
+        cin>>digits[i];
 
-        ll foo=gcd(p,q);
-        p/=foo;
-        q/=foo;
+    REP(i,8){
+        string digit="";
+        REP(j,10)
+            digit+=str[i*10+j];
 
-        ll h=b;
-        while(h!=1LL){
-            h=gcd(h,q);
-            q/=h;
-        }
-
-        if(q!=1LL)
-            cout<<"Infinite"<<endl;
-        else
-            cout<<"Finite"<<endl;
+        REP(j,10)
+            if(digits[j]==digit){
+                cout<<j;
+                break;
+            }
     }
+    cout<<endl;
 
     return 0;
 }

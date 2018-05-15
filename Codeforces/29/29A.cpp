@@ -64,38 +64,32 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-ll gcd(ll a,ll b){
-    if(!b)
-        return a;
-    return gcd(b,a%b);
-}
+
 //Main function
 int main(){
     IOS;
     TIE;
 
-    int q;
-    cin>>q;
+    int n;
+    cin>>n;
 
-    while(q--){
-        ll p,q,b;
-        cin>>p>>q>>b;
+    bool flag=false;
 
-        ll foo=gcd(p,q);
-        p/=foo;
-        q/=foo;
+    pi spit[n];
+    REP(i,n)
+        cin>>spit[i].F>>spit[i].S;
 
-        ll h=b;
-        while(h!=1LL){
-            h=gcd(h,q);
-            q/=h;
-        }
+    REP(i,n)
+        FOR(j,1,n)
+            if(spit[i].F+spit[i].S==spit[j].F && spit[j].F+spit[j].S==spit[i].F){
+                flag=true;
+                break;
+            }
 
-        if(q!=1LL)
-            cout<<"Infinite"<<endl;
-        else
-            cout<<"Finite"<<endl;
-    }
+    if(flag)
+        cout<<"YES"<<endl;
+    else
+        cout<<"NO"<<endl;
 
     return 0;
 }

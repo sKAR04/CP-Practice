@@ -64,38 +64,18 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-ll gcd(ll a,ll b){
-    if(!b)
-        return a;
-    return gcd(b,a%b);
-}
+string pos[10]={"O-|-OOOO","O-|O-OOO","O-|OO-OO","O-|OOO-O","O-|OOOO-","-O|-OOOO","-O|O-OOO","-O|OO-OO","-O|OOO-O","-O|OOOO-"};
 //Main function
 int main(){
     IOS;
     TIE;
 
-    int q;
-    cin>>q;
+    string str;
+    cin>>str;
 
-    while(q--){
-        ll p,q,b;
-        cin>>p>>q>>b;
-
-        ll foo=gcd(p,q);
-        p/=foo;
-        q/=foo;
-
-        ll h=b;
-        while(h!=1LL){
-            h=gcd(h,q);
-            q/=h;
-        }
-
-        if(q!=1LL)
-            cout<<"Infinite"<<endl;
-        else
-            cout<<"Finite"<<endl;
-    }
+    int len=str.length();
+    DFOR(i,len-1,0)
+        cout<<pos[str[i]-48]<<endl;
 
     return 0;
 }

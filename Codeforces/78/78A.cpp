@@ -64,38 +64,54 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-ll gcd(ll a,ll b){
-    if(!b)
-        return a;
-    return gcd(b,a%b);
-}
+
 //Main function
 int main(){
     IOS;
     TIE;
 
-    int q;
-    cin>>q;
+    char str[110];
+    scanf ("%[^\n]%*c",str);
 
-    while(q--){
-        ll p,q,b;
-        cin>>p>>q>>b;
-
-        ll foo=gcd(p,q);
-        p/=foo;
-        q/=foo;
-
-        ll h=b;
-        while(h!=1LL){
-            h=gcd(h,q);
-            q/=h;
-        }
-
-        if(q!=1LL)
-            cout<<"Infinite"<<endl;
-        else
-            cout<<"Finite"<<endl;
+    bool flag=true;
+    int cnt=0,idx=0;
+    while(str[idx]!='\0'){
+        if(str[idx]=='a' || str[idx]=='e' || str[idx]=='i' || str[idx]=='o' || str[idx]=='u')
+            ++cnt;
+        ++idx;
     }
+
+    if(cnt!=5)
+        flag=false;
+
+    cnt=0;
+    idx=0;
+    scanf ("%[^\n]%*c",str);
+    while(str[idx]!='\0'){
+        if(str[idx]=='a' || str[idx]=='e' || str[idx]=='i' || str[idx]=='o' || str[idx]=='u')
+            ++cnt;
+        ++idx;
+    }
+
+    if(cnt!=7)
+        flag=false;
+
+    cnt=0;
+    idx=0;
+    scanf ("%[^\n]%*c",str);
+    while(str[idx]!='\0'){
+        if(str[idx]=='a' || str[idx]=='e' || str[idx]=='i' || str[idx]=='o' || str[idx]=='u')
+            ++cnt;
+        ++idx;
+    }
+
+    if(cnt!=5)
+        flag=false;
+
+    if(flag)
+        cout<<"YES"<<endl;
+    else
+        cout<<"NO"<<endl;
 
     return 0;
 }

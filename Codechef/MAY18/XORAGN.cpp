@@ -39,7 +39,17 @@ typedef long long ll;
 
 //Variables and Functions required
 inline void solve(){
-    
+    int n;
+    cin>>n;
+
+    int ans=0;
+    REP(i,n){
+        int temp;
+        cin>>temp;
+        ans^=(2*temp);
+    }
+
+    cout<<ans<<endl;
 }
 //Main function
 int main(){
