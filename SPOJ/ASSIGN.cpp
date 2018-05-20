@@ -64,12 +64,41 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
+inline void solve(){
+    int n;
+    cin>>n;
 
+    bool likesSubject[n][n];
+    REP(i,n)
+        REP(j,n)
+            cin>>likesSubject[i][j];
+
+    ll dp[1 << n]={};
+    dp[0]=1;
+
+    REP(mask,(1LL << n)-1LL){
+        int oneCnt=0;
+        REP(j,n)
+            if(mask & (1LL << j))
+                ++oneCnt;
+
+        REP(j,n)
+            if(!(mask & (1LL << j)) && likesSubject[oneCnt][j])
+                dp[mask | (1LL << j)]+=dp[mask];
+    }
+
+    cout<<dp[(1LL << n)-1LL]<<endl;
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int t;
+    cin>>t;
+
+    while(t--)
+        solve();
 
     return 0;
 }

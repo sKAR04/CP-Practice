@@ -64,12 +64,76 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
+class Ribbon{
+    public :
+    int cntLower[26]={0};
+    int cntUpper[26]={0};
+
+    string str;
+    int len;
+
+    void getCnt(){
+        len=str.length();
+        REP(i,len)
+            if(str[i]>96)
+                ++cntLower[str[i]-97];
+            else
+                ++cntUpper[str[i]-65];
+    }
+
+    int getMaxVal(int k){
+        int maxVal=0;
+        REP(i,26){
+            int cur=cntLower[i];
+            if(cur==len && k==1)
+                --cur;
+            else if(k<=len-cur)
+                cur+=k;
+            else
+                cur=len;
+            maxVal=max(maxVal,cur);
+
+            cur=cntUpper[i];
+            if(cur==len && k==1)
+                --cur;
+            else if(k<=len-cur)
+                cur+=k;
+            else
+                cur=len;
+            maxVal=max(maxVal,cur);
+        }
+
+        return maxVal;
+    }
+};
 
 //Main function
 int main(){
     IOS;
     TIE;
 
+    ll k;
+    cin>>k;
+
+    Ribbon kuro,shiro,katie;
+    cin>>kuro.str>>shiro.str>>katie.str;
+
+    kuro.getCnt();
+    shiro.getCnt();
+    katie.getCnt();
+
+    int max0=kuro.getMaxVal(k);
+    int max1=shiro.getMaxVal(k);
+    int max2=katie.getMaxVal(k);
+
+    if(max0>max1 && max0>max2)
+        cout<<"Kuro"<<endl;
+    else if(max1>max0 && max1>max2)
+        cout<<"Shiro"<<endl;
+    else if(max2>max0 && max2>max1)
+        cout<<"Katie"<<endl;
+    else
+        cout<<"Draw"<<endl;
 
     return 0;
 }

@@ -64,12 +64,45 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+int dpInc[100010],dpDec[100010];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n,q;
+    cin>>n>>q;
+
+    int arr[n];
+    REP(i,n)
+        cin>>arr[i];
+
+    dpInc[n-1]=1;
+    DFOR(i,n-2,0)
+        if(arr[i]<=arr[i+1])
+            dpInc[i]=dpInc[i+1]+1;
+        else
+            dpInc[i]=1;
+
+    dpDec[n-1]=1;
+    DFOR(i,n-2,0)
+        if(arr[i]>=arr[i+1])
+            dpDec[i]=dpDec[i+1]+1;
+        else
+            dpDec[i]=1;
+
+    while(q--){
+        int l,r;
+        cin>>l>>r;
+
+        int len=dpInc[l-1]-1;
+        len+=dpDec[l+len-1];
+
+        if(r-l+1<=len)
+            cout<<"Yes"<<endl;
+        else
+            cout<<"No"<<endl;
+    }
 
     return 0;
 }

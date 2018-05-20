@@ -70,6 +70,17 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    int arr[n];
+    REP(i,n)
+        cin>>arr[i];
+
+    sort(arr,arr+n);
+
+    REP(i,n)
+        cout<<arr[i]<<endl;
 
     return 0;
 }

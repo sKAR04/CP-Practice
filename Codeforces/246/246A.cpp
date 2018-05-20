@@ -70,6 +70,15 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
 
+    if(n>2)
+        DFOR(i,n,1)
+            cout<<i<<" ";
+    else
+        cout<<-1;
+    cout<<endl;
+    
     return 0;
 }

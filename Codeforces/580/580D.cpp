@@ -64,12 +64,49 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+ll dp[1LL << 18][18];
+ll dishes[20];
+ll rules[20][20];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    ll n,m,k;
+    cin>>n>>m>>k;
+
+    REP(i,n)
+        cin>>dishes[i];
+
+    REP(i,k){
+        ll a,b,c;
+        cin>>a>>b>>c;
+        rules[a-1][b-1]=c;
+    }
+
+    REP(i,n)
+        dp[(1LL << i)][i]=dishes[i];
+
+    ll ans=0;
+    REP(mask,(1LL << n)){
+        ll numOfOnes=0;
+        REP(i,n)
+            if(mask & (1LL << i))
+                ++numOfOnes;
+
+        if(numOfOnes==m)
+            REP(i,n)
+                ans=max(ans,dp[mask][i]);
+
+        else if(numOfOnes<m)
+            REP(i,n)
+                if(mask & (1LL << i))
+                    REP(j,n)
+                        if(!(mask & (1LL << j)))
+                            dp[mask | (1LL << j)][j]=max(dp[mask | (1LL << j)][j],dp[mask][i]+dishes[j]+rules[i][j]);
+    }
+
+    cout<<ans<<endl;
 
     return 0;
 }

@@ -70,6 +70,52 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    pi requests[n];
+    REP(i,n)
+        cin>>requests[i].F>>requests[i].S;
+
+    int m;
+    cin>>m;
+
+    pi tables[m];
+    REP(i,m){
+        cin>>tables[i].F;
+        tables[i].S=i;
+    }
+    sort(tables,tables+m);
+
+    int assigned[m]={};
+    bool serviced[n]={};
+
+    REP(i,m){
+        int maxIdx=-1,maxCost=INT_MIN;
+
+        REP(j,n)
+            if(!serviced[j] && requests[j].F<=tables[i].F && maxCost<requests[j].S){
+                maxIdx=j;
+                maxCost=requests[j].S;
+            }
+
+        assigned[tables[i].S]=maxIdx;
+        if(maxIdx!=-1)
+            serviced[maxIdx]=true;
+    }
+
+    int reqServiced=0,income=0;
+    REP(i,m)
+        if(assigned[i]!=-1){
+            ++reqServiced;
+            income+=requests[assigned[i]].S;
+        }
+
+    cout<<reqServiced<<" "<<income<<endl;
+
+    REP(i,m)
+        if(assigned[i]!=-1)
+            cout<<assigned[i]+1<<" "<<i+1<<endl;
 
     return 0;
 }

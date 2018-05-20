@@ -70,6 +70,21 @@ int main(){
     IOS;
     TIE;
 
+    int t;
+    cin>>t;
 
+    FOR(i,1,t+1){
+        int n;
+        cin>>n;
+
+        int sum=0;
+        REP(j,n){
+            int temp;
+            cin>>temp;
+            sum+=temp;
+        }
+
+        cout<<"Case "<<i<<": "<<sum<<endl;
+    }
     return 0;
 }

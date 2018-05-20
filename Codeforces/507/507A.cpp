@@ -70,6 +70,30 @@ int main(){
     IOS;
     TIE;
 
+    int n,k;
+    cin>>n>>k;
+    
+    pi days[n];
+    REP(i,n){
+        int temp;
+        cin>>temp;
+        days[i]=mp(temp,i+1);
+    }
+    sort(days,days+n);
+
+    vi ans;
+    REP(i,n)
+        if(k>=days[i].F){
+            k-=days[i].F;
+            ans.pb(days[i].S);
+        }
+        else
+            break;
+
+    cout<<ans.size()<<endl;
+    for(int x : ans)
+        cout<<x<<" ";
+    cout<<endl;
 
     return 0;
 }

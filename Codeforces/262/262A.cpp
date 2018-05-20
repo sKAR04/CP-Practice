@@ -70,6 +70,25 @@ int main(){
     IOS;
     TIE;
 
+    int n,k;
+    cin>>n>>k;
+
+    int ans=0;
+    REP(i,n){
+        string str;
+        cin>>str;
+
+        int len=str.length();
+        int cnt=0;
+        REP(j,len)
+            if(str[j]=='4' || str[j]=='7')
+                ++cnt;
+
+        if(cnt<=k)
+            ++ans;
+    }
+
+    cout<<ans<<endl;
 
     return 0;
 }

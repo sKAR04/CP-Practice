@@ -70,6 +70,36 @@ int main(){
     IOS;
     TIE;
 
+    int white=0,black=0;
+    REP(i,8)
+        REP(j,8){
+            char temp;
+            cin>>temp;
+
+            if(temp=='Q')
+                white+=9;
+            else if(temp=='R')
+                white+=5;
+            else if(temp=='B' || temp=='N')
+                white+=3;
+            else if(temp=='P')
+                ++white;
+            else if(temp=='q')
+                black+=9;
+            else if(temp=='r')
+                black+=5;
+            else if(temp=='b' || temp=='n')
+                black+=3;
+            else if(temp=='p')
+                ++black;
+        }
+
+    if(black>white)
+        cout<<"Black"<<endl;
+    else if(black==white)
+        cout<<"Draw"<<endl;
+    else
+        cout<<"White"<<endl;
 
     return 0;
 }

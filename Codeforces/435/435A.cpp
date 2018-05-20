@@ -70,6 +70,23 @@ int main(){
     IOS;
     TIE;
 
+    int n,m;
+    cin>>n>>m;
+
+    int busCnt=1,curBus=0;
+    REP(i,n){
+        int temp;
+        cin>>temp;
+
+        if(curBus+temp>m){
+            curBus=temp;
+            ++busCnt;
+        }
+        else
+            curBus+=temp;
+    }
+
+    cout<<busCnt<<endl;
 
     return 0;
 }

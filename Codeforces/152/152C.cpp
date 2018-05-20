@@ -70,6 +70,24 @@ int main(){
     IOS;
     TIE;
 
+    int n,m;
+    cin>>n>>m;
 
+    string arr[n];
+    REP(i,n)
+        cin>>arr[i];
+
+    ll ans=1;
+    REP(j,m){
+        set<char> temp;
+        REP(i,n)
+            temp.insert(arr[i][j]);
+
+        ans*=(ll)(temp.size());
+        ans%=MOD;
+    }
+
+    cout<<ans<<endl;
+    
     return 0;
 }

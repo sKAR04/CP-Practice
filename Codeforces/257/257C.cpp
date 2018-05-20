@@ -70,6 +70,46 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    vector<long double> angles;
+    REP(i,n){
+        int x,y;
+        cin>>x>>y;
+
+        long double angle;
+        if(!x)
+            if(!y)
+                angle=0;
+            else
+                angle=90;
+        else
+            angle=atan((long double)abs(y)/(long double)abs(x))*180/PI;
+
+        if(x>=0 && y>=0)
+            angle+=0;
+        else if(y>=0)
+            angle=180-angle;
+        else if(x>=0)
+            angle=360-angle;
+        else
+            angle+=180;
+
+        angles.pb(angle);
+    }
+
+    sort(all(angles));
+
+    int len=angles.size();
+    long double ans=360-(angles[len-1]-angles[0]);
+    REP(i,len-1)
+        ans=max(ans,angles[i+1]-angles[i]);
+
+    if(n==1)
+        cout<<0<<endl;
+    else
+        cout<<setprecision(20)<<360-ans<<endl;
 
     return 0;
 }

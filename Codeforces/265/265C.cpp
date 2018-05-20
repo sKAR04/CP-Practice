@@ -70,6 +70,21 @@ int main(){
     IOS;
     TIE;
 
+    string str;
+    cin>>str;
+
+    vi l,r;
+    int len=str.length();
+    REP(i,len)
+        if(str[i]=='l')
+            l.pb(i+1);
+        else
+            r.pb(i+1);
+
+    for(auto it=r.begin();it!=r.end();++it)
+        cout<<*it<<endl;
+    for(auto it=l.rbegin();it!=l.rend();++it)
+        cout<<*it<<endl;
 
     return 0;
 }

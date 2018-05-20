@@ -64,12 +64,27 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+ll gcd(ll a,ll b){
+    if(!b)
+        return a;
+    return gcd(b,a%b);
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    string str0,str1;
+    cin>>str0>>str1;
+
+    int cnt=0;
+    str0+="$";
+    int len=str1.length();
+    REP(i,len)
+        if(str1[i]==str0[cnt])
+            ++cnt;
+
+    cout<<cnt+1<<endl;
 
     return 0;
 }

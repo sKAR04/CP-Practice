@@ -70,6 +70,27 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    int arr[n];
+    REP(i,n)
+        cin>>arr[i];
+    sort(arr,arr+n);
+
+    int stacks[100]={};
+    REP(i,n)
+        REP(j,100)
+            if(stacks[j]<=arr[i]){
+                ++stacks[j];
+                break;
+            }
+
+    int cnt=0;
+    REP(i,100)
+        if(stacks[i])
+            ++cnt;
+    cout<<cnt<<endl;
 
     return 0;
 }

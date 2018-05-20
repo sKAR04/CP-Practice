@@ -70,6 +70,26 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
 
+    int arr[n],sorted[n];
+
+    REP(i,n){
+        cin>>arr[i];
+        sorted[i]=arr[i];
+    }
+    sort(sorted,sorted+n);
+
+    int cnt=0;
+    REP(i,n)
+        if(sorted[i]!=arr[i])
+            ++cnt;
+
+    if(cnt>2)
+        cout<<"NO"<<endl;
+    else
+        cout<<"YES"<<endl;
+        
     return 0;
 }

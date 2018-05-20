@@ -64,12 +64,55 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
+ll arr[100010];
+ll segTree[1 << 18];
 
+void buildTree(ll low,ll high,ll pos){
+    ll mid=(low+high) >> 1;
+    if(low==high)
+        segTree[pos]=arr[mid];
+    else{
+        buildTree(low,mid,2*pos+1);
+        buildTree(mid+1,high,2*pos+2);
+
+        segTree[pos]=min(segTree[2*pos+1],segTree[2*pos+2]);
+    }
+}
+
+ll queryTree(ll low,ll high,ll pos,ll qLow,ll qHigh){
+    if(qHigh<low || qLow>high)
+        return LLONG_MAX;
+    else if(qLow<=low && qHigh>=high)
+        return segTree[pos];
+    else{
+        ll mid=(low+high) >> 1;
+        return min(queryTree(low,mid,2*pos+1,qLow,qHigh),queryTree(mid+1,high,2*pos+2,qLow,qHigh));
+    }
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int t;
+    cin>>t;
 
+    FOR(j,1,t+1){
+        cout<<"Scenario #"<<j<<":"<<endl;
+
+        ll n,q;
+        cin>>n>>q;
+
+        REP(i,n)
+            cin>>arr[i];
+        buildTree(0,n-1,0);
+
+        while(q--){
+            ll a,b;
+            cin>>a>>b;
+
+            cout<<queryTree(0,n-1,0,a-1,b-1)<<endl;
+        }
+    }
     return 0;
 }

@@ -70,6 +70,23 @@ int main(){
     IOS;
     TIE;
 
+    int n,m;
+    cin>>n>>m;
+
+    bool flag=false;
+    REP(i,n)
+        REP(j,m){
+            int temp;
+            cin>>temp;
+            
+            if(temp && (i==n-1 || j==m-1 || !i || !j))
+                flag=true;
+        }
+
+    if(flag)
+        cout<<2<<endl;
+    else
+        cout<<4<<endl;
 
     return 0;
 }
