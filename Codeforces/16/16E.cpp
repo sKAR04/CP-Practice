@@ -14,8 +14,8 @@ using namespace std;
 
 //save time
 #define endl '\n'
-#define db(x) cout << "> " << #x << ": " << x << endl;
 typedef long long ll;
+typedef long double ld;
 
 //for sorting
 #define all(a) a.begin(),a.end()
@@ -24,7 +24,6 @@ typedef long long ll;
 #define PI   3.141592653593
 #define MOD  1000000007LL
 #define EPS  0.000000001
-#define INF  0X3f3f3f3f
 
 //loops
 #define REP(i,n) 	    for(ll i=0;i<(n);++i)
@@ -66,37 +65,41 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-bool isPrime[10000010];
-void sieve(){
-    fill(isPrime,isPrime+10000010,true);
-    isPrime[1]=false;
-    FOR(i,2,10000010)
-        if(isPrime[i]){
-            for(ll j=2LL*i;j<10000010LL;j+=i)
-                isPrime[j]=false;
-        }
-}
+ld prob[20][20];
 //Main function
 int main(){
     IOS;
     TIE;
 
-    sieve();
+    ll n;
+    cin>>n;
 
-    ll maxDiff=0;
-    FOR(i,3,1000010){
-        if(!i & 1)
-            --i;
+    REP(i,n)
+        REP(j,n)
+            cin>>prob[i][j];
 
-        for(ll j=i;;j-=2)
-            if(isPrime[j]){
-                maxDiff=max(maxDiff,i-j);
-                break;
-            }
+
+    ld dp[1LL << n]={};
+    dp[(1LL << n)-1LL]=1;
+
+    DFOR(mask,(1LL << n)-1LL,0LL){
+        ll aliveCnt=0;
+        REP(j,n)
+            if(mask & (1LL << j))
+                ++aliveCnt;
+
+        if(aliveCnt>1LL){
+            ld fightProb=(ld)2/((ld)aliveCnt*(ld)(aliveCnt-1LL));
+            REP(j,n)
+                REP(k,n)
+                    if((mask & (1LL << j)) && (mask & (1LL << k)))
+                        dp[mask & ~(1LL << k)]+=(dp[mask]*prob[j][k]*fightProb);
+        }
     }
 
-    cout<<maxDiff<<endl;
-
+    REP(i,n)
+        cout<<setprecision(20)<<dp[(1LL << i)]<<" ";
+    cout<<endl;
 
     return 0;
 }

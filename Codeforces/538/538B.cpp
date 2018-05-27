@@ -14,7 +14,6 @@ using namespace std;
 
 //save time
 #define endl '\n'
-#define db(x) cout << "> " << #x << ": " << x << endl;
 typedef long long ll;
 
 //for sorting
@@ -66,37 +65,45 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-bool isPrime[10000010];
-void sieve(){
-    fill(isPrime,isPrime+10000010,true);
-    isPrime[1]=false;
-    FOR(i,2,10000010)
-        if(isPrime[i]){
-            for(ll j=2LL*i;j<10000010LL;j+=i)
-                isPrime[j]=false;
-        }
-}
+
 //Main function
 int main(){
     IOS;
     TIE;
 
-    sieve();
+    int n;
+    cin>>n;
 
-    ll maxDiff=0;
-    FOR(i,3,1000010){
-        if(!i & 1)
-            --i;
-
-        for(ll j=i;;j-=2)
-            if(isPrime[j]){
-                maxDiff=max(maxDiff,i-j);
-                break;
-            }
+    int ans=0;
+    int num[10]={};
+    DFOR(i,9,0){
+        num[i]=n%10;
+        n/=10;
+        ans=max(ans,num[i]);
     }
 
-    cout<<maxDiff<<endl;
+    int nums[ans][10];
+    REP(j,10){
+        int cur=num[j];
+        REP(i,ans){
+            nums[i][j]=cur>0;
+            --cur;
+        }
+    }
 
+    cout<<ans<<endl;
+    REP(i,ans){
+        bool flag=false;
+        REP(j,10){
+            if(!flag && !nums[i][j])
+                continue;
+            else if(!flag)
+                flag=true;
+            cout<<nums[i][j];
+        }
+        cout<<" ";
+    }
+    cout<<endl;
 
     return 0;
 }

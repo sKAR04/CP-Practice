@@ -14,7 +14,6 @@ using namespace std;
 
 //save time
 #define endl '\n'
-#define db(x) cout << "> " << #x << ": " << x << endl;
 typedef long long ll;
 
 //for sorting
@@ -24,7 +23,6 @@ typedef long long ll;
 #define PI   3.141592653593
 #define MOD  1000000007LL
 #define EPS  0.000000001
-#define INF  0X3f3f3f3f
 
 //loops
 #define REP(i,n) 	    for(ll i=0;i<(n);++i)
@@ -66,37 +64,74 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-bool isPrime[10000010];
-void sieve(){
-    fill(isPrime,isPrime+10000010,true);
-    isPrime[1]=false;
-    FOR(i,2,10000010)
-        if(isPrime[i]){
-            for(ll j=2LL*i;j<10000010LL;j+=i)
-                isPrime[j]=false;
-        }
+ll cost[100010];
+vi adj[100010],revAdj[100010];
+bool vis[100010],revVis[100010];
+vector<vi > components;
+
+void dfs(int i,vi &v){
+    vis[i]=true;
+    for(int x : adj[i])
+        if(!vis[x])
+            dfs(x,v);
+    v.pb(i);
+}
+
+void revDfs(int i,vi &v){
+    revVis[i]=true;
+    v.pb(cost[i]);
+    for(int x : revAdj[i])
+        if(!revVis[x])
+            revDfs(x,v);
 }
 //Main function
 int main(){
     IOS;
     TIE;
 
-    sieve();
+    ll n;
+    cin>>n;
 
-    ll maxDiff=0;
-    FOR(i,3,1000010){
-        if(!i & 1)
-            --i;
+    FOR(i,1,n+1)
+        cin>>cost[i];
 
-        for(ll j=i;;j-=2)
-            if(isPrime[j]){
-                maxDiff=max(maxDiff,i-j);
-                break;
-            }
+    ll m;
+    cin>>m;
+    REP(i,m){
+        ll v1,v2;
+        cin>>v1>>v2;
+        adj[v1].pb(v2);
+        revAdj[v2].pb(v1);
     }
 
-    cout<<maxDiff<<endl;
+    vi v;
+    FOR(i,1,n+1)
+        if(!vis[i])
+            dfs(i,v);
 
+
+
+    int len=v.size();
+    DFOR(i,len-1,0)
+        if(!revVis[v[i]]){
+            vi temp;
+            revDfs(v[i],temp);
+            components.pb(temp);
+        }
+
+    ll minCost=0LL;
+    ll ways=1LL;
+    for(vi v : components){
+        sort(all(v));
+        minCost+=v[0];
+
+        ll cnt=0;
+        for(int x : v)
+            if(x==v[0])
+                ++cnt;
+        ways=(ways*cnt)%MOD;
+    }
+    cout<<minCost<<" "<<ways<<endl;
 
     return 0;
 }

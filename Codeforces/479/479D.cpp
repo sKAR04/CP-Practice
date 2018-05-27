@@ -66,37 +66,63 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-bool isPrime[10000010];
-void sieve(){
-    fill(isPrime,isPrime+10000010,true);
-    isPrime[1]=false;
-    FOR(i,2,10000010)
-        if(isPrime[i]){
-            for(ll j=2LL*i;j<10000010LL;j+=i)
-                isPrime[j]=false;
-        }
-}
+
 //Main function
 int main(){
     IOS;
     TIE;
 
-    sieve();
+    ll n,l,x,y;
+    cin>>n>>l>>x>>y;
 
-    ll maxDiff=0;
-    FOR(i,3,1000010){
-        if(!i & 1)
-            --i;
-
-        for(ll j=i;;j-=2)
-            if(isPrime[j]){
-                maxDiff=max(maxDiff,i-j);
-                break;
-            }
+    vll v;
+    REP(i,n){
+        ll temp;
+        cin>>temp;
+        v.pb(temp);
     }
 
-    cout<<maxDiff<<endl;
+    bool flag1=false,flag2=false;
+    REP(i,n){
+        if(binary_search(all(v),v[i]-x) || binary_search(all(v),v[i]+x))
+            flag1=true;
+        if(binary_search(all(v),v[i]-y) || binary_search(all(v),v[i]+y))
+            flag2=true;
+    }
 
+    if(flag1 && flag2)
+        cout<<0<<endl;
+    else if(flag1)
+        cout<<1<<endl<<y<<endl;
+    else if(flag2)
+        cout<<1<<endl<<x<<endl;
+    else{
+        REP(i,n){
+            ll foo=v[i]-x;
+            ll bar=v[i]+x;
+            if(foo>0 && foo<l && (binary_search(all(v),foo+y) || binary_search(all(v),foo-y))){
+                cout<<1<<endl<<foo<<endl;
+                return 0;
+            }
+            if(bar>0 && bar<l && (binary_search(all(v),bar+y) || binary_search(all(v),bar-y))){
+                cout<<1<<endl<<bar<<endl;
+                return 0;
+            }
+
+            foo=v[i]-y;
+            bar=v[i]+y;
+            if(foo>0 && foo<l && (binary_search(all(v),foo+x) || binary_search(all(v),foo-x))){
+                cout<<1<<endl<<foo<<endl;
+                return 0;
+            }
+            if(bar>0 && bar<l && (binary_search(all(v),bar+x) || binary_search(all(v),bar-x))){
+                cout<<1<<endl<<bar<<endl;
+                return 0;
+            }
+        }
+
+        cout<<2<<endl<<x<<endl<<y<<endl;
+    }
 
     return 0;
 }

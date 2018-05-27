@@ -14,7 +14,6 @@ using namespace std;
 
 //save time
 #define endl '\n'
-#define db(x) cout << "> " << #x << ": " << x << endl;
 typedef long long ll;
 
 //for sorting
@@ -66,37 +65,45 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-bool isPrime[10000010];
-void sieve(){
-    fill(isPrime,isPrime+10000010,true);
-    isPrime[1]=false;
-    FOR(i,2,10000010)
-        if(isPrime[i]){
-            for(ll j=2LL*i;j<10000010LL;j+=i)
-                isPrime[j]=false;
-        }
-}
+char code[1010][1010];
+ll dp[1010][2];
+ll whiteCnt[1010];
 //Main function
 int main(){
     IOS;
     TIE;
 
-    sieve();
+    ll n,m,x,y;
+    cin>>n>>m>>x>>y;
 
-    ll maxDiff=0;
-    FOR(i,3,1000010){
-        if(!i & 1)
-            --i;
+    FOR(i,1,n+1)
+        FOR(j,1,m+1)
+            cin>>code[i][j];
 
-        for(ll j=i;;j-=2)
-            if(isPrime[j]){
-                maxDiff=max(maxDiff,i-j);
-                break;
-            }
+    FOR(j,1,m+1)
+        FOR(i,1,n+1)
+            if(code[i][j]=='.')
+                ++whiteCnt[j];
+
+    FOR(i,1,m+1)
+        dp[i][0]=dp[i][1]=LLONG_MAX;
+
+    FOR(i,1,m+1){
+        ll sum=0;
+        DFOR(j,i,max(1LL,i+1-y)){
+            sum+=whiteCnt[j];
+            if(i-j+1>=x && i-j+1<=y && dp[j-1][0]!=LLONG_MAX)
+                dp[i][1]=min(dp[i][1],sum+dp[j-1][0]);
+        }
+
+        sum=0;
+        DFOR(j,i,max(1LL,i+1-y)){
+            sum+=(n-whiteCnt[j]);
+            if(i-j+1>=x && i-j+1<=y && dp[j-1][1]!=LLONG_MAX)
+                dp[i][0]=min(dp[i][0],sum+dp[j-1][1]);
+        }
     }
-
-    cout<<maxDiff<<endl;
-
+    cout<<min(dp[m][0],dp[m][1])<<endl;
 
     return 0;
 }

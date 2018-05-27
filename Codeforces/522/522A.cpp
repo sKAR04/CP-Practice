@@ -14,7 +14,6 @@ using namespace std;
 
 //save time
 #define endl '\n'
-#define db(x) cout << "> " << #x << ": " << x << endl;
 typedef long long ll;
 
 //for sorting
@@ -66,37 +65,39 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-bool isPrime[10000010];
-void sieve(){
-    fill(isPrime,isPrime+10000010,true);
-    isPrime[1]=false;
-    FOR(i,2,10000010)
-        if(isPrime[i]){
-            for(ll j=2LL*i;j<10000010LL;j+=i)
-                isPrime[j]=false;
-        }
+map<string,vector<string> > adj;
+
+int dfs(string str){
+    int ans=0;
+    for(auto s : adj[str])
+        ans=max(ans,dfs(s));
+
+    return ans+1;
 }
 //Main function
 int main(){
     IOS;
     TIE;
 
-    sieve();
+    int n;
+    cin>>n;
 
-    ll maxDiff=0;
-    FOR(i,3,1000010){
-        if(!i & 1)
-            --i;
+    REP(i,n){
+        string str0,str1,str2;
+        cin>>str0>>str1>>str2;
 
-        for(ll j=i;;j-=2)
-            if(isPrime[j]){
-                maxDiff=max(maxDiff,i-j);
-                break;
-            }
+        int len0=str0.length(),len2=str2.length();
+        REP(i,len0)
+            if(str0[i]<97)
+                str0[i]+=32;
+        REP(i,len2)
+            if(str2[i]<97)
+                str2[i]+=32;
+
+        adj[str2].pb(str0);
     }
 
-    cout<<maxDiff<<endl;
-
+    cout<<dfs("polycarp")<<endl;
 
     return 0;
 }

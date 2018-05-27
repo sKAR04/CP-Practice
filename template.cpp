@@ -14,6 +14,7 @@ using namespace std;
 
 //save time
 #define endl '\n'
+#define db(x) cout << "> " << #x << ": " << x << endl;
 typedef long long ll;
 
 //for sorting
@@ -23,11 +24,12 @@ typedef long long ll;
 #define PI   3.141592653593
 #define MOD  1000000007LL
 #define EPS  0.000000001
+#define INF  0X3f3f3f3f
 
 //loops
-#define REP(i,n) 	    for(int i=0;i<(n);++i)
-#define FOR(i,a,b)      for(int i=(a);i<(b);++i)
-#define DFOR(i,a,b)     for(int i=(a);i>=(b);--i)
+#define REP(i,n) 	    for(ll i=0;i<(n);++i)
+#define FOR(i,a,b)      for(ll i=(a);i<(b);++i)
+#define DFOR(i,a,b)     for(ll i=(a);i>=(b);--i)
 
 //vectors
 #define vi vector<int>

@@ -14,7 +14,6 @@ using namespace std;
 
 //save time
 #define endl '\n'
-#define db(x) cout << "> " << #x << ": " << x << endl;
 typedef long long ll;
 
 //for sorting
@@ -66,37 +65,47 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-bool isPrime[10000010];
-void sieve(){
-    fill(isPrime,isPrime+10000010,true);
-    isPrime[1]=false;
-    FOR(i,2,10000010)
-        if(isPrime[i]){
-            for(ll j=2LL*i;j<10000010LL;j+=i)
-                isPrime[j]=false;
-        }
-}
+string str[100010],rev[100010];
+ll cost[100010];
+ll dp[100010][2];
 //Main function
 int main(){
     IOS;
     TIE;
 
-    sieve();
-
-    ll maxDiff=0;
-    FOR(i,3,1000010){
-        if(!i & 1)
-            --i;
-
-        for(ll j=i;;j-=2)
-            if(isPrime[j]){
-                maxDiff=max(maxDiff,i-j);
-                break;
-            }
+    ll n;
+    cin>>n;
+    FOR(i,1,n+1){
+        cin>>cost[i];
+        dp[i][0]=dp[i][1]=LLONG_MAX;
     }
 
-    cout<<maxDiff<<endl;
+    FOR(i,1,n+1){
+        string temp;
+        cin>>temp;
 
+        str[i]=temp;
+        reverse(all(temp));
+        rev[i]=temp;
+    }
+
+    dp[1][0]=0;
+    dp[1][1]=cost[1];
+    FOR(i,2,n+1){
+        if(str[i]>=str[i-1] && dp[i-1][0]!=LLONG_MAX)
+            dp[i][0]=min(dp[i][0],dp[i-1][0]);
+        if(str[i]>=rev[i-1] && dp[i-1][1]!=LLONG_MAX)
+            dp[i][0]=min(dp[i][0],dp[i-1][1]);
+        if(rev[i]>=str[i-1] && dp[i-1][0]!=LLONG_MAX)
+            dp[i][1]=min(dp[i][1],dp[i-1][0]+cost[i]);
+        if(rev[i]>=rev[i-1] && dp[i-1][1]!=LLONG_MAX)
+            dp[i][1]=min(dp[i][1],dp[i-1][1]+cost[i]);
+    }
+
+    ll ans=min(dp[n][0],dp[n][1]);
+    if(ans==LLONG_MAX)
+        ans=-1;
+    cout<<ans<<endl;
 
     return 0;
 }

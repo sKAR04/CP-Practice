@@ -66,37 +66,45 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-bool isPrime[10000010];
-void sieve(){
-    fill(isPrime,isPrime+10000010,true);
-    isPrime[1]=false;
-    FOR(i,2,10000010)
-        if(isPrime[i]){
-            for(ll j=2LL*i;j<10000010LL;j+=i)
-                isPrime[j]=false;
-        }
+ll power(ll base,ll exp){
+    if(!exp)
+        return 1LL;
+    else{
+        ll ans=power(base,exp/2);
+        ans=(ans*ans)%MOD;
+
+        if(exp & 1LL)
+            ans=(ans*base)%MOD;
+        return ans;
+    }
+}
+
+inline void solve(){
+    ll n,t;
+    cin>>n>>t;
+
+    ll ans=1LL;
+    DFOR(i,n+t+1,n+1)
+        ans=(ans*(i%MOD))%MOD;
+    ans=(ans*power(t+1,MOD-2))%MOD;
+
+    ll firstTerm=1LL;
+    FOR(i,1,t+1)
+        firstTerm=(firstTerm*i)%MOD;
+
+    ans=(ans-firstTerm+MOD)%MOD;
+    cout<<ans<<endl;
 }
 //Main function
 int main(){
     IOS;
     TIE;
 
-    sieve();
+    int t;
+    cin>>t;
 
-    ll maxDiff=0;
-    FOR(i,3,1000010){
-        if(!i & 1)
-            --i;
-
-        for(ll j=i;;j-=2)
-            if(isPrime[j]){
-                maxDiff=max(maxDiff,i-j);
-                break;
-            }
-    }
-
-    cout<<maxDiff<<endl;
-
+    while(t--)
+        solve();
 
     return 0;
 }

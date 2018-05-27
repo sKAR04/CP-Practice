@@ -66,37 +66,49 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-bool isPrime[10000010];
-void sieve(){
-    fill(isPrime,isPrime+10000010,true);
-    isPrime[1]=false;
-    FOR(i,2,10000010)
-        if(isPrime[i]){
-            for(ll j=2LL*i;j<10000010LL;j+=i)
-                isPrime[j]=false;
-        }
+string str;
+ll alpha[26];
+ll arr[100010];
+
+ll solve(ll low,ll high){
+    ll mid=(low+high) >> 1;
+
+    if(low==high)
+        return 0LL;
+    else{
+        ll ans=solve(low,mid)+solve(mid+1,high);
+        map<ll,ll[26]> lCnt,rCnt;
+
+        DFOR(i,mid,low)
+            ++((lCnt[arr[mid]-arr[i]])[str[i-1]-97]);
+        FOR(i,mid+1,high+1)
+            ++((rCnt[arr[i-1]-arr[mid]])[str[i-1]-97]);
+
+        for(auto it=lCnt.begin();it!=lCnt.end();++it)
+            REP(i,26)
+                ans+=(((it->S)[i])*((rCnt[-it->F])[i]));
+
+        return ans;
+    }
 }
 //Main function
 int main(){
     IOS;
     TIE;
 
-    sieve();
+    REP(i,26)
+        cin>>alpha[i];
 
-    ll maxDiff=0;
-    FOR(i,3,1000010){
-        if(!i & 1)
-            --i;
+    cin>>str;
 
-        for(ll j=i;;j-=2)
-            if(isPrime[j]){
-                maxDiff=max(maxDiff,i-j);
-                break;
-            }
-    }
+    ll len=str.length();
+    FOR(i,1,len+1)
+        arr[i]=alpha[str[i-1]-97];
 
-    cout<<maxDiff<<endl;
+    FOR(i,1,100010)
+        arr[i]+=arr[i-1];
 
+    cout<<solve(1,len)<<endl;
 
     return 0;
 }

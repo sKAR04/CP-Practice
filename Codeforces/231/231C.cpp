@@ -14,7 +14,6 @@ using namespace std;
 
 //save time
 #define endl '\n'
-#define db(x) cout << "> " << #x << ": " << x << endl;
 typedef long long ll;
 
 //for sorting
@@ -24,7 +23,7 @@ typedef long long ll;
 #define PI   3.141592653593
 #define MOD  1000000007LL
 #define EPS  0.000000001
-#define INF  0X3f3f3f3f
+#define INF 0X3f3f3f3f
 
 //loops
 #define REP(i,n) 	    for(ll i=0;i<(n);++i)
@@ -66,37 +65,56 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-bool isPrime[10000010];
-void sieve(){
-    fill(isPrime,isPrime+10000010,true);
-    isPrime[1]=false;
-    FOR(i,2,10000010)
-        if(isPrime[i]){
-            for(ll j=2LL*i;j<10000010LL;j+=i)
-                isPrime[j]=false;
-        }
+ll n,k;
+ll arr[100010];
+ll sum[100010];
+
+ll binarySearch(ll low,ll high,ll idx,ll x){
+    ll mid=(low+high) >> 1;
+    if(low<high){
+        ll val=x*(idx-mid+1)-sum[mid]+sum[idx+1];
+        if(val>k)
+            return binarySearch(mid+1,high,idx,x);
+        else
+            return binarySearch(low,mid-1,idx,x);
+    }
+    else{
+        if(mid<0)
+            ++mid;
+
+        return mid;
+    }
 }
 //Main function
 int main(){
     IOS;
     TIE;
 
-    sieve();
+    cin>>n>>k;
 
-    ll maxDiff=0;
-    FOR(i,3,1000010){
-        if(!i & 1)
-            --i;
+    REP(i,n)
+        cin>>arr[i];
+    sort(arr,arr+n);
 
-        for(ll j=i;;j-=2)
-            if(isPrime[j]){
-                maxDiff=max(maxDiff,i-j);
-                break;
-            }
+    DFOR(i,n-1,0)
+        sum[i]=sum[i+1]+arr[i];
+
+    ll maxOccur=LLONG_MIN;
+    ll minNum=LLONG_MAX;
+    REP(i,n){
+        ll idx=binarySearch(0,i,i,arr[i]);
+        ll curOccur=i-idx+1;
+        if(arr[i]*(curOccur)+sum[i+1]-sum[idx]>k)
+            --curOccur;
+
+        if(curOccur>maxOccur){
+            maxOccur=curOccur;
+            minNum=arr[i];
+        }
+        else if(curOccur==maxOccur)
+            minNum=min(minNum,arr[i]);
     }
-
-    cout<<maxDiff<<endl;
-
+    cout<<maxOccur<<" "<<minNum<<endl;
 
     return 0;
 }

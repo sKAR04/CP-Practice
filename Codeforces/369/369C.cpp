@@ -66,37 +66,50 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-bool isPrime[10000010];
-void sieve(){
-    fill(isPrime,isPrime+10000010,true);
-    isPrime[1]=false;
-    FOR(i,2,10000010)
-        if(isPrime[i]){
-            for(ll j=2LL*i;j<10000010LL;j+=i)
-                isPrime[j]=false;
+bool vis[100010];
+vii adj[100010];
+set<int> ans;
+bool dfs(int i){
+    vis[i]=true;
+    if(adj[i].size()==1 && i!=1)
+        return false;
+
+    bool flag=false;
+    for(pi p : adj[i])
+        if(!vis[p.F]){
+            bool temp=dfs(p.F);
+            flag|=temp;
+
+            if(!temp && p.S==2){
+                ans.insert(p.F);
+                flag=true;
+            }
         }
+
+    return flag;
 }
+
 //Main function
 int main(){
     IOS;
     TIE;
 
-    sieve();
+    int n;
+    cin>>n;
 
-    ll maxDiff=0;
-    FOR(i,3,1000010){
-        if(!i & 1)
-            --i;
-
-        for(ll j=i;;j-=2)
-            if(isPrime[j]){
-                maxDiff=max(maxDiff,i-j);
-                break;
-            }
+    REP(i,n-1){
+        int v1,v2,t;
+        cin>>v1>>v2>>t;
+        adj[v1].pb(mp(v2,t));
+        adj[v2].pb(mp(v1,t));
     }
 
-    cout<<maxDiff<<endl;
+    dfs(1);
 
+    cout<<ans.size()<<endl;
+    for(auto it=ans.begin();it!=ans.end();++it)
+        cout<<*it<<" ";
+    cout<<endl;
 
     return 0;
 }

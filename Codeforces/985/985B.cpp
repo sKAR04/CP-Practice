@@ -14,7 +14,6 @@ using namespace std;
 
 //save time
 #define endl '\n'
-#define db(x) cout << "> " << #x << ": " << x << endl;
 typedef long long ll;
 
 //for sorting
@@ -24,7 +23,6 @@ typedef long long ll;
 #define PI   3.141592653593
 #define MOD  1000000007LL
 #define EPS  0.000000001
-#define INF  0X3f3f3f3f
 
 //loops
 #define REP(i,n) 	    for(ll i=0;i<(n);++i)
@@ -66,37 +64,43 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-bool isPrime[10000010];
-void sieve(){
-    fill(isPrime,isPrime+10000010,true);
-    isPrime[1]=false;
-    FOR(i,2,10000010)
-        if(isPrime[i]){
-            for(ll j=2LL*i;j<10000010LL;j+=i)
-                isPrime[j]=false;
-        }
-}
+
 //Main function
 int main(){
     IOS;
     TIE;
 
-    sieve();
+    int n,m;
+    cin>>n>>m;
 
-    ll maxDiff=0;
-    FOR(i,3,1000010){
-        if(!i & 1)
-            --i;
+    char grid[n][m];
+    int cnt[m]={};
+    REP(i,n)
+        REP(j,m){
+            cin>>grid[i][j];
+            if(grid[i][j]-48)
+                ++cnt[j];
+        }
 
-        for(ll j=i;;j-=2)
-            if(isPrime[j]){
-                maxDiff=max(maxDiff,i-j);
+    bool flag0=false;
+    REP(i,n){
+        bool flag1=true;
+        REP(j,m)
+            if(grid[i][j]-48==cnt[j]){
+                flag1=false;
                 break;
             }
+
+        if(flag1){
+            flag0=true;
+            break;
+        }
     }
 
-    cout<<maxDiff<<endl;
-
+    if(flag0)
+        cout<<"YES"<<endl;
+    else
+        cout<<"NO"<<endl;
 
     return 0;
 }

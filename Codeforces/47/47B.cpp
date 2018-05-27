@@ -14,7 +14,6 @@ using namespace std;
 
 //save time
 #define endl '\n'
-#define db(x) cout << "> " << #x << ": " << x << endl;
 typedef long long ll;
 
 //for sorting
@@ -24,7 +23,7 @@ typedef long long ll;
 #define PI   3.141592653593
 #define MOD  1000000007LL
 #define EPS  0.000000001
-#define INF  0X3f3f3f3f
+#define INF 0X3f3f3f3f
 
 //loops
 #define REP(i,n) 	    for(ll i=0;i<(n);++i)
@@ -66,37 +65,59 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-bool isPrime[10000010];
-void sieve(){
-    fill(isPrime,isPrime+10000010,true);
-    isPrime[1]=false;
-    FOR(i,2,10000010)
-        if(isPrime[i]){
-            for(ll j=2LL*i;j<10000010LL;j+=i)
-                isPrime[j]=false;
-        }
-}
+bool adjMtrx[3][3];
+bool vis[3];
+int inDeg[3];
 //Main function
 int main(){
     IOS;
     TIE;
 
-    sieve();
-
-    ll maxDiff=0;
-    FOR(i,3,1000010){
-        if(!i & 1)
-            --i;
-
-        for(ll j=i;;j-=2)
-            if(isPrime[j]){
-                maxDiff=max(maxDiff,i-j);
-                break;
-            }
+    REP(i,3){
+        string str;
+        cin>>str;
+        if(str[1]=='>'){
+            adjMtrx[str[2]-65][str[0]-65]=true;
+            ++inDeg[str[0]-65];
+        }
+        else{
+            adjMtrx[str[0]-65][str[2]-65]=true;
+            ++inDeg[str[2]-65];
+        }
     }
 
-    cout<<maxDiff<<endl;
+    qi q;
+    REP(i,3)
+        if(!inDeg[i])
+            q.push(i);
 
+    vi ans;
+    while(!q.E){
+        int cur=q.front();
+        vis[cur]=true;
+        q.pop();
+
+        REP(j,3)
+            if(adjMtrx[cur][j] && !vis[j]){
+                adjMtrx[cur][j]=false;
+                --inDeg[j];
+                if(!inDeg[j])
+                    q.push(j);
+            }
+
+        ans.pb(cur);
+    }
+
+    REP(i,3)
+        REP(j,3)
+            if(adjMtrx[i][j]){
+                cout<<"Impossible"<<endl;
+                return 0;
+            }
+
+    for(int x : ans)
+        cout<<char(65+x);
+    cout<<endl;
 
     return 0;
 }
