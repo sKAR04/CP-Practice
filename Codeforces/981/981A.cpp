@@ -16,7 +16,6 @@ using namespace std;
 #define endl '\n'
 #define db(x) cout << "> " << #x << ": " << x << endl;
 typedef long long ll;
-typedef long long ld;
 
 //for sorting
 #define all(a) a.begin(),a.end()
@@ -73,6 +72,31 @@ int main(){
     IOS;
     TIE;
 
+    string str;
+    cin>>str;
+
+    int len=str.length();
+    map<char,int> cntMap;
+    REP(i,len)
+        ++cntMap[str[i]-97];
+
+    int ans;
+    if(cntMap.size()==1)
+        ans=0;
+    else{
+        bool flag=true;
+        REP(i,len)
+            if(str[i]!=str[len-1-i]){
+                flag=false;
+                break;
+            }
+
+        if(flag)
+            ans=len-1;
+        else
+            ans=len;
+    }
+    cout<<ans<<endl;
 
     return 0;
 }

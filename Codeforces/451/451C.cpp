@@ -16,7 +16,6 @@ using namespace std;
 #define endl '\n'
 #define db(x) cout << "> " << #x << ": " << x << endl;
 typedef long long ll;
-typedef long long ld;
 
 //for sorting
 #define all(a) a.begin(),a.end()
@@ -67,12 +66,66 @@ typedef long long ld;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
+bool check(ll foo){
+    return (foo%3==0 && foo>=0);
+}
+bool isValid(ll n,ll k,ll d1,ll d2){
+    if(n%3LL)
+        return false;
 
+    ll x,y,z;
+    //xzy
+    x=(k+2*d1-d2)/3;
+    y=(k-d1-d2)/3;
+    z=(k-d1+2*d2)/3;
+
+    if(x<=n/3 && y<=n/3 && z<=n/3 && check(k+2*d1-d2) && check(k-d1-d2) && check(k-d1+2*d2))
+        return true;
+
+    //yxz
+    x=(k-2*d1+d2)/3;
+    y=(k+d1+d2)/3;
+    z=(k+d1-2*d2)/3;
+
+    if(x<=n/3 && y<=n/3 && z<=n/3 && check(k-2*d1+d2) && check(k+d1+d2) && check(k+d1-2*d2))
+        return true;
+
+    //xyz
+    x=(k+2*d1+d2)/3;
+    y=(k-d1+d2)/3;
+    z=(k-d1-2*d2)/3;
+
+    if(x<=n/3 && y<=n/3 && z<=n/3 && check(k+2*d1+d2) && check(k-d1+d2) && check(k-d1-2*d2))
+        return true;
+
+    //zyx
+    x=(k-2*d1-d2)/3;
+    y=(k+d1-d2)/3;
+    z=(k+d1+2*d2)/3;
+
+    if(x<=n/3 && y<=n/3 && z<=n/3 && check(k-2*d1-d2) && check(k+d1-d2) && check(k+d1+2*d2))
+        return true;
+
+    return false;
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int t;
+    cin>>t;
+
+    while(t--){
+        ll n,k,d1,d2;
+        cin>>n>>k>>d1>>d2;
+
+        if(isValid(n,k,d1,d2))
+            cout<<"yes";
+        else
+            cout<<"no";
+        cout<<endl;
+    }
 
     return 0;
 }

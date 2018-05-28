@@ -16,7 +16,6 @@ using namespace std;
 #define endl '\n'
 #define db(x) cout << "> " << #x << ": " << x << endl;
 typedef long long ll;
-typedef long long ld;
 
 //for sorting
 #define all(a) a.begin(),a.end()
@@ -73,6 +72,44 @@ int main(){
     IOS;
     TIE;
 
+    int n,k;
+    cin>>n>>k;
+
+    string str;
+    cin>>str;
+    str="$"+str;
+
+    int dp[n+1][2];
+    dp[0][0]=dp[0][1]=0;
+    FOR(i,1,n+1){
+        dp[i][0]=dp[i-1][0];
+        dp[i][1]=dp[i-1][1];
+        if(str[i]==97)
+            ++dp[i][0];
+        else
+            ++dp[i][1];
+    }
+
+    ll ans=0;
+
+    ll ptr=1;
+    FOR(i,1,n+1){
+        if(dp[i][1]-dp[ptr-1][1]>k)
+            while(ptr<=i && dp[i][1]-dp[ptr-1][1]>k)
+                ++ptr;
+
+        ans=max(ans,i-ptr+1);
+    }
+
+    ptr=1;
+    FOR(i,1,n+1){
+        if(dp[i][0]-dp[ptr-1][0]>k)
+            while(ptr<=i && dp[i][0]-dp[ptr-1][0]>k)
+                ++ptr;
+
+        ans=max(ans,i-ptr+1);
+    }
+    cout<<ans<<endl;
 
     return 0;
 }

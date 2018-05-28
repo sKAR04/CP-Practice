@@ -16,7 +16,6 @@ using namespace std;
 #define endl '\n'
 #define db(x) cout << "> " << #x << ": " << x << endl;
 typedef long long ll;
-typedef long long ld;
 
 //for sorting
 #define all(a) a.begin(),a.end()
@@ -73,6 +72,13 @@ int main(){
     IOS;
     TIE;
 
+    int n,m;
+    cin>>n>>m;
+
+    if((int)min(n,m) & 1)
+        cout<<"Akshat"<<endl;
+    else
+        cout<<"Malvika"<<endl;
 
     return 0;
 }

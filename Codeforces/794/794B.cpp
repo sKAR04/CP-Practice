@@ -16,7 +16,7 @@ using namespace std;
 #define endl '\n'
 #define db(x) cout << "> " << #x << ": " << x << endl;
 typedef long long ll;
-typedef long long ld;
+typedef long double ld;
 
 //for sorting
 #define all(a) a.begin(),a.end()
@@ -73,6 +73,16 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    ld h;
+    cin>>n>>h;
+
+    ld area=h/ld(2.0*n);
+    FOR(i,1,n){
+        ld curheight=sqrt(2*h*area*(ld)i);
+        cout<<setprecision(20)<<curheight<<" ";
+    }
+    cout<<endl;
 
     return 0;
 }

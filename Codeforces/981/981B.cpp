@@ -16,7 +16,6 @@ using namespace std;
 #define endl '\n'
 #define db(x) cout << "> " << #x << ": " << x << endl;
 typedef long long ll;
-typedef long long ld;
 
 //for sorting
 #define all(a) a.begin(),a.end()
@@ -73,6 +72,45 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    pll a[n];
+    REP(i,n)
+        cin>>a[i].F>>a[i].S;
+
+    int m;
+    cin>>m;
+
+    pll b[m];
+    REP(i,m)
+        cin>>b[i].F>>b[i].S;
+
+    sort(a,a+n);
+    sort(b,b+m);
+
+    ll maxIncome=0LL;
+    int aPtr=0,bPtr=0;
+
+    while(aPtr<n || bPtr<m){
+        if(aPtr==n)
+            maxIncome+=b[bPtr++].S;
+        else if(bPtr==m)
+            maxIncome+=a[aPtr++].S;
+        else if(a[aPtr].F<b[bPtr].F)
+            maxIncome+=a[aPtr++].S;
+        else if(a[aPtr].F==b[bPtr].F){
+            if(a[aPtr].S>=b[bPtr].S)
+                maxIncome+=a[aPtr].S;
+            else
+                maxIncome+=b[bPtr].S;
+            ++aPtr;
+            ++bPtr;
+        }
+        else
+            maxIncome+=b[bPtr++].S;
+    }
+    cout<<maxIncome<<endl;
 
     return 0;
 }

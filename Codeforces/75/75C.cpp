@@ -67,12 +67,59 @@ typedef long long ld;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
+ll gcd(ll a,ll b){
+    if(!b)
+        return a;
+    return gcd(b,a%b);
+}
 
+vll factors;
+
+ll bSearch(ll low,ll high,ll key){
+    ll mid=(low+high) >> 1;
+    if(low<=high)
+        if(factors[mid]>key)
+            return bSearch(low,mid-1,key);
+        else if(factors[mid]==key)
+            return mid;
+        else
+            return bSearch(mid+1,high,key);
+    else
+        return mid;
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    ll a,b;
+    cin>>a>>b;
+
+    ll temp=gcd(a,b);
+    ll root=sqrt(temp);
+    set<ll> s;
+    FOR(i,1,root+1)
+        if(temp%i==0){
+            s.insert(i);
+            s.insert(temp/i);
+        }
+
+    for(auto it=s.begin();it!=s.end();++it)
+        factors.pb(*it);
+
+    ll n;
+    cin>>n;
+    while(n--){
+        ll l,r;
+        cin>>l>>r;
+
+        ll idx=bSearch(0LL,ll(factors.size()-1),r);
+        if(factors[idx]<l)
+            cout<<-1;
+        else
+            cout<<factors[idx];
+        cout<<endl;
+    }
 
     return 0;
 }

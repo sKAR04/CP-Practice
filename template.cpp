@@ -16,6 +16,7 @@ using namespace std;
 #define endl '\n'
 #define db(x) cout << "> " << #x << ": " << x << endl;
 typedef long long ll;
+typedef long long ld;
 
 //for sorting
 #define all(a) a.begin(),a.end()
