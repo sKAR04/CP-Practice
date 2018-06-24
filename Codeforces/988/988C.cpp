@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -67,12 +66,40 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
 
+    vector<pair<pi,int> > v;
+    REP(i,n){
+        int m;
+        cin>>m;
+
+        int sum=0;
+        int arr[m];
+        REP(j,m){
+            cin>>arr[j];
+            sum+=arr[j];
+        }
+
+        REP(j,m)
+            v.pb(mp(mp(sum-arr[j],i),j));
+    }
+    sort(all(v));
+
+    int len=v.size();
+    REP(i,len-1)
+        if(v[i].F.F==v[i+1].F.F && v[i].F.S!=v[i+1].F.S){
+            cout<<"YES"<<endl;
+            cout<<v[i].F.S+1<<" "<<v[i].S+1<<endl;
+            cout<<v[i+1].F.S+1<<" "<<v[i+1].S+1<<endl;
+            return 0;
+        }
+
+    cout<<"NO"<<endl;
     return 0;
 }

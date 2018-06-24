@@ -1,8 +1,4 @@
-/*
-#####################################################
-# I will win.. maybe not immediately but definitely #
-#####################################################
-*/
+//Strike me down and I shall become stronger, than you can possibly imagine
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -36,6 +32,7 @@ typedef long long ll;
 #define vll vector<ll>
 #define vii vector<pair<int,int> >
 #define pb 	push_back
+#define pf push_front
 
 //pairs
 #define pi pair<int,int>
@@ -44,35 +41,46 @@ typedef long long ll;
 #define F first
 #define S second
 
-//fast I/O
-#ifndef _WIN32
-#define getchar getchar_unlocked
-#define putchar putchar_unlocked
-#endif
-#define gc getchar
-#define pc putchar
-#define scan getFoo
-
 //If using cin and cout
 #define IOS ios::sync_with_stdio(false)
 #define TIE cin.tie(NULL);cout.tie(NULL)
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
 //general
 #define E empty()
 
-//Declare all variables and methods needed between this comment and the next one(OCD lol)
+//Variables and Functions required
+void solve(){
+    int n,a,b;
+    cin>>n>>a>>b;
 
+    int aCnt=0,bCnt=0;
+    REP(i,n){
+        int temp;
+        cin>>temp;
+        if(temp==a)
+            ++aCnt;
+        if(temp==b)
+            ++bCnt;
+    }
+
+    long double ans=(long double)aCnt*(long double)bCnt/((long double)n*(long double)n);
+    cout<<setprecision(20)<<ans<<endl;
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int t;
+    cin>>t;
+
+    while(t--)
+        solve();
 
     return 0;
 }

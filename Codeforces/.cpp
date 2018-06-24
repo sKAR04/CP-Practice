@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -67,12 +66,45 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
+int n,m,s;
+vi adj[5050];
+int rep[5010];
+bool vis[5010];
 
+void dfs(int i,int x){
+    vis[i]=true;
+    if(rep[i]!=s){
+        rep[i]=x;
+        for(int v : adj[i])
+            if(!vis[v])
+                dfs(v,x);
+    }
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    cin>>n>>m>>s;
+
+    REP(i,m){
+        int v1,v2;
+        cin>>v1>>v2;
+        adj[v1].pb(v2);
+    }
+
+    dfs(s,s);
+
+    FOR(i,1,n+1)
+        if(i!=s && !rep[i]){
+            fill(vis,vis+5010,false);
+            dfs(i,i);
+        }
+
+    set<int> cnt;
+    FOR(i,1,n+1)
+        cnt.insert(rep[i]);
+    cout<<cnt.size()-1<<endl;
 
     return 0;
 }

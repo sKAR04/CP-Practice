@@ -16,6 +16,7 @@ using namespace std;
 #define endl '\n'
 #define db(x) cout << "> " << #x << ": " << x << endl;
 typedef long long ll;
+typedef long long ld;
 
 //for sorting
 #define all(a) a.begin(),a.end()
@@ -59,7 +60,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -67,12 +67,50 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+vi adj[100010];
+bool isLeaf[100010];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    REP(i,n-1){
+      int v1,v2;
+      cin>>v1>>v2;
+      adj[v1].pb(v2);
+      adj[v2].pb(v1);
+    }
+
+    int cnt=0;
+    int idx=1;
+    int leafCnt=0;
+    FOR(i,1,n+1){
+      if(adj[i].size()>2){
+        ++cnt;
+        idx=i;
+      }
+      else if(adj[i].size()==1){
+        isLeaf[i]=true;
+        ++leafCnt;
+      }
+    }
+
+    if(cnt>1)
+      cout<<"No"<<endl;
+    else{
+      cout<<"Yes"<<endl;
+      if(isLeaf[idx])
+        --leafCnt;
+      isLeaf[idx]=false;
+
+      cout<<leafCnt<<endl;
+      FOR(i,1,n+1)
+        if(isLeaf[i])
+          cout<<idx<<" "<<i<<endl;
+    }
 
     return 0;
 }

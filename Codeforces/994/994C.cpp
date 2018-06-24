@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -67,12 +66,71 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
+struct Equation{
+    int a,b,c;
+};
 
+Equation getEquation(pi p1,pi p2){
+    Equation ans;
+    ans.a=(p2.F-p1.F);
+    ans.b=(p1.S-p2.S);
+    ans.c=p1.F*(p2.S-p1.S)-p1.S*(p2.F-p1.F);
+
+
+    if(ans.a<0){
+        ans.a*=-1;
+        ans.b*=-1;
+        ans.c*=-1;
+    }
+    else if(!ans.a && ans.b<0){
+        ans.a*=-1;
+        ans.b*=-1;
+        ans.c*=-1;
+    }
+
+    return ans;
+}
+
+int check(pi p,Equation foo){
+    return foo.a*p.S+foo.b*p.F+foo.c;
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    pi s1[4],s2[4];
+    REP(i,4)
+        cin>>s1[i].F>>s1[i].S;
+    REP(i,4)
+        cin>>s2[i].F>>s2[i].S;
 
+    Equation sides1[4];
+    REP(i,4)
+        sides1[i]=getEquation(s1[i],s1[(i+1)%4]);
+
+    Equation sides2[4];
+    REP(i,4)
+        sides2[i]=getEquation(s2[i],s2[(i+1)%4]);
+
+    pi center1=mp((s1[0].F+s1[2].F)/2,(s1[0].S+s1[2].S)/2),center2=mp((s2[0].F+s2[2].F)/2,(s2[0].S+s2[2].S)/2);
+    bool flag=false;
+    REP(i,4)
+        if(check(s2[i],sides1[0])*check(s2[i],sides1[2])<=0 && check(s2[i],sides1[1])*check(s2[i],sides1[3])<=0)
+            flag=true;
+
+    if(check(center2,sides1[0])*check(center2,sides1[2])<=0 && check(center2,sides1[1])*check(center2,sides1[3])<=0)
+        flag=true;
+
+    REP(i,4)
+        if(check(s1[i],sides2[0])*check(s1[i],sides2[2])<=0 && check(s1[i],sides2[1])*check(s1[i],sides2[3])<=0)
+            flag=true;
+    if(check(center1,sides2[0])*check(center1,sides2[2])<=0 && check(center1,sides2[1])*check(center1,sides2[3])<=0)
+        flag=true;
+
+    if(flag)
+        cout<<"YES"<<endl;
+    else
+        cout<<"NO"<<endl;
     return 0;
 }

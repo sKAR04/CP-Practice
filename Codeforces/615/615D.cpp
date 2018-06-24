@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -67,12 +66,45 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
+ll power(ll base,ll exp){
+    ll ans=1LL;
+    if(exp){
+        ans=power(base,exp/2);
+        ans=ans*ans%MOD;
+
+        if(exp & 1LL)
+            ans=(ans*base)%MOD;
+    }
+
+    return ans;
+}
 
 //Main function
 int main(){
     IOS;
     TIE;
 
+    ll n;
+    cin>>n;
+
+
+    map<ll,ll> cntMap;
+    REP(i,n){
+        ll temp;
+        cin>>temp;
+        ++cntMap[temp];
+    }
+
+    ll prod=1LL;
+    ll divisors=1LL;
+    for(auto it=cntMap.begin();it!=cntMap.end();++it){
+        ll tempProd=power(it->F,(it->S*(it->S+1LL))/2LL);
+        prod=power(prod,it->S+1);
+        tempProd=power(tempProd,divisors);
+        prod=(prod*tempProd)%MOD;
+        divisors=(divisors*(it->S+1))%(MOD-1LL);
+    }
+    cout<<prod<<endl;
 
     return 0;
 }

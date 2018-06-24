@@ -1,4 +1,4 @@
-/*
+    /*
 #####################################################
 # I will win.. maybe not immediately but definitely #
 #####################################################
@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -73,6 +72,22 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    pi arr[n];
+    REP(i,n)
+        cin>>arr[i].F>>arr[i].S;
+    sort(arr,arr+n);
+
+    int rightEnd=arr[0].S;
+    int cnt=0;
+    FOR(i,1,n)
+        if(rightEnd>arr[i].S)
+            ++cnt;
+        else
+            rightEnd=arr[i].S;
+    cout<<cnt<<endl;
 
     return 0;
 }

@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -67,12 +66,47 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+ll dp[200010];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int q;
+    cin>>q;
+
+    double avg=0;
+    int n=1,last=0;
+
+    REP(i,q){
+        int t;
+        cin>>t;
+
+        if(t==1){
+            int a,x;
+            cin>>a>>x;
+
+            dp[a]-=x;
+            if(a==n)
+                last+=x;
+            avg=(avg*n+(double)x*a)/(double)n;
+        }
+        else if(t==2){
+            cin>>last;
+            avg=(avg*n+(double)last)/((double)n+1.0);
+            dp[n]+=last;
+            ++n;
+            dp[n]-=last;
+        }
+        else{
+            avg=(avg*n-(double)last)/((double)n-1.0);
+            dp[n]=0;
+            --n;
+            last=last-dp[n];
+            dp[n]=-last;
+        }
+        cout<<setprecision(20)<<avg<<endl;
+    }
 
     return 0;
 }

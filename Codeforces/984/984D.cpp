@@ -67,12 +67,43 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+ll dp[5010][5010];
+ll arr[5010];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+    FOR(i,1,n+1)
+        cin>>arr[i];
+
+    FOR(i,1,n+1)
+        dp[i][i]=arr[i];
+
+
+    FOR(j,0,n+1)
+        FOR(i,1,n+1){
+            if(i+j>n)
+                break;
+            dp[i][i+j]^=(dp[i][i+j-1]^dp[i+1][i+j]);
+        }
+
+    FOR(j,0,n+1)
+        FOR(i,1,n+1){
+            if(i+j>n)
+                break;
+            dp[i][i+j]=max(dp[i][i+j],max(dp[i][i+j-1],dp[i+1][i+j]));
+        }
+
+    int q;
+    cin>>q;
+    REP(i,q){
+        int l,r;
+        cin>>l>>r;
+        cout<<dp[l][r]<<endl;
+    }
 
     return 0;
 }

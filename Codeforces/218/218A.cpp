@@ -73,6 +73,28 @@ int main(){
     IOS;
     TIE;
 
+    int n,k;
+    cin>>n>>k;
+    n=2*n+1;
+
+    int arr[n];
+    REP(i,n)
+        cin>>arr[i];
+
+    REP(i,n){
+        if(!k)
+            break;
+
+        if(i & 1)
+            if(arr[i]>arr[i-1]+1 && arr[i]>arr[i+1]+1){
+                --arr[i];
+                --k;
+            }
+    }
+
+    REP(i,n)
+        cout<<arr[i]<<" ";
+    cout<<endl;
 
     return 0;
 }

@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -67,12 +66,37 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+bool grid[1010][1010];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n,m,k;
+    cin>>n>>m>>k;
+
+    int ans=0;
+    FOR(i,1,k+1){
+        int x,y;
+        cin>>x>>y;
+        grid[x][y]=true;
+
+        bool flag=false;
+        if(x-1 && y-1 && grid[x-1][y] && grid[x-1][y-1] && grid[x][y-1])
+            flag=true;
+        else if(x+1<=n && y-1 && grid[x+1][y] && grid[x+1][y-1] && grid[x][y-1])
+            flag=true;
+        else if(x-1 && y+1<=m && grid[x-1][y] && grid[x-1][y+1] && grid[x][y+1])
+            flag=true;
+        else if(x+1<=n && y+1<=m && grid[x+1][y] && grid[x+1][y+1] && grid[x][y+1])
+            flag=true;
+
+        if(flag){
+            ans=i;
+            break;
+        }
+    }
+    cout<<ans<<endl;
 
     return 0;
 }

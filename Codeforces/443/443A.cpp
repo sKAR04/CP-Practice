@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -73,6 +72,12 @@ int main(){
     IOS;
     TIE;
 
+    set<char> charSet;
+    char c;
+    while(cin>>c)
+        if(c!=',' && c!='{' && c!='}')
+            charSet.insert(c);
+    cout<<charSet.size()<<endl;
 
     return 0;
 }

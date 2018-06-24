@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -73,6 +72,25 @@ int main(){
     IOS;
     TIE;
 
+    int n,l;
+    cin>>n>>l;
+
+    set<int> lamps;
+    REP(i,n){
+        int temp;
+        cin>>temp;
+        lamps.insert(temp);
+    }
+
+    vi street;
+    for(auto it=lamps.begin();it!=lamps.end();++it)
+        street.pb(*it);
+
+    n=street.size();
+    double maxDist=max((double)street[0],(double)l-(double)street[n-1]);
+    FOR(i,1,n)
+        maxDist=max(maxDist,((double)street[i]-(double)street[i-1])/2.0);
+    cout<<setprecision(20)<<maxDist<<endl;
 
     return 0;
 }

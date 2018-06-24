@@ -1,8 +1,4 @@
-/*
-#####################################################
-# I will win.. maybe not immediately but definitely #
-#####################################################
-*/
+//Strike me down and I shall become stronger, than you can possibly imagine
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -36,6 +32,7 @@ typedef long long ll;
 #define vll vector<ll>
 #define vii vector<pair<int,int> >
 #define pb 	push_back
+#define pf push_front
 
 //pairs
 #define pi pair<int,int>
@@ -44,35 +41,66 @@ typedef long long ll;
 #define F first
 #define S second
 
-//fast I/O
-#ifndef _WIN32
-#define getchar getchar_unlocked
-#define putchar putchar_unlocked
-#endif
-#define gc getchar
-#define pc putchar
-#define scan getFoo
-
 //If using cin and cout
 #define IOS ios::sync_with_stdio(false)
 #define TIE cin.tie(NULL);cout.tie(NULL)
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
 //general
 #define E empty()
 
-//Declare all variables and methods needed between this comment and the next one(OCD lol)
+//Variables and Functions required
+struct Vect{
+    double i,j,k;
+};
 
+double SQUARE(double x){
+    return x*x;
+}
+
+void solve(){
+    Vect P,Q,C,D;
+    double r;
+
+    cin>>P.i>>P.j>>P.k;
+    cin>>Q.i>>Q.j>>Q.k;
+    cin>>D.i>>D.j>>D.k;
+    cin>>C.i>>C.j>>C.k;
+    cin>>r;
+
+    Q.i-=P.i;
+    Q.j-=P.j;
+    Q.k-=P.k;
+
+    C.i-=P.i;
+    C.j-=P.j;
+    C.k-=P.k;
+
+    double A=(SQUARE(C.i)+SQUARE(C.j)+SQUARE(C.k)-SQUARE(r))*(SQUARE(D.i)+SQUARE(D.j)+SQUARE(D.k))-SQUARE((D.i*C.i+D.j*C.j+D.k*C.k));
+    double B=2.0*((SQUARE(C.i)+SQUARE(C.j)+SQUARE(C.k)-SQUARE(r))*(Q.i*D.i+Q.j*D.j+Q.k*D.k)-(D.i*C.i+D.j*C.j+D.k*C.k)*(Q.i*C.i+Q.j*C.j+Q.k*C.k));
+    double F=(SQUARE(C.i)+SQUARE(C.j)+SQUARE(C.k)-SQUARE(r))*(SQUARE(Q.i)+SQUARE(Q.j)+SQUARE(Q.k))-SQUARE(Q.i*C.i+Q.j*C.j+Q.k*C.k);
+    
+    double t;
+    if(abs(A)<EPS)
+        t=(-F/B);
+    else
+        t=(sqrt(SQUARE(B)-4*A*F)-B)/(2.0*A);
+    cout<<setprecision(20)<<t<<endl;
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int t;
+    cin>>t;
+
+    while(t--)
+        solve();
 
     return 0;
 }

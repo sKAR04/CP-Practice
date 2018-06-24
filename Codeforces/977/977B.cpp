@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -73,6 +72,24 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    string str;
+    cin>>str;
+
+    map<string,int> cnt;
+    REP(i,n-1)
+        ++cnt[str.substr(i,2)];
+
+    int maxCnt=0;
+    string maxString="";
+    for(auto it=cnt.begin();it!=cnt.end();++it)
+        if(it->S>maxCnt){
+            maxCnt=it->S;
+            maxString=it->F;
+        }
+    cout<<maxString<<endl;
 
     return 0;
 }

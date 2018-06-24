@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -67,12 +66,46 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+bool dp[1000010][2];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    string str;
+    cin>>str;
+
+    int a,b;
+    cin>>a>>b;
+
+    int len=str.length();
+    int prevMod=0;
+    REP(i,len){
+        prevMod=(prevMod*10+(str[i]-48))%a;
+        dp[i][0]=!prevMod;
+    }
+
+    int power10=1;
+    prevMod=0;
+    DFOR(i,len-1,0){
+        prevMod=(power10*(str[i]-48)+prevMod)%b;
+        power10=(power10*10)%b;
+        dp[i][1]=!prevMod;
+    }
+
+    int idx=-1;
+    REP(i,len-1)
+        if(dp[i][0] && dp[i+1][1] && str[i+1]!=48){
+            idx=i;
+            break;
+        }
+
+    if(idx==-1)
+        cout<<"NO"<<endl;
+    else{
+        cout<<"YES"<<endl;
+        cout<<str.substr(0,idx+1)<<endl<<str.substr(idx+1)<<endl;
+    }
 
     return 0;
 }

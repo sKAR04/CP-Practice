@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -73,6 +72,20 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    vi goodAt[4];
+    FOR(i,1,n+1){
+        int subject;
+        cin>>subject;
+        goodAt[subject].pb(i);
+    }
+
+    int minSize=min(goodAt[1].size(),min(goodAt[2].size(),goodAt[3].size()));
+    cout<<minSize<<endl;
+    REP(i,minSize)
+        cout<<goodAt[1][i]<<" "<<goodAt[2][i]<<" "<<goodAt[3][i]<<endl;
 
     return 0;
 }

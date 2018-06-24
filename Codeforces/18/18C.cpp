@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -73,6 +72,21 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    int stripes[n+1];
+    int sum[n+1]={};
+    FOR(i,1,n+1){
+        cin>>stripes[i];
+        sum[i]=sum[i-1]+stripes[i];
+    }
+
+    int cnt=0;
+    FOR(i,1,n)
+        if(sum[i]==sum[n]-sum[i])
+            ++cnt;
+    cout<<cnt<<endl;
 
     return 0;
 }

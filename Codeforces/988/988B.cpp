@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -67,12 +66,32 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+bool myCmp(string s1,string s2){
+    return s1.length()<s2.length();
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    string str[n];
+    REP(i,n)
+        cin>>str[i];
+
+    sort(str,str+n,myCmp);
+    REP(i,n)
+        FOR(j,i+1,n)
+            if(str[j].find(str[i])==-1){
+                cout<<"NO"<<endl;
+                return 0;
+            }
+
+    cout<<"YES"<<endl;
+    REP(i,n)
+        cout<<str[i]<<endl;
 
     return 0;
 }

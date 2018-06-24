@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -67,12 +66,64 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
+int n;
+ll arr[100010];
+vll vol;
+int idx[100010];
 
+ll segTree[1 << 18];
+
+ll queryTree(int low,int high,int pos,int qLow,int qHigh){
+    int mid=(low+high) >> 1;
+
+    if(low>qHigh || high<qLow)
+        return 0LL;
+    else if(qLow<=low && qHigh>=high)
+        return segTree[pos];
+    else
+        return max(queryTree(low,mid,2*pos+1,qLow,qHigh),queryTree(mid+1,high,2*pos+2,qLow,qHigh));
+}
+
+void updateTree(int low,int high,int pos,int qPos,ll val){
+    int mid=(low+high) >> 1;
+
+    if(low>qPos || high<qPos)
+        return ;
+    else if(low==high)
+        segTree[pos]=max(segTree[pos],val);
+    else{
+        updateTree(low,mid,2*pos+1,qPos,val);
+        updateTree(mid+1,high,2*pos+2,qPos,val);
+        segTree[pos]=max(segTree[2*pos+1],segTree[2*pos+2]);
+    }
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    REP(i,n){
+        ll r,h;
+        cin>>r>>h;
+        arr[i]=r*r*h;
+        vol.pb(arr[i]);
+    }
+    sort(all(vol));
+    REP(i,n)
+        idx[i]=lower_bound(all(vol),arr[i])-vol.begin();
+
+    REP(i,n){
+        ll maxVal;
+        if(idx[i])
+            maxVal=queryTree(0,n-1,0,0,idx[i]-1);
+        else
+            maxVal=0;
+        updateTree(0,n-1,0,idx[i],maxVal+arr[i]);
+    }
+    cout<<setprecision(20)<<PI*(double)segTree[0]<<endl;
 
     return 0;
 }

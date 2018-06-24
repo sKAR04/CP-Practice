@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -73,6 +72,66 @@ int main(){
     IOS;
     TIE;
 
+    int n,m;
+    cin>>n>>m;
+
+    pi a[n],b[m];
+    REP(i,n)
+        cin>>a[i].F>>a[i].S;
+    REP(i,m)
+        cin>>b[i].F>>b[i].S;
+
+    bool flag1=false,flag2=false;
+    bool isCommon[10]={};
+
+    REP(i,n){
+        set<int> possible;
+        REP(j,m)
+            if((a[i].F==b[j].F && a[i].S==b[j].S) || (a[i].S==b[j].F && a[i].F==b[j].S))
+                continue;
+            else if(a[i].F==b[j].F || a[i].F==b[j].S)
+                possible.insert(a[i].F);
+            else if(a[i].S==b[j].F || a[i].S==b[j].S)
+                possible.insert(a[i].S);
+
+        if(possible.size()>1)
+            flag1=true;
+
+        for(auto it=possible.begin();it!=possible.end();++it)
+            isCommon[*it]=true;
+    }
+
+    REP(j,m){
+        set<int> possible;
+        REP(i,n)
+            if((b[j].F==a[i].F && b[j].S==a[i].S) || (b[j].S==a[i].F && b[j].F==a[i].S))
+                continue;
+            else if(b[j].F==a[i].F || b[j].F==a[i].S)
+                possible.insert(b[j].F);
+            else if(b[j].S==a[i].F || b[j].S==a[i].S)
+                possible.insert(b[j].S);
+
+        if(possible.size()>1)
+            flag2=true;
+
+        for(auto it=possible.begin();it!=possible.end();++it)
+            isCommon[*it]=true;
+    }
+
+    int commonCnt=0;
+    int commonNum=0;
+    REP(i,10)
+        if(isCommon[i]){
+            ++commonCnt;
+            commonNum=i;
+        }
+
+    if(commonCnt==1)
+        cout<<commonNum<<endl;
+    else if(!flag1 && !flag2)
+        cout<<0<<endl;
+    else
+        cout<<-1<<endl;
 
     return 0;
 }

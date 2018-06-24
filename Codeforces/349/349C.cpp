@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -73,6 +72,23 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    ll sum=0;
+    ll maxVal=0LL;
+    REP(i,n){
+        ll temp;
+        cin>>temp;
+        maxVal=max(maxVal,temp);
+        sum+=temp;
+    }
+
+    ll ans=sum/(n-1);
+    if(sum%(n-1))
+        ++ans;
+    ans=max(ans,maxVal);
+    cout<<ans<<endl;
 
     return 0;
 }

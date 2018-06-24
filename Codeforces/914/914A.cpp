@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -67,12 +66,38 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
+ll power(ll base,ll exponent){
+    if(!exponent)
+        return 1LL;
+    else{
+        ll ans=power(base,exponent/2LL);
+        ans=(ans*ans)%MOD;
 
+        if(exponent & 1LL)
+            ans=(ans*base)%MOD;
+
+        return ans;
+    }
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    int maxNum=INT_MIN;
+    REP(i,n){
+        int num;
+        cin>>num;
+
+        if(num<0)
+            maxNum=max(maxNum,num);
+        else if(sqrt(num)*sqrt(num)!=num)
+            maxNum=max(maxNum,num);
+    }
+    cout<<maxNum<<endl;
 
     return 0;
 }

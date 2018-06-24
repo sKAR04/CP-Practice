@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -67,12 +66,38 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+int a[200010],b[200010];
+pi idx[200010];
+bool purchased[200010];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n,k;
+    cin>>n>>k;
+
+    REP(i,n){
+        cin>>a[i];
+        idx[i]=mp(a[i],i);
+    }
+
+    REP(i,n){
+        cin>>b[i];
+        idx[i].F-=b[i];
+    }
+    sort(idx,idx+n);
+
+    REP(i,k)
+        purchased[idx[i].S]=true;
+
+    int minCost=0;
+    REP(i,n)
+        if(purchased[i])
+            minCost+=a[i];
+        else
+            minCost+=min(a[i],b[i]);
+    cout<<minCost<<endl;
 
     return 0;
 }

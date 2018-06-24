@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -72,6 +71,37 @@ typedef long long ll;
 int main(){
     IOS;
     TIE;
+
+    int t;
+    cin>>t;
+
+    map<char,bool> ref;
+    ref['f']=ref['r']=ref['i']=ref['e']=ref['z']=ref['a']=true;
+    while(t--){
+        string str;
+        cin>>str;
+
+        int len=str.length();
+
+        int cnt=0;
+        REP(i,len){
+            if(!ref[str[i]])
+                while(!ref[str[i]] && i<len){
+                    ++i;
+                    ++cnt;
+                }
+            else
+                while(ref[str[i]] && i<len){
+                    ++i;
+                    ++cnt;
+                }
+
+            cout<<cnt;
+            cnt=0;
+            --i;
+        }
+        cout<<endl;
+    }
 
 
     return 0;

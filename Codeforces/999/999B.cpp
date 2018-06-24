@@ -73,6 +73,16 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    string str;
+    cin>>str;
+
+    FOR(i,1,n+1)
+        if(n%i==0)
+            reverse(str.begin(),str.begin()+i);
+    cout<<str<<endl;
 
     return 0;
 }

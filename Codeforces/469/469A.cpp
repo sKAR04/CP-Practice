@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -67,12 +66,40 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+bool canPass[110];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    int p;
+    cin>>p;
+    while(p--){
+        int temp;
+        cin>>temp;
+        canPass[temp]=true;
+    }
+
+    int q;
+    cin>>q;
+    while(q--){
+        int temp;
+        cin>>temp;
+        canPass[temp]=true;
+    }
+
+    bool flag=true;
+    FOR(i,1,n+1)
+        if(!canPass[i])
+            flag=false;
+
+    if(flag)
+        cout<<"I become the guy."<<endl;
+    else
+        cout<<"Oh, my keyboard!"<<endl;
 
     return 0;
 }

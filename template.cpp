@@ -16,7 +16,6 @@ using namespace std;
 #define endl '\n'
 #define db(x) cout << "> " << #x << ": " << x << endl;
 typedef long long ll;
-typedef long long ld;
 
 //for sorting
 #define all(a) a.begin(),a.end()
@@ -60,6 +59,7 @@ typedef long long ld;
 
 //queue
 #define di deque<int>
+#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 

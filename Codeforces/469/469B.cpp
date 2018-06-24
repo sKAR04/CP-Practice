@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -67,12 +66,36 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+bool xIsOnline[10100],yIsOnline[10100];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int p,q,l,r;
+    cin>>p>>q>>l>>r;
+
+    REP(i,p){
+        int foo,bar;
+        cin>>foo>>bar;
+        FOR(j,foo,bar+1)
+            xIsOnline[j]=true;
+    }
+    REP(i,q){
+        int foo,bar;
+        cin>>foo>>bar;
+        FOR(j,foo,bar+1)
+            yIsOnline[j]=true;
+    }
+
+    int cnt=0;
+    FOR(i,l,r+1)
+        REP(j,1010)
+            if(yIsOnline[j] && xIsOnline[i+j]){
+                ++cnt;
+                break;
+            }
+    cout<<cnt<<endl;
 
     return 0;
 }

@@ -55,6 +55,56 @@ typedef long long ll;
 
 //Variables and Functions required
 void solve(){
+    ll A,B;
+    cin>>A>>B;
+
+    ll ans;
+    if(A==B)
+        ans=0;
+    else if(!B)
+        ans=-1;
+    else{
+        ll a=A,b=B;
+        int aCnt=0,bCnt=0;
+        while(a){
+            aCnt+=(a & 1LL);
+            a/=2LL;
+        }
+        while(b){
+            bCnt+=(b & 1LL);
+            b/=2LL;
+        }
+
+        int pos=0;
+        while(true){
+            if(B & 1LL)
+                break;
+            B/=2LL;
+            ++pos;
+        }
+
+        if(aCnt<bCnt)
+            ans=(bCnt-aCnt+pos);
+        else if(aCnt==bCnt){
+            if(bCnt==1 && !pos)
+                ans=-1;
+            else if(!pos)
+                ans=2;
+            else
+                ans=pos;
+        }
+        else{
+            if(bCnt==1 && !pos)
+                ans=-1;
+            else if(!pos)
+                ans=2;
+            else if(pos>=aCnt-bCnt+1)
+                ans=pos+bCnt-aCnt;
+            else
+                ans=2;
+        }
+    }
+    cout<<ans<<endl;
 
 }
 //Main function

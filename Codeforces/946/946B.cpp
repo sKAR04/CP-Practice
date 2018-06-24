@@ -67,12 +67,30 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+void modNums(ll &a,ll &b){
+    if(!b || !a)
+        return ;
+    else if(a>=2*b){
+        a%=(2*b);
+        modNums(a,b);
+    }
+    else if(b>=2*a){
+        b%=(2*a);
+        modNums(a,b);
+    }
+    else
+        return ;
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    ll a,b;
+    cin>>a>>b;
+
+    modNums(a,b);
+    cout<<a<<" "<<b<<endl;
 
     return 0;
 }

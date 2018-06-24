@@ -16,6 +16,7 @@ using namespace std;
 #define endl '\n'
 #define db(x) cout << "> " << #x << ": " << x << endl;
 typedef long long ll;
+typedef long long ld;
 
 //for sorting
 #define all(a) a.begin(),a.end()
@@ -59,7 +60,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -67,12 +67,42 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+int quarrelCnt[200010];
+map<int,int> cntMap;
+map<int,int> possible;
+int arr[200010];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n,k;
+    cin>>n>>k;
+
+    FOR(i,1,n+1){
+        cin>>arr[i];
+        ++cntMap[arr[i]];
+    }
+
+    REP(i,k){
+        int v1,v2;
+        cin>>v1>>v2;
+
+        if(arr[v1]>arr[v2])
+            ++quarrelCnt[v1];
+        else if(arr[v1]<arr[v2])
+            ++quarrelCnt[v2];
+    }
+
+    int sum=0;
+    for(auto it=cntMap.begin();it!=cntMap.end();++it){
+        possible[it->F]=sum;
+        sum+=it->S;
+    }
+
+    FOR(i,1,n+1)
+        cout<<possible[arr[i]]-quarrelCnt[i]<<" ";
+    cout<<endl;
 
     return 0;
 }

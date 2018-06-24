@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -67,12 +66,63 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
+bool vis[100010];
+vi adj[100010];
 
+bool foo[100010],bar[100010];
+vi pari,arya;
+
+bool notPossible;
+
+void dfs(int i,bool flag){
+    vis[i]=true;
+    if(flag){
+        pari.pb(i);
+        foo[i]=true;
+    }
+    else{
+        arya.pb(i);
+        bar[i]=true;
+    }
+
+    for(int v : adj[i])
+        if(!vis[v])
+            dfs(v,!flag);
+        else if(foo[i] && foo[v])
+            notPossible=true;
+        else if(bar[i] && bar[v])
+            notPossible=true;
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n,m;
+    cin>>n>>m;
 
+    REP(i,m){
+        int v1,v2;
+        cin>>v1>>v2;
+        adj[v1].pb(v2);
+        adj[v2].pb(v1);
+    }
+
+    FOR(i,1,n+1)
+        if(!vis[i])
+            dfs(i,false);
+
+    if(notPossible)
+        cout<<-1<<endl;
+    else{
+        cout<<arya.size()<<endl;
+        for(int x : arya)
+            cout<<x<<" ";
+        cout<<endl;
+
+        cout<<pari.size()<<endl;
+        for(int x : pari)
+            cout<<x<<endl;
+    }
     return 0;
 }

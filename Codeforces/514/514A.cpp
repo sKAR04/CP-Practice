@@ -73,6 +73,17 @@ int main(){
     IOS;
     TIE;
 
+    string str;
+    cin>>str;
+
+    if(str[0]>52 && str[0]<57)
+        str[0]=105-str[0];
+
+    int len=str.length();
+    FOR(i,1,len)
+        if(str[i]>52)
+            str[i]=105-str[i];
+    cout<<str<<endl;
 
     return 0;
 }

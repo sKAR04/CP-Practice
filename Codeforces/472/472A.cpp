@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -73,6 +72,13 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    if(n & 1)
+        cout<<9<<" "<<n-9<<endl;
+    else
+        cout<<4<<" "<<n-4<<endl;
 
     return 0;
 }

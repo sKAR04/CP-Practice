@@ -73,6 +73,70 @@ int main(){
     IOS;
     TIE;
 
+    ll n,m;
+    cin>>n>>m;
+
+    ll arr[n];
+    vll rem[m];
+    REP(i,n){
+        cin>>arr[i];
+        rem[arr[i]%m].pb(i);
+    }
+
+    dll low,high;
+    REP(i,m)
+        if(rem[i].size()>n/m)
+            high.pb(i);
+        else if(rem[i].size()<n/m)
+            low.pb(i);
+
+    while(high.size()){
+        ll lowTop=low.back(),highTop=high.back();
+
+        if(lowTop<highTop){
+            lowTop=low.front();
+            while(rem[lowTop].size()<n/m && rem[highTop].size()>n/m){
+                rem[lowTop].pb(rem[highTop].back());
+                rem[highTop].pop_back();
+            }
+
+            if(rem[lowTop].size()==n/m)
+                low.pop_front();
+            if(rem[highTop].size()==n/m)
+                high.pop_back();
+        }
+        else{
+            while(rem[lowTop].size()<n/m && rem[highTop].size()>n/m){
+                rem[lowTop].pb(rem[highTop].back());
+                rem[highTop].pop_back();
+            }
+
+            if(rem[lowTop].size()==n/m)
+                low.pop_back();
+            if(rem[highTop].size()==n/m)
+                high.pop_back();
+        }
+    }
+
+    ll ans=0;
+    REP(i,m)
+        for(ll r : rem[i]){
+            ll prevVal=arr[r];
+
+            ll add;
+            if(arr[r]%m<=i)
+                add=(i-arr[r]%m);
+            else
+                add=(m-arr[r]%m+i);
+            ans+=add;
+            arr[r]+=add;
+        }
+
+
+    cout<<ans<<endl;
+    REP(i,n)
+        cout<<arr[i]<<" ";
+    cout<<endl;
 
     return 0;
 }

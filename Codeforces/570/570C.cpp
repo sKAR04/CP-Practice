@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -67,12 +66,52 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+int dpLeft[3000010],dpRight[3000010];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n,m;
+    cin>>n>>m;
+
+    string str;
+    cin>>str;
+    str="$"+str+"$";
+
+    FOR(i,1,n+1)
+        if(str[i]=='.')
+            dpLeft[i]=dpLeft[i-1]+1;
+
+    DFOR(i,n,1)
+        if(str[i]=='.')
+            dpRight[i]=dpRight[i+1]+1;
+
+    int cur=0;
+    FOR(i,1,n+1)
+        if(dpLeft[i] && !dpLeft[i+1])
+            cur+=(dpLeft[i]-1);
+
+    while(m--){
+        int idx;
+        char c;
+        cin>>idx>>c;
+
+        if(str[idx]=='.' && c!='.'){
+            cur-=(dpLeft[idx-1]+dpRight[idx+1]);
+            cur+=(max(dpLeft[idx-1]-1,0)+max(dpRight[idx+1]-1,0));
+            dpLeft[idx]=dpRight[idx]=0;
+        }
+        else if(str[idx]!='.' && c=='.'){
+            cur-=(max(dpLeft[idx-1]-1,0)+max(dpRight[idx+1]-1,0));
+            cur+=(dpLeft[idx-1]+dpRight[idx+1]);
+            dpLeft[idx]=dpLeft[idx-1]+1;
+            dpRight[idx]=dpRight[idx+1]+1;
+        }
+        str[idx]=c;
+        
+        cout<<cur<<endl;
+    }
 
     return 0;
 }

@@ -73,6 +73,25 @@ int main(){
     IOS;
     TIE;
 
+    int a,b,c;
+    cin>>a>>b>>c;
+    a%=b;
+
+    int idx=-1;
+    REP(i,b){
+        a*=10;
+        if(a/b==c){
+            idx=i;
+            break;
+        }
+        else
+            a%=b;
+    }
+
+    if(idx!=-1)
+        cout<<idx+1<<endl;
+    else
+        cout<<idx<<endl;
 
     return 0;
 }

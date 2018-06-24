@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -67,12 +66,34 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+bool isStorage[100010];
+pair<pair<int,int>,int> edges[100010];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n,m,k;
+    cin>>n>>m>>k;
+
+    REP(i,m){
+        int v1,v2,x;
+        cin>>v1>>v2>>x;
+        edges[i]=mp(mp(v1,v2),x);
+    }
+    REP(i,k){
+        int temp;
+        cin>>temp;
+        isStorage[temp]=true;
+    }
+
+    int ans=INF;
+    REP(i,m)
+        if(isStorage[edges[i].F.F] ^ isStorage[edges[i].F.S])
+            ans=min(ans,edges[i].S);
+    if(ans==INF)
+        ans=-1;
+    cout<<ans<<endl;
 
     return 0;
 }

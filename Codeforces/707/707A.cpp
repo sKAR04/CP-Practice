@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -73,6 +72,23 @@ int main(){
     IOS;
     TIE;
 
+    int n,m;
+    cin>>n>>m;
+
+    bool flag=true;
+    REP(i,n)
+        REP(j,m){
+            char color;
+            cin>>color;
+
+            if(color!='B' && color!='W' && color!='G')
+                flag=false;
+        }
+    if(flag)
+        cout<<"#Black&White";
+    else
+        cout<<"#Color";
+    cout<<endl;
 
     return 0;
 }

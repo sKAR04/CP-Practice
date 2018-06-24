@@ -67,12 +67,43 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
+vi adj[200010];
+bool vis[200010];
 
+void dfs(int i,ll &cnt){
+    vis[i]=true;
+    ++cnt;
+    for(int x : adj[i])
+        if(!vis[x])
+            dfs(x,cnt);
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    ll n,m;
+    cin>>n>>m;
+    REP(i,m){
+        int v1,v2;
+        cin>>v1>>v2;
+        adj[v1].pb(v2);
+        adj[v2].pb(v1);
+    }
+
+    ll edges=0LL;
+    FOR(i,1,n+1)
+        if(!vis[i]){
+            ll cnt=0;
+            dfs(i,cnt);
+            edges+=(cnt*(cnt-1)/2LL);
+        }
+
+    if(edges==m)
+        cout<<"YES";
+    else
+        cout<<"NO";
+    cout<<endl;
 
     return 0;
 }

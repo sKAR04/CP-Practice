@@ -16,6 +16,7 @@ using namespace std;
 #define endl '\n'
 #define db(x) cout << "> " << #x << ": " << x << endl;
 typedef long long ll;
+typedef long long ld;
 
 //for sorting
 #define all(a) a.begin(),a.end()
@@ -59,7 +60,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -73,6 +73,27 @@ int main(){
     IOS;
     TIE;
 
+    int n,k;
+    cin>>n>>k;
+
+    set<int> s;
+    vi distinct;
+    REP(i,n){
+        int temp;
+        cin>>temp;
+        int curSize=s.size();
+        s.insert(temp);
+        if(curSize!=s.size())
+            distinct.pb(i+1);
+    }
+    if(distinct.size()>=k){
+        cout<<"YES"<<endl;
+        REP(i,k)
+            cout<<distinct[i]<<" ";
+        cout<<endl;
+    }
+    else
+        cout<<"NO"<<endl;
 
     return 0;
 }

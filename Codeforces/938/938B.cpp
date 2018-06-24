@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -73,6 +72,21 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    int lMax=0,rMin=1000000;
+    REP(i,n){
+        int x;
+        cin>>x;
+
+        if(x<=500000)
+            lMax=max(lMax,x);
+        else
+            rMin=min(rMin,x);
+    }
+
+    cout<<max(lMax-1,1000000-rMin)<<endl;
 
     return 0;
 }

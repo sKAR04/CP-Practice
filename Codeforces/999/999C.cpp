@@ -67,12 +67,34 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+di idx[26];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n,k;
+    cin>>n>>k;
+
+    string str;
+    cin>>str;
+
+    REP(i,n)
+        idx[str[i]-97].pb(i);
+
+    REP(i,k){
+        REP(j,26)
+            if(idx[j].size()){
+                str[idx[j].front()]='*';
+                idx[j].pop_front();
+                break;
+            }
+    }
+
+    REP(i,n)
+        if(str[i]!='*')
+            cout<<str[i];
+    cout<<endl;
 
     return 0;
 }

@@ -73,6 +73,29 @@ int main(){
     IOS;
     TIE;
 
+    int r1,r2,c1,c2,d1,d2;
+    cin>>r1>>r2>>c1>>c2>>d1>>d2;
+
+    FOR(i,1,10)
+        FOR(j,1,10)
+            FOR(k,1,10)
+                FOR(l,1,10){
+                    set<int> fml;
+                    fml.insert(i);
+                    fml.insert(j);
+                    fml.insert(k);
+                    fml.insert(l);
+
+                    if(fml.size()==4){
+                        if(i+j==r1 && k+l==r2 && i+k==c1 && j+l==c2 && i+l==d1 && j+k==d2){
+                            cout<<i<<" "<<j<<endl;
+                            cout<<k<<" "<<l<<endl;
+
+                            return 0;
+                        }
+                    }
+                }
+    cout<<-1<<endl;
 
     return 0;
 }

@@ -16,6 +16,7 @@ using namespace std;
 #define endl '\n'
 #define db(x) cout << "> " << #x << ": " << x << endl;
 typedef long long ll;
+typedef long long ld;
 
 //for sorting
 #define all(a) a.begin(),a.end()
@@ -59,7 +60,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -73,6 +73,41 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    pll arr[n];
+    REP(i,n)
+        cin>>arr[i].F;
+    REP(i,n)
+        cin>>arr[i].S;
+
+    ll minCost=LLONG_MAX;
+    FOR(j,1,n-1){
+        ll minIdxX=-1;
+        ll minCostX=LLONG_MAX;
+        DFOR(i,j-1,0)
+            if(arr[i].F<arr[j].F && minCostX>arr[i].S){
+                minIdxX=i;
+                minCostX=arr[i].S;
+            }
+
+        ll minIdxZ=-1;
+        ll minCostZ=LLONG_MAX;
+        FOR(k,j+1,n)
+            if(arr[k].F>arr[j].F && minCostZ>arr[k].S){
+                minIdxZ=k;
+                minCostZ=arr[k].S;
+            }
+
+        if(minIdxX!=-1 && minIdxZ!=-1)
+            minCost=min(minCost,minCostX+arr[j].S+minCostZ);
+    }
+    if(minCost==LLONG_MAX)
+        cout<<-1;
+    else
+        cout<<minCost;
+    cout<<endl;
 
     return 0;
 }

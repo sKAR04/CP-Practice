@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -67,12 +66,51 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-
+bool mtrx[1010][1010];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n,a,b;
+    cin>>n>>a>>b;
+
+    bool XOR=false;
+    bool flag=true;
+
+    if(n==1)
+        flag=true;
+    else if(a>1 && b==1)
+        FOR(i,1,n-a+1)
+            mtrx[i][0]=mtrx[0][i]=true;
+    else if(a==1 && b>1){
+        FOR(i,1,n-b+1)
+            mtrx[i][0]=mtrx[0][i]=true;
+        XOR=true;
+    }
+    else if(a==1 && b==1){
+        if(n>3)
+            REP(i,n-1)
+                mtrx[i][i+1]=mtrx[i+1][i]=true;
+        else
+            flag=false;
+    }
+    else
+        flag=false;
+
+    if(!flag)
+        cout<<"NO"<<endl;
+    else{
+        cout<<"YES"<<endl;
+        REP(i,n){
+            REP(j,n)
+                if(i==j)
+                    cout<<0;
+                else
+                    cout<<(mtrx[i][j]^(XOR));
+            cout<<endl;
+        }
+    }
 
     return 0;
 }

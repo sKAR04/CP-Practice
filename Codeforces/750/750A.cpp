@@ -73,6 +73,19 @@ int main(){
     IOS;
     TIE;
 
+    int n,k;
+    cin>>n>>k;
+
+    int sum=0;
+    int cnt=0;
+    FOR(i,1,n+1)
+        if(sum+5*i<=240-k){
+            sum+=(5*i);
+            ++cnt;
+        }
+        else
+            break;
+    cout<<cnt<<endl;
 
     return 0;
 }

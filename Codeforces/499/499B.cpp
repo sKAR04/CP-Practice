@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -73,6 +72,37 @@ int main(){
     IOS;
     TIE;
 
+    int n,m;
+    cin>>n>>m;
+
+    map<string,string> lang;
+    map<string,bool> lang1;
+    REP(i,m){
+        string s1,s2;
+        cin>>s1>>s2;
+        lang1[s1]=true;
+        lang[s1]=s2;
+        lang[s2]=s1;
+    }
+
+    REP(i,n){
+        string word;
+        cin>>word;
+
+        if(lang1[word]){
+            if(lang[word].length()<word.length())
+                cout<<lang[word]<<" ";
+            else
+                cout<<word<<" ";
+        }
+        else{
+            if(lang[word].length()>word.length())
+                cout<<word<<" ";
+            else
+                cout<<lang[word]<<" ";
+        }
+    }
+    cout<<endl;
 
     return 0;
 }

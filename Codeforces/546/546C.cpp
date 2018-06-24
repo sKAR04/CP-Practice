@@ -59,7 +59,6 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
-#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -73,6 +72,59 @@ int main(){
     IOS;
     TIE;
 
+    map<pair<di,di >,bool> states;
+    di soldierA,soldierB;
+
+    int n;
+    cin>>n;
+
+    int sz;
+
+    cin>>sz;
+    REP(i,sz){
+        int card;
+        cin>>card;
+        soldierA.pb(card);
+    }
+
+    cin>>sz;
+    REP(i,sz){
+        int card;
+        cin>>card;
+        soldierB.pb(card);
+    }
+
+    int cnt=0;
+    while(!soldierA.E && !soldierB.E){
+        if(!states[mp(soldierA,soldierB)])
+            states[mp(soldierA,soldierB)]=true;
+        else
+            break;
+
+        int cardA=soldierA.front();
+        int cardB=soldierB.front();
+
+        soldierA.pop_front();
+        soldierB.pop_front();
+
+        if(cardA>cardB){
+            soldierA.pb(cardB);
+            soldierA.pb(cardA);
+        }
+        else{
+            soldierB.pb(cardA);
+            soldierB.pb(cardB);
+        }
+
+        ++cnt;
+    }
+
+    if(soldierA.E)
+        cout<<cnt<<" "<<2<<endl;
+    else if(soldierB.E)
+        cout<<cnt<<" "<<1<<endl;
+    else
+        cout<<-1<<endl;
 
     return 0;
 }

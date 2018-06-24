@@ -73,6 +73,30 @@ int main(){
     IOS;
     TIE;
 
+    int n,k;
+    cin>>n>>k;
+
+    int arr[n];
+    bool vis[n]={};
+    REP(i,n)
+        cin>>arr[i];
+
+    REP(i,n)
+        if(arr[i]<=k)
+            vis[i]=true;
+        else
+            break;
+
+    DFOR(i,n-1,0)
+        if(arr[i]<=k)
+            vis[i]=true;
+        else
+            break;
+    int cnt=0;
+    REP(i,n)
+        if(vis[i])
+            ++cnt;
+    cout<<cnt<<endl;
 
     return 0;
 }
