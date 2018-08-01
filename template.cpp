@@ -34,7 +34,8 @@ typedef long long ll;
 //vectors
 #define vi vector<int>
 #define vll vector<ll>
-#define vii vector<pair<int,int> >
+#define vii vector<pair<int,int>>
+#define vlll vector<pair<ll,ll>>
 #define pb 	push_back
 
 //pairs
@@ -51,7 +52,6 @@ typedef long long ll;
 #endif
 #define gc getchar
 #define pc putchar
-#define scan getFoo
 
 //If using cin and cout
 #define IOS ios::sync_with_stdio(false)

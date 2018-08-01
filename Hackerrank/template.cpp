@@ -59,6 +59,7 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
+#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
