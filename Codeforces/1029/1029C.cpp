@@ -22,14 +22,14 @@ typedef long long ll;
 
 //Constants
 #define PI   3.141592653593
-#define MOD  1000000007
+#define MOD  1000000007LL
 #define EPS  0.000000001
 #define INF  0X3f3f3f3f
 
 //loops
-#define REP(i,n) 	    for(ll i=0;i<(n);++i)
-#define FOR(i,a,b)      for(ll i=(a);i<(b);++i)
-#define DFOR(i,a,b)     for(ll i=(a);i>=(b);--i)
+#define REP(i,n) 	    for(int i=0;i<(n);++i)
+#define FOR(i,a,b)      for(int i=(a);i<(b);++i)
+#define DFOR(i,a,b)     for(int i=(a);i>=(b);--i)
 
 //vectors
 #define vi vector<int>
@@ -67,7 +67,7 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-int dp[5010][5010];
+
 //Main function
 int main(){
     IOS;
@@ -76,31 +76,40 @@ int main(){
     int n;
     cin>>n;
 
-    char type[n];
+    pi arr[n];
     REP(i,n)
-        cin>>type[i];
+        cin>>arr[i].F>>arr[i].S;
 
-    dp[0][1]=1;
-    int maxIdt=1;
-    FOR(i,1,n)
-        if(type[i-1]=='f'){
-            FOR(j,1,maxIdt+1){
-                dp[i][j+1]=(dp[i-1][j]-dp[i-1][j-1]+dp[i][j]);
-                if(dp[i][j+1]<0)
-                    dp[i][j+1]+=MOD;
-                dp[i][j+1]%=MOD;
-            }
-            ++maxIdt;
+    if(n==1){
+        cout<<0<<endl;
+        return 0;
+    }
+
+    int firstMax=max(arr[0].F,arr[1].F),secondMax=min(arr[0].F,arr[1].F);
+    FOR(i,2,n)
+        if(arr[i].F>=firstMax){
+            secondMax=firstMax;
+            firstMax=arr[i].F;
         }
-        else
-            FOR(j,1,maxIdt+1){
-                dp[i][j]=(dp[i-1][maxIdt]-dp[i-1][j-1]+dp[i][j-1]);
-                if(dp[i][j]<0)
-                    dp[i][j]+=MOD;
-                dp[i][j]%=MOD;
-            }
+        else if(arr[i].F>secondMax)
+            secondMax=arr[i].F;
 
-    cout<<dp[n-1][maxIdt]<<endl;
+    int firstMin=min(arr[0].S,arr[1].S),secondMin=max(arr[0].S,arr[1].S);
+    FOR(i,2,n)
+        if(arr[i].S<=firstMin){
+            secondMin=firstMin;
+            firstMin=arr[i].S;
+        }
+        else if(arr[i].S<secondMin)
+            secondMin=arr[i].S;
+
+    int ans=0;
+    REP(i,n){
+        int lMax=(arr[i].F==firstMax)?secondMax:firstMax;
+        int rMin=(arr[i].S==firstMin)?secondMin:firstMin;
+        ans=(ans>(rMin-lMax))?ans:(rMin-lMax);
+    }
+    cout<<ans<<endl;
 
     return 0;
 }

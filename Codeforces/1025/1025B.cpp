@@ -1,6 +1,6 @@
 /*
 #####################################################
-# I will win.. maybe not immediately but definitely #
+# Apparently it takes me a lot of time to win lol :(#
 #####################################################
 */
 
@@ -22,14 +22,14 @@ typedef long long ll;
 
 //Constants
 #define PI   3.141592653593
-#define MOD  1000000007
+#define MOD  1000000007LL
 #define EPS  0.000000001
 #define INF  0X3f3f3f3f
 
 //loops
-#define REP(i,n) 	    for(ll i=0;i<(n);++i)
-#define FOR(i,a,b)      for(ll i=(a);i<(b);++i)
-#define DFOR(i,a,b)     for(ll i=(a);i>=(b);--i)
+#define REP(i,n) 	    for(int i=0;i<(n);++i)
+#define FOR(i,a,b)      for(int i=(a);i<(b);++i)
+#define DFOR(i,a,b)     for(int i=(a);i>=(b);--i)
 
 //vectors
 #define vi vector<int>
@@ -67,7 +67,31 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-int dp[5010][5010];
+bool isPrime[1000010];
+vi primes;
+
+void sieve(){
+    fill(isPrime,isPrime+1000010,true);
+    isPrime[0]=isPrime[1]=false;
+    REP(i,1000010)
+        if(isPrime[i]){
+            for(int j=2*i;j<1000010;j+=i)
+                isPrime[j]=false;
+            primes.pb(i);
+        }
+}
+
+void getPrimeFacts(set<int> &s,int cur){
+    for(int p : primes)
+        if(cur%p==0){
+            while(cur%p==0)
+                cur/=p;
+            s.insert(p);
+        }
+
+    if(cur>1)
+        s.insert(cur);
+}
 //Main function
 int main(){
     IOS;
@@ -76,31 +100,36 @@ int main(){
     int n;
     cin>>n;
 
-    char type[n];
+    pi arr[n];
     REP(i,n)
-        cin>>type[i];
+        cin>>arr[i].F>>arr[i].S;
 
-    dp[0][1]=1;
-    int maxIdt=1;
-    FOR(i,1,n)
-        if(type[i-1]=='f'){
-            FOR(j,1,maxIdt+1){
-                dp[i][j+1]=(dp[i-1][j]-dp[i-1][j-1]+dp[i][j]);
-                if(dp[i][j+1]<0)
-                    dp[i][j+1]+=MOD;
-                dp[i][j+1]%=MOD;
+    sieve();
+
+    set<int> wcd;
+    getPrimeFacts(wcd,arr[0].F);
+    getPrimeFacts(wcd,arr[0].S);
+
+    int ans=0;
+    for(auto it=wcd.begin();it!=wcd.end();++it){
+        int cur=*it;
+        bool flag=true;
+        REP(i,n)
+            if(arr[i].F%cur!=0 && arr[i].S%cur!=0){
+                flag=false;
+                break;
             }
-            ++maxIdt;
+
+        if(flag){
+            ans=cur;
+            break;
         }
-        else
-            FOR(j,1,maxIdt+1){
-                dp[i][j]=(dp[i-1][maxIdt]-dp[i-1][j-1]+dp[i][j-1]);
-                if(dp[i][j]<0)
-                    dp[i][j]+=MOD;
-                dp[i][j]%=MOD;
-            }
+    }
 
-    cout<<dp[n-1][maxIdt]<<endl;
+    if(ans)
+        cout<<ans<<endl;
+    else
+        cout<<-1<<endl;
 
     return 0;
 }

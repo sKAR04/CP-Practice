@@ -22,7 +22,7 @@ typedef long long ll;
 
 //Constants
 #define PI   3.141592653593
-#define MOD  1000000007
+#define MOD  1000000007LL
 #define EPS  0.000000001
 #define INF  0X3f3f3f3f
 
@@ -67,7 +67,7 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-int dp[5010][5010];
+int idx[1000010],arr[1000010];
 //Main function
 int main(){
     IOS;
@@ -76,31 +76,24 @@ int main(){
     int n;
     cin>>n;
 
-    char type[n];
-    REP(i,n)
-        cin>>type[i];
+    FOR(i,1,n+1){
+        cin>>arr[i];
+        idx[arr[i]]=i;
+    }
 
-    dp[0][1]=1;
-    int maxIdt=1;
-    FOR(i,1,n)
-        if(type[i-1]=='f'){
-            FOR(j,1,maxIdt+1){
-                dp[i][j+1]=(dp[i-1][j]-dp[i-1][j-1]+dp[i][j]);
-                if(dp[i][j+1]<0)
-                    dp[i][j+1]+=MOD;
-                dp[i][j+1]%=MOD;
-            }
-            ++maxIdt;
+    int cnt=0;
+    FOR(i,1,n+1)
+        if(idx[i]!=i){
+            ++cnt;
+            idx[arr[i]]=idx[i];
+            swap(arr[idx[i]],arr[i]);
+            idx[i]=i;
         }
-        else
-            FOR(j,1,maxIdt+1){
-                dp[i][j]=(dp[i-1][maxIdt]-dp[i-1][j-1]+dp[i][j-1]);
-                if(dp[i][j]<0)
-                    dp[i][j]+=MOD;
-                dp[i][j]%=MOD;
-            }
 
-    cout<<dp[n-1][maxIdt]<<endl;
+    if((cnt+3*n)&1)
+        cout<<"Um_nik"<<endl;
+    else
+        cout<<"Petr"<<endl;
 
     return 0;
 }

@@ -22,14 +22,14 @@ typedef long long ll;
 
 //Constants
 #define PI   3.141592653593
-#define MOD  1000000007
+#define MOD  998244353
 #define EPS  0.000000001
 #define INF  0X3f3f3f3f
 
 //loops
-#define REP(i,n) 	    for(ll i=0;i<(n);++i)
-#define FOR(i,a,b)      for(ll i=(a);i<(b);++i)
-#define DFOR(i,a,b)     for(ll i=(a);i>=(b);--i)
+#define REP(i,n) 	    for(int i=0;i<(n);++i)
+#define FOR(i,a,b)      for(int i=(a);i<(b);++i)
+#define DFOR(i,a,b)     for(int i=(a);i>=(b);--i)
 
 //vectors
 #define vi vector<int>
@@ -67,40 +67,51 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-int dp[5010][5010];
+const int MAXN=1010;
+int dp[MAXN][4][2*MAXN];
 //Main function
 int main(){
     IOS;
     TIE;
 
-    int n;
-    cin>>n;
+    int n,k;
+    cin>>n>>k;
 
-    char type[n];
-    REP(i,n)
-        cin>>type[i];
+    dp[1][0][1]=dp[1][3][1]=1;
+    dp[1][1][2]=dp[1][2][2]=1;
 
-    dp[0][1]=1;
-    int maxIdt=1;
     FOR(i,1,n)
-        if(type[i-1]=='f'){
-            FOR(j,1,maxIdt+1){
-                dp[i][j+1]=(dp[i-1][j]-dp[i-1][j-1]+dp[i][j]);
-                if(dp[i][j+1]<0)
-                    dp[i][j+1]+=MOD;
-                dp[i][j+1]%=MOD;
-            }
-            ++maxIdt;
-        }
-        else
-            FOR(j,1,maxIdt+1){
-                dp[i][j]=(dp[i-1][maxIdt]-dp[i-1][j-1]+dp[i][j-1]);
-                if(dp[i][j]<0)
-                    dp[i][j]+=MOD;
-                dp[i][j]%=MOD;
-            }
+        FOR(j,1,k+1)
+            REP(x,4)
+                REP(y,4)
+                    if(x==y){
+                        dp[i+1][y][j]+=dp[i][x][j];
+                        if(dp[i+1][y][j]>=MOD)
+                            dp[i+1][y][j]-=MOD;
+                    }
+                    else if((x==2 && y==1) || (x==1 && y==2)){
+                        dp[i+1][y][j+2]+=dp[i][x][j];
+                        if(dp[i+1][y][j+2]>=MOD)
+                            dp[i+1][y][j+2]-=MOD;
+                    }
+                    else if(x==0 || x==3){
+                        dp[i+1][y][j+1]+=dp[i][x][j];
+                        if(dp[i+1][y][j+1]>=MOD)
+                            dp[i+1][y][j+1]-=MOD;
+                    }
+                    else{
+                        dp[i+1][y][j]+=dp[i][x][j];
+                        if(dp[i+1][y][j]>=MOD)
+                            dp[i+1][y][j]-=MOD;
+                    }
 
-    cout<<dp[n-1][maxIdt]<<endl;
+    int ans=0;
+    REP(i,4){
+        ans+=dp[n][i][k];
+        if(ans>=MOD)
+            ans-=MOD;
+    }
+    cout<<ans<<endl;
 
     return 0;
 }

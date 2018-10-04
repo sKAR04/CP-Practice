@@ -67,48 +67,81 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
-ll gcd(ll a,ll b){
-    if(!b)
-        return a;
-    return gcd(b,a%b);
+int tree[1200010],lazy[1200010];
+vi unread[300010];
+void update(int low,int high,int pos,int qLow,int qHigh,int val){
+    int mid=(low+high)>>1;
+
+    if(lazy[pos]!=-1){
+        tree[pos]=0;
+        if(low!=high)
+            lazy[2*pos+1]=lazy[2*pos+2]=0;
+        lazy[pos]=-1;
+    }
+
+    if(qLow>high || qHigh<low)
+        return ;
+    else if(qLow<=low && qHigh>=high){
+        if(low==high)
+            tree[pos]=val;
+        else
+            tree[pos]=0;
+
+        if(low!=high)
+            lazy[2*pos+1]=lazy[2*pos+2]=0;
+    }
+    else{
+        update(low,mid,2*pos+1,qLow,qHigh,val);
+        update(mid+1,high,2*pos+2,qLow,qHigh,val);
+        tree[pos]=tree[2*pos+1]+tree[2*pos+2];
+    }
+}
+
+int query(int low,int high,int pos,int qLow,int qHigh){
+    int mid=(low+high)>>1;
+
+    if(lazy[pos]!=-1){
+        tree[pos]=0;
+        if(low!=high)
+            lazy[2*pos+1]=lazy[2*pos+2]=0;
+        lazy[pos]=-1;
+    }
+
+    if(qLow>high || qHigh<low)
+        return 0;
+    else if(qLow<=low && qHigh>=high)
+        return tree[pos];
+    else
+        return query(low,mid,2*pos+1,qLow,qHigh)+query(mid+1,high,2*pos+2,qLow,qHigh);
 }
 //Main function
 int main(){
     IOS;
     TIE;
 
-    ll n,m,k;
-    cin>>n>>m>>k;
+    int n,q;
+    cin>>n>>q;
 
-    if((n*m*2)%k==0){
-        cout<<"YES"<<endl;
-        ll x,y,g;
-        if(k&1LL){
-            g=gcd(n,k);
-            if(g>1){
-                x=n*2/g;
-                k/=g;
-                y=m/k;
-            }
-            else{
-                x=n;
-                y=(2*m/k);
-            }
+    fill(lazy,lazy+1200010,-1);
+
+    int cnt=0;
+    REP(i,q){
+        int type,x;
+        cin>>type>>x;
+
+        if(type==1){
+            update(0,q-1,0,cnt,cnt,1);
+            unread[x].pb(cnt);
+            ++cnt;
         }
-        else{
-            k>>=1;
-            g=gcd(n,k);
-            x=n/g;
-            k=k/g;
-            y=m/k;
+        else if(type==2){
+            for(int notif : unread[x])
+                update(0,q-1,0,notif,notif,0);
+            unread[x].clear();
         }
-        cout<<0<<" "<<0<<endl;
-        cout<<x<<" "<<0<<endl;
-        cout<<0<<" "<<y<<endl;
+        else
+            update(0,q-1,0,0,x-1,0);
+        cout<<query(0,q-1,0,0,cnt)<<endl;
     }
-    else
-        cout<<"NO"<<endl;
-
     return 0;
 }

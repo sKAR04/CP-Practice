@@ -23,9 +23,9 @@ typedef long long ll;
 #define INF  0X3f3f3f3f
 
 //loops
-#define REP(i,n) 	    for(int i=0;i<(n);++i)
-#define FOR(i,a,b)      for(int i=(a);i<(b);++i)
-#define DFOR(i,a,b)     for(int i=(a);i>=(b);--i)
+#define REP(i,n) 	    for(ll i=0;i<(n);++i)
+#define FOR(i,a,b)      for(ll i=(a);i<(b);++i)
+#define DFOR(i,a,b)     for(ll i=(a);i>=(b);--i)
 
 //vectors
 #define vi vector<int>
@@ -54,7 +54,35 @@ typedef long long ll;
 #define E empty()
 
 //Variables and Functions required
-inline void solve(){
+void solve(){
+    int n,d;
+    cin>>n>>d;
+
+    vi v;
+    FOR(i,1,d+1)
+        v.pb(i);
+
+    PQ<pair<int,pi>,vector<pair<int,pi>>> q;
+    REP(i,n){
+        pair<int,pi> p;
+        cin>>p.S.F>>p.S.S>>p.F;
+        q.push(p);
+    }
+
+    ll minSadness=0;
+    while(!q.E){
+        auto cur=q.top();
+        auto l=lower_bound(all(v),cur.S.F),r=l;
+        while(cur.S.S && r!=v.end()){
+            ++r;
+            --cur.S.S;
+        }
+
+        minSadness+=((ll)cur.S.S*(ll)cur.F);
+        v.erase(l,r);
+        q.pop();
+    }
+    cout<<minSadness<<endl;
 
 }
 //Main function

@@ -27,9 +27,9 @@ typedef long long ll;
 #define INF  0X3f3f3f3f
 
 //loops
-#define REP(i,n) 	    for(ll i=0;i<(n);++i)
-#define FOR(i,a,b)      for(ll i=(a);i<(b);++i)
-#define DFOR(i,a,b)     for(ll i=(a);i>=(b);--i)
+#define REP(i,n) 	    for(int i=0;i<(n);++i)
+#define FOR(i,a,b)      for(int i=(a);i<(b);++i)
+#define DFOR(i,a,b)     for(int i=(a);i>=(b);--i)
 
 //vectors
 #define vi vector<int>
@@ -67,6 +67,7 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
+const int MAXN=0;
 
 //Main function
 int main(){

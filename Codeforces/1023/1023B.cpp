@@ -22,14 +22,14 @@ typedef long long ll;
 
 //Constants
 #define PI   3.141592653593
-#define MOD  1000000007
+#define MOD  1000000007LL
 #define EPS  0.000000001
 #define INF  0X3f3f3f3f
 
 //loops
-#define REP(i,n) 	    for(ll i=0;i<(n);++i)
-#define FOR(i,a,b)      for(ll i=(a);i<(b);++i)
-#define DFOR(i,a,b)     for(ll i=(a);i>=(b);--i)
+#define REP(i,n) 	    for(int i=0;i<(n);++i)
+#define FOR(i,a,b)      for(int i=(a);i<(b);++i)
+#define DFOR(i,a,b)     for(int i=(a);i>=(b);--i)
 
 //vectors
 #define vi vector<int>
@@ -67,40 +67,32 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-int dp[5010][5010];
+
 //Main function
 int main(){
     IOS;
     TIE;
 
-    int n;
-    cin>>n;
+    ll n,k;
+    cin>>n>>k;
 
-    char type[n];
-    REP(i,n)
-        cin>>type[i];
+    n=min(n,k-1);
 
-    dp[0][1]=1;
-    int maxIdt=1;
-    FOR(i,1,n)
-        if(type[i-1]=='f'){
-            FOR(j,1,maxIdt+1){
-                dp[i][j+1]=(dp[i-1][j]-dp[i-1][j-1]+dp[i][j]);
-                if(dp[i][j+1]<0)
-                    dp[i][j+1]+=MOD;
-                dp[i][j+1]%=MOD;
-            }
-            ++maxIdt;
+    ll ans=0;
+    if(k==1 || n==1)
+        ans=0;
+    else{
+        if(2*n-1>=k){
+            ll r=min(n,k-1);
+            ll l=max(1LL,k-n);
+
+            if(~k&1)
+                ans=(r-l)/2;
+            else
+                ans=(r-l+1)/2;
         }
-        else
-            FOR(j,1,maxIdt+1){
-                dp[i][j]=(dp[i-1][maxIdt]-dp[i-1][j-1]+dp[i][j-1]);
-                if(dp[i][j]<0)
-                    dp[i][j]+=MOD;
-                dp[i][j]%=MOD;
-            }
-
-    cout<<dp[n-1][maxIdt]<<endl;
+    }
+    cout<<ans<<endl;
 
     return 0;
 }

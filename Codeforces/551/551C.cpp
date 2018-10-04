@@ -22,7 +22,7 @@ typedef long long ll;
 
 //Constants
 #define PI   3.141592653593
-#define MOD  1000000007
+#define MOD  1000000007LL
 #define EPS  0.000000001
 #define INF  0X3f3f3f3f
 
@@ -67,40 +67,44 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-int dp[5010][5010];
+int n,m;
+vi boxes(100010);
 //Main function
 int main(){
     IOS;
     TIE;
 
-    int n;
-    cin>>n;
-
-    char type[n];
+    cin>>n>>m;
     REP(i,n)
-        cin>>type[i];
+        cin>>boxes[i];
+    ll low=1,high=10E14+10;
+    while(low<=high){
+        ll mid=(low+high)>>1;
+        if(low<=high){
+            vi temp=boxes;
+            REP(i,m){
+                while(!temp.E && !temp.back())
+                    temp.pop_back();
 
-    dp[0][1]=1;
-    int maxIdt=1;
-    FOR(i,1,n)
-        if(type[i-1]=='f'){
-            FOR(j,1,maxIdt+1){
-                dp[i][j+1]=(dp[i-1][j]-dp[i-1][j-1]+dp[i][j]);
-                if(dp[i][j+1]<0)
-                    dp[i][j+1]+=MOD;
-                dp[i][j+1]%=MOD;
+                ll sum=mid-temp.size();
+                if(sum<0)
+                    break;
+                while(!temp.E && sum>=temp.back()){
+                    sum-=temp.back();
+                    temp.pop_back();
+                }
+
+                if(!temp.E && temp.back())
+                    temp.back()-=sum;
             }
-            ++maxIdt;
+
+            if(temp.E)
+                high=mid-1;
+            else
+                low=mid+1;
         }
-        else
-            FOR(j,1,maxIdt+1){
-                dp[i][j]=(dp[i-1][maxIdt]-dp[i-1][j-1]+dp[i][j-1]);
-                if(dp[i][j]<0)
-                    dp[i][j]+=MOD;
-                dp[i][j]%=MOD;
-            }
-
-    cout<<dp[n-1][maxIdt]<<endl;
+    }
+    cout<<(low+high)/2+1<<endl;
 
     return 0;
 }

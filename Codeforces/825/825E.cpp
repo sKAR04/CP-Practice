@@ -22,14 +22,14 @@ typedef long long ll;
 
 //Constants
 #define PI   3.141592653593
-#define MOD  1000000007
+#define MOD  1000000007LL
 #define EPS  0.000000001
 #define INF  0X3f3f3f3f
 
 //loops
-#define REP(i,n) 	    for(ll i=0;i<(n);++i)
-#define FOR(i,a,b)      for(ll i=(a);i<(b);++i)
-#define DFOR(i,a,b)     for(ll i=(a);i>=(b);--i)
+#define REP(i,n) 	    for(int i=0;i<(n);++i)
+#define FOR(i,a,b)      for(int i=(a);i<(b);++i)
+#define DFOR(i,a,b)     for(int i=(a);i>=(b);--i)
 
 //vectors
 #define vi vector<int>
@@ -67,40 +67,52 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-int dp[5010][5010];
+int outCnt[100010],perm[100010];
+vi adj[100010];
+
+bool myCmp(pi p1,pi p2){
+    if(p1.F<p2.F)
+        return true;
+    else if(p1.F==p2.F)
+        return (p1.S>p2.S);
+    else
+        return false;
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
-    int n;
-    cin>>n;
+    int n,m;
+    cin>>n>>m;
 
-    char type[n];
-    REP(i,n)
-        cin>>type[i];
+    REP(i,m){
+        int v1,v2;
+        cin>>v1>>v2;
+        adj[v2].pb(v1);
+        ++outCnt[v1];
+    }
 
-    dp[0][1]=1;
-    int maxIdt=1;
-    FOR(i,1,n)
-        if(type[i-1]=='f'){
-            FOR(j,1,maxIdt+1){
-                dp[i][j+1]=(dp[i-1][j]-dp[i-1][j-1]+dp[i][j]);
-                if(dp[i][j+1]<0)
-                    dp[i][j+1]+=MOD;
-                dp[i][j+1]%=MOD;
-            }
-            ++maxIdt;
+    PQ<int> q;
+    FOR(i,1,n+1)
+        if(!outCnt[i])
+            q.push(i);
+
+    int cnt=n;
+    while(!q.E){
+        int cur=q.top();
+        q.pop();
+        for(int ch : adj[cur]){
+            --outCnt[ch];
+            if(!outCnt[ch])
+                q.push(ch);
         }
-        else
-            FOR(j,1,maxIdt+1){
-                dp[i][j]=(dp[i-1][maxIdt]-dp[i-1][j-1]+dp[i][j-1]);
-                if(dp[i][j]<0)
-                    dp[i][j]+=MOD;
-                dp[i][j]%=MOD;
-            }
+        perm[cur]=cnt--;
+    }
 
-    cout<<dp[n-1][maxIdt]<<endl;
+    FOR(i,1,n+1)
+        cout<<perm[i]<<" ";
+    cout<<endl;
 
     return 0;
 }

@@ -22,14 +22,14 @@ typedef long long ll;
 
 //Constants
 #define PI   3.141592653593
-#define MOD  1000000007
+#define MOD  1000000007LL
 #define EPS  0.000000001
 #define INF  0X3f3f3f3f
 
 //loops
-#define REP(i,n) 	    for(ll i=0;i<(n);++i)
-#define FOR(i,a,b)      for(ll i=(a);i<(b);++i)
-#define DFOR(i,a,b)     for(ll i=(a);i>=(b);--i)
+#define REP(i,n) 	    for(int i=0;i<(n);++i)
+#define FOR(i,a,b)      for(int i=(a);i<(b);++i)
+#define DFOR(i,a,b)     for(int i=(a);i>=(b);--i)
 
 //vectors
 #define vi vector<int>
@@ -67,6 +67,7 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
+int arr[5010];
 int dp[5010][5010];
 //Main function
 int main(){
@@ -76,31 +77,37 @@ int main(){
     int n;
     cin>>n;
 
-    char type[n];
-    REP(i,n)
-        cin>>type[i];
+    FOR(i,1,n+1)
+        cin>>arr[i];
+    arr[0]=arr[n+1]=-INF;
 
-    dp[0][1]=1;
-    int maxIdt=1;
-    FOR(i,1,n)
-        if(type[i-1]=='f'){
-            FOR(j,1,maxIdt+1){
-                dp[i][j+1]=(dp[i-1][j]-dp[i-1][j-1]+dp[i][j]);
-                if(dp[i][j+1]<0)
-                    dp[i][j+1]+=MOD;
-                dp[i][j+1]%=MOD;
-            }
-            ++maxIdt;
+    int ans=INF;
+    FOR(i,1,n+1){
+        if(arr[i]<=arr[i-1])
+            dp[i][1]+=arr[i-1]-arr[i]+1;
+        if(arr[i]<=arr[i+1])
+            dp[i][1]+=arr[i+1]-arr[i]+1;
+        ans=(ans>dp[i][1])?dp[i][1]:ans;
+    }
+    cout<<ans<<" ";
+
+    int up=n/2+(n&1);
+    FOR(i,2,up+1){
+        int ans=INF,tmp=INF;
+        FOR(j,2*i-1,n+1){
+            dp[j][i]=dp[j-2][i-1];
+            int mn=(arr[j-1]>arr[j-2]-1)?arr[j-2]-1:arr[j-1];
+            if(mn>=arr[j])
+                dp[j][i]+=(mn-arr[j]+1);
+            if(arr[j+1]>=arr[j])
+                dp[j][i]+=(arr[j+1]-arr[j]+1);
+            dp[j][i]=(dp[j][i]>tmp+dp[j][1])?(tmp+dp[j][1]):dp[j][i];
+            tmp=(tmp>dp[j-2][i-1])?dp[j-2][i-1]:tmp;
+            ans=(ans>dp[j][i])?dp[j][i]:ans;
         }
-        else
-            FOR(j,1,maxIdt+1){
-                dp[i][j]=(dp[i-1][maxIdt]-dp[i-1][j-1]+dp[i][j-1]);
-                if(dp[i][j]<0)
-                    dp[i][j]+=MOD;
-                dp[i][j]%=MOD;
-            }
-
-    cout<<dp[n-1][maxIdt]<<endl;
+        cout<<ans<<" ";
+    }
+    cout<<endl;
 
     return 0;
 }

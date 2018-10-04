@@ -22,7 +22,7 @@ typedef long long ll;
 
 //Constants
 #define PI   3.141592653593
-#define MOD  1000000007
+#define MOD  1000000007LL
 #define EPS  0.000000001
 #define INF  0X3f3f3f3f
 
@@ -67,40 +67,70 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-int dp[5010][5010];
+int dp[110][(1<<17)],b[110][(1<<17)];
+int bit[60],arr[110],primeMask[60];
+
+void precalc(){
+    bit[2]=bit[3]=bit[5]=bit[7]=bit[11]=bit[13]=bit[17]=bit[19]=bit[23]=1;
+    bit[29]=bit[31]=bit[37]=bit[41]=bit[43]=bit[47]=bit[53]=bit[59]=1;
+    bit[0]=bit[1]=-1;
+
+    FOR(i,2,60){
+        bit[i]+=bit[i-1];
+        int temp=i;
+        FOR(j,2,i+1)
+            if(temp%j==0){
+                while(temp%j==0)
+                    temp/=j;
+                primeMask[i]|=(1<<bit[j]);
+            }
+    }
+
+    FOR(i,1,101)
+        REP(j,(1<<17)){
+            dp[i][j]=INF;
+            b[i][j]=1;
+        }
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    precalc();
+
     int n;
     cin>>n;
 
-    char type[n];
-    REP(i,n)
-        cin>>type[i];
+    FOR(i,1,n+1)
+        cin>>arr[i];
 
-    dp[0][1]=1;
-    int maxIdt=1;
-    FOR(i,1,n)
-        if(type[i-1]=='f'){
-            FOR(j,1,maxIdt+1){
-                dp[i][j+1]=(dp[i-1][j]-dp[i-1][j-1]+dp[i][j]);
-                if(dp[i][j+1]<0)
-                    dp[i][j+1]+=MOD;
-                dp[i][j+1]%=MOD;
-            }
-            ++maxIdt;
+    FOR(i,1,n+1){
+        FOR(j,1,60){
+            int revMask=(~primeMask[j])&((1<<17)-1);
+            for(int k=revMask;k;k=(k-1)&revMask)
+                if(dp[i][k|primeMask[j]]>dp[i-1][k]+abs(arr[i]-j)){
+                    dp[i][k|primeMask[j]]=dp[i-1][k]+abs(arr[i]-j);
+                    b[i][k|primeMask[j]]=j;
+                }
         }
-        else
-            FOR(j,1,maxIdt+1){
-                dp[i][j]=(dp[i-1][maxIdt]-dp[i-1][j-1]+dp[i][j-1]);
-                if(dp[i][j]<0)
-                    dp[i][j]+=MOD;
-                dp[i][j]%=MOD;
-            }
+    }
 
-    cout<<dp[n-1][maxIdt]<<endl;
+    int curMin=INF,mask=0;
+    REP(i,(1<<17))
+        if(curMin>dp[n][i]){
+            curMin=dp[n][i];
+            mask=i;
+        }
 
+    di ans;
+    DFOR(i,n,1){
+        ans.push_front(b[i][mask]);
+        mask&=(~(primeMask[b[i][mask]])&((1<<17)-1));
+    }
+
+    REP(i,n)
+        cout<<ans[i]<<" ";
+    cout<<endl;
     return 0;
 }

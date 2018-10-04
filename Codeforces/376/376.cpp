@@ -22,7 +22,7 @@ typedef long long ll;
 
 //Constants
 #define PI   3.141592653593
-#define MOD  1000000007
+#define MOD  1000000007LL
 #define EPS  0.000000001
 #define INF  0X3f3f3f3f
 
@@ -67,40 +67,38 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-int dp[5010][5010];
+int dp[5010][5010],cnt[5010][5010];
 //Main function
 int main(){
     IOS;
     TIE;
 
-    int n;
-    cin>>n;
+    int n,m;
+    cin>>n>>m;
 
-    char type[n];
-    REP(i,n)
-        cin>>type[i];
+    FOR(i,1,n+1){
+        string str;
+        cin>>str;
 
-    dp[0][1]=1;
-    int maxIdt=1;
-    FOR(i,1,n)
-        if(type[i-1]=='f'){
-            FOR(j,1,maxIdt+1){
-                dp[i][j+1]=(dp[i-1][j]-dp[i-1][j-1]+dp[i][j]);
-                if(dp[i][j+1]<0)
-                    dp[i][j+1]+=MOD;
-                dp[i][j+1]%=MOD;
+        DFOR(j,m,1)
+            if(str[j-1]==49)
+                dp[i][j]=dp[i][j+1]+1;
+    }
+
+    int curMax=0;
+    FOR(j,1,m+1){
+        FOR(i,1,n+1)
+            ++cnt[j][dp[i][j]];
+
+        int curCnt=0,tempMax=m;
+        DFOR(i,5010,1)
+            if(cnt[j][i]){
+                curCnt+=cnt[j][i];
+                tempMax=i;
+                curMax=(curMax>(curCnt*tempMax))?curMax:(curCnt*tempMax);
             }
-            ++maxIdt;
-        }
-        else
-            FOR(j,1,maxIdt+1){
-                dp[i][j]=(dp[i-1][maxIdt]-dp[i-1][j-1]+dp[i][j-1]);
-                if(dp[i][j]<0)
-                    dp[i][j]+=MOD;
-                dp[i][j]%=MOD;
-            }
-
-    cout<<dp[n-1][maxIdt]<<endl;
+    }
+    cout<<curMax<<endl;
 
     return 0;
 }

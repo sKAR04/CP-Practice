@@ -23,9 +23,9 @@ typedef long long ll;
 #define INF  0X3f3f3f3f
 
 //loops
-#define REP(i,n) 	    for(int i=0;i<(n);++i)
-#define FOR(i,a,b)      for(int i=(a);i<(b);++i)
-#define DFOR(i,a,b)     for(int i=(a);i>=(b);--i)
+#define REP(i,n) 	    for(ll i=0;i<(n);++i)
+#define FOR(i,a,b)      for(ll i=(a);i<(b);++i)
+#define DFOR(i,a,b)     for(ll i=(a);i>=(b);--i)
 
 //vectors
 #define vi vector<int>
@@ -55,7 +55,38 @@ typedef long long ll;
 
 //Variables and Functions required
 inline void solve(){
+    int n;
+    cin>>n;
 
+    int arr[1<<n];
+    REP(i,(1<<n))
+        cin>>arr[i];
+    sort(arr,arr+(1<<n));
+
+    map<int,bool> exists;
+    vi elements;
+
+    FOR(i,1,(1<<n)){
+        int cur=arr[i];
+        if(exists.find(cur)!=exists.end())
+            continue;
+        else{
+            for(int e : elements)
+                exists[cur+e]=true;
+
+            vi temp;
+            for(auto it=exists.begin();it!=exists.end();++it)
+                temp.pb(cur+it->F);
+            for(int t : temp)
+                exists[t]=true;
+
+            elements.pb(cur);
+        }
+    }
+
+    for(int e : elements)
+        cout<<e<<" ";
+    cout<<endl;
 }
 //Main function
 int main(){

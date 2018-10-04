@@ -1,6 +1,6 @@
 /*
 #####################################################
-# I will win.. maybe not immediately but definitely #
+# If this doesn't work.. I will have to kill myself #
 #####################################################
 */
 
@@ -22,14 +22,14 @@ typedef long long ll;
 
 //Constants
 #define PI   3.141592653593
-#define MOD  1000000007
+#define MOD  1000000007LL
 #define EPS  0.000000001
 #define INF  0X3f3f3f3f
 
 //loops
-#define REP(i,n) 	    for(ll i=0;i<(n);++i)
-#define FOR(i,a,b)      for(ll i=(a);i<(b);++i)
-#define DFOR(i,a,b)     for(ll i=(a);i>=(b);--i)
+#define REP(i,n) 	    for(int i=0;i<(n);++i)
+#define FOR(i,a,b)      for(int i=(a);i<(b);++i)
+#define DFOR(i,a,b)     for(int i=(a);i>=(b);--i)
 
 //vectors
 #define vi vector<int>
@@ -67,40 +67,32 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-int dp[5010][5010];
+
 //Main function
 int main(){
     IOS;
     TIE;
 
-    int n;
-    cin>>n;
+    ll k,d,t;
+    cin>>k>>d>>t;
 
-    char type[n];
-    REP(i,n)
-        cin>>type[i];
+    if(k%d==0)
+        cout<<t;
+    else{
+        double ans=(2*t)/(2*k+d-k%d);
+        double left=1.0-ans*double(2*k+d-k%d)/double(2*t);
+        ans*=(ceil(double(k)/double(d))*d);
 
-    dp[0][1]=1;
-    int maxIdt=1;
-    FOR(i,1,n)
-        if(type[i-1]=='f'){
-            FOR(j,1,maxIdt+1){
-                dp[i][j+1]=(dp[i-1][j]-dp[i-1][j-1]+dp[i][j]);
-                if(dp[i][j+1]<0)
-                    dp[i][j+1]+=MOD;
-                dp[i][j+1]%=MOD;
-            }
-            ++maxIdt;
+        if(left*t<=k)
+            ans+=left*double(t);
+        else{
+            ans+=k;
+            left-=double(k)/double(t);
+            ans+=left*2*t;
         }
-        else
-            FOR(j,1,maxIdt+1){
-                dp[i][j]=(dp[i-1][maxIdt]-dp[i-1][j-1]+dp[i][j-1]);
-                if(dp[i][j]<0)
-                    dp[i][j]+=MOD;
-                dp[i][j]%=MOD;
-            }
-
-    cout<<dp[n-1][maxIdt]<<endl;
+        cout<<setprecision(20)<<ans;
+    }
+    cout<<endl;
 
     return 0;
 }

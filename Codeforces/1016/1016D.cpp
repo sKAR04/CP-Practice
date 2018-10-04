@@ -22,7 +22,7 @@ typedef long long ll;
 
 //Constants
 #define PI   3.141592653593
-#define MOD  1000000007
+#define MOD  1000000007LL
 #define EPS  0.000000001
 #define INF  0X3f3f3f3f
 
@@ -67,40 +67,43 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-int dp[5010][5010];
+int mtrx[110][110];
 //Main function
 int main(){
     IOS;
     TIE;
 
-    int n;
-    cin>>n;
+    int n,m;
+    cin>>n>>m;
 
-    char type[n];
-    REP(i,n)
-        cin>>type[i];
+    int a[n],b[m];
 
-    dp[0][1]=1;
-    int maxIdt=1;
-    FOR(i,1,n)
-        if(type[i-1]=='f'){
-            FOR(j,1,maxIdt+1){
-                dp[i][j+1]=(dp[i-1][j]-dp[i-1][j-1]+dp[i][j]);
-                if(dp[i][j+1]<0)
-                    dp[i][j+1]+=MOD;
-                dp[i][j+1]%=MOD;
-            }
-            ++maxIdt;
+    int row=0,col=0;
+    REP(i,n){
+        cin>>a[i];
+        row^=a[i];
+    }
+    REP(i,m){
+        cin>>b[i];
+        col^=b[i];
+    }
+
+    if(row!=col)
+        cout<<"NO"<<endl;
+    else{
+        cout<<"YES"<<endl;
+        mtrx[1][1]=b[0]^row^a[0];
+        FOR(i,2,n+1)
+            mtrx[i][1]=a[i-1];
+        FOR(j,2,m+1)
+            mtrx[1][j]=b[j-1];
+
+        FOR(i,1,n+1){
+            FOR(j,1,m+1)
+                cout<<mtrx[i][j]<<" ";
+            cout<<endl;
         }
-        else
-            FOR(j,1,maxIdt+1){
-                dp[i][j]=(dp[i-1][maxIdt]-dp[i-1][j-1]+dp[i][j-1]);
-                if(dp[i][j]<0)
-                    dp[i][j]+=MOD;
-                dp[i][j]%=MOD;
-            }
-
-    cout<<dp[n-1][maxIdt]<<endl;
+    }
 
     return 0;
 }

@@ -22,7 +22,7 @@ typedef long long ll;
 
 //Constants
 #define PI   3.141592653593
-#define MOD  1000000007
+#define MOD  1000000007LL
 #define EPS  0.000000001
 #define INF  0X3f3f3f3f
 
@@ -67,40 +67,78 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-int dp[5010][5010];
+int k,degree[1010];
+vi adj[1010];
+void buildGraph(int startIdx){
+    FOR(i,startIdx+1,startIdx+k+1){
+        adj[startIdx].pb(i);
+        adj[i].pb(startIdx);
+
+        ++degree[i];
+        ++degree[startIdx];
+    }
+
+    FOR(i,startIdx+2,startIdx+k+1){
+        adj[startIdx+1].pb(i);
+        adj[i].pb(startIdx+1);
+
+        ++degree[i];
+        ++degree[startIdx+1];
+    }
+
+    FOR(i,startIdx+2,startIdx+k+1){
+        adj[startIdx+k+1].pb(i);
+        adj[i].pb(startIdx+k+1);
+
+        ++degree[i];
+        ++degree[startIdx+k+1];
+    }
+
+    REP(i,k-1){
+        vii v;
+        FOR(j,startIdx+2,startIdx+k+1)
+            v.pb(mp(degree[j],j));
+        sort(all(v));
+
+        for(pi p : v){
+            if(degree[v[0].S]==k)
+                break;
+            if(p.S!=v[0].S){
+                ++degree[v[0].S];
+                ++degree[p.S];
+                adj[v[0].S].pb(p.S);
+                adj[p.S].pb(v[0].S);
+            }
+        }
+    }
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
-    int n;
-    cin>>n;
-
-    char type[n];
-    REP(i,n)
-        cin>>type[i];
-
-    dp[0][1]=1;
-    int maxIdt=1;
-    FOR(i,1,n)
-        if(type[i-1]=='f'){
-            FOR(j,1,maxIdt+1){
-                dp[i][j+1]=(dp[i-1][j]-dp[i-1][j-1]+dp[i][j]);
-                if(dp[i][j+1]<0)
-                    dp[i][j+1]+=MOD;
-                dp[i][j+1]%=MOD;
-            }
-            ++maxIdt;
+    cin>>k;
+    if(k&1){
+        cout<<"YES"<<endl;
+        if(k==1){
+            cout<<2<<" "<<1<<endl;
+            cout<<1<<" "<<2<<endl;
         }
-        else
-            FOR(j,1,maxIdt+1){
-                dp[i][j]=(dp[i-1][maxIdt]-dp[i-1][j-1]+dp[i][j-1]);
-                if(dp[i][j]<0)
-                    dp[i][j]+=MOD;
-                dp[i][j]%=MOD;
-            }
+        else{
+            buildGraph(1);
+            buildGraph(k+3);
+            adj[k+2].pb(2*k+4);
+            adj[2*k+4].pb(k+2);
 
-    cout<<dp[n-1][maxIdt]<<endl;
+            cout<<2*(k+2)<<" "<<k*(k+2)<<endl;
+            FOR(i,1,2*k+5)
+                for(int v : adj[i])
+                    if(v>i)
+                        cout<<i<<" "<<v<<endl;
+        }
+    }
+    else
+        cout<<"NO"<<endl;
 
     return 0;
 }

@@ -22,14 +22,14 @@ typedef long long ll;
 
 //Constants
 #define PI   3.141592653593
-#define MOD  1000000007
+#define MOD  1000000007LL
 #define EPS  0.000000001
 #define INF  0X3f3f3f3f
 
 //loops
-#define REP(i,n) 	    for(ll i=0;i<(n);++i)
-#define FOR(i,a,b)      for(ll i=(a);i<(b);++i)
-#define DFOR(i,a,b)     for(ll i=(a);i>=(b);--i)
+#define REP(i,n) 	    for(int i=0;i<(n);++i)
+#define FOR(i,a,b)      for(int i=(a);i<(b);++i)
+#define DFOR(i,a,b)     for(int i=(a);i>=(b);--i)
 
 //vectors
 #define vi vector<int>
@@ -67,7 +67,24 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-int dp[5010][5010];
+const int MAXN=15000010;
+int arr[300010],maxPrime[MAXN],cnt[MAXN];
+inline void sieve(){
+    for(int i=2;i*i<MAXN;++i)
+        if(!maxPrime[i])
+            for(int j=i*i;j<MAXN;j+=i)
+                maxPrime[j]=i;
+
+    FOR(i,2,MAXN)
+        if(!maxPrime[i])
+            maxPrime[i]=i;
+}
+
+int gcd(int a,int b){
+    if(!b)
+        return a;
+    return gcd(b,a%b);
+}
 //Main function
 int main(){
     IOS;
@@ -76,31 +93,33 @@ int main(){
     int n;
     cin>>n;
 
-    char type[n];
-    REP(i,n)
-        cin>>type[i];
-
-    dp[0][1]=1;
-    int maxIdt=1;
-    FOR(i,1,n)
-        if(type[i-1]=='f'){
-            FOR(j,1,maxIdt+1){
-                dp[i][j+1]=(dp[i-1][j]-dp[i-1][j-1]+dp[i][j]);
-                if(dp[i][j+1]<0)
-                    dp[i][j+1]+=MOD;
-                dp[i][j+1]%=MOD;
-            }
-            ++maxIdt;
-        }
+    int gcdVal;
+    REP(i,n){
+        cin>>arr[i];
+        if(i)
+            gcdVal=gcd(gcdVal,arr[i]);
         else
-            FOR(j,1,maxIdt+1){
-                dp[i][j]=(dp[i-1][maxIdt]-dp[i-1][j-1]+dp[i][j-1]);
-                if(dp[i][j]<0)
-                    dp[i][j]+=MOD;
-                dp[i][j]%=MOD;
-            }
+            gcdVal=arr[i];
+    }
 
-    cout<<dp[n-1][maxIdt]<<endl;
+    sieve();
+
+    int ans=0;
+    REP(i,n){
+        arr[i]/=gcdVal;
+        while(arr[i]>1){
+            int curPrime=maxPrime[arr[i]];
+            ++cnt[curPrime];
+            ans=(ans>cnt[curPrime])?ans:cnt[curPrime];
+            while(arr[i]%curPrime==0)
+                arr[i]/=curPrime;
+        }
+    }
+
+    if(!ans)
+        cout<<-1<<endl;
+    else
+        cout<<n-ans<<endl;
 
     return 0;
 }

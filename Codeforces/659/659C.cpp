@@ -22,14 +22,14 @@ typedef long long ll;
 
 //Constants
 #define PI   3.141592653593
-#define MOD  1000000007
+#define MOD  1000000007LL
 #define EPS  0.000000001
 #define INF  0X3f3f3f3f
 
 //loops
-#define REP(i,n) 	    for(ll i=0;i<(n);++i)
-#define FOR(i,a,b)      for(ll i=(a);i<(b);++i)
-#define DFOR(i,a,b)     for(ll i=(a);i>=(b);--i)
+#define REP(i,n) 	    for(int i=0;i<(n);++i)
+#define FOR(i,a,b)      for(int i=(a);i<(b);++i)
+#define DFOR(i,a,b)     for(int i=(a);i>=(b);--i)
 
 //vectors
 #define vi vector<int>
@@ -67,40 +67,35 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-int dp[5010][5010];
+
 //Main function
 int main(){
     IOS;
     TIE;
 
-    int n;
-    cin>>n;
+    int n,m;
+    cin>>n>>m;
 
-    char type[n];
-    REP(i,n)
-        cin>>type[i];
+    map<int,bool> exists;
+    REP(i,n){
+        int cur;
+        cin>>cur;
+        exists[cur]=true;
+    }
 
-    dp[0][1]=1;
-    int maxIdt=1;
-    FOR(i,1,n)
-        if(type[i-1]=='f'){
-            FOR(j,1,maxIdt+1){
-                dp[i][j+1]=(dp[i-1][j]-dp[i-1][j-1]+dp[i][j]);
-                if(dp[i][j+1]<0)
-                    dp[i][j+1]+=MOD;
-                dp[i][j+1]%=MOD;
-            }
-            ++maxIdt;
+    vi ans;
+    FOR(i,1,300010)
+        if(i>m)
+            break;
+        else if(!exists[i]){
+            m-=i;
+            ans.pb(i);
         }
-        else
-            FOR(j,1,maxIdt+1){
-                dp[i][j]=(dp[i-1][maxIdt]-dp[i-1][j-1]+dp[i][j-1]);
-                if(dp[i][j]<0)
-                    dp[i][j]+=MOD;
-                dp[i][j]%=MOD;
-            }
 
-    cout<<dp[n-1][maxIdt]<<endl;
+    cout<<ans.size()<<endl;
+    for(int x : ans)
+        cout<<x<<" ";
+    cout<<endl;
 
     return 0;
 }

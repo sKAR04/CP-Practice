@@ -22,14 +22,14 @@ typedef long long ll;
 
 //Constants
 #define PI   3.141592653593
-#define MOD  1000000007
+#define MOD  1000000007LL
 #define EPS  0.000000001
 #define INF  0X3f3f3f3f
 
 //loops
-#define REP(i,n) 	    for(ll i=0;i<(n);++i)
-#define FOR(i,a,b)      for(ll i=(a);i<(b);++i)
-#define DFOR(i,a,b)     for(ll i=(a);i>=(b);--i)
+#define REP(i,n) 	    for(int i=0;i<(n);++i)
+#define FOR(i,a,b)      for(int i=(a);i<(b);++i)
+#define DFOR(i,a,b)     for(int i=(a);i>=(b);--i)
 
 //vectors
 #define vi vector<int>
@@ -67,7 +67,7 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-int dp[5010][5010];
+const int MAXN=0;
 //Main function
 int main(){
     IOS;
@@ -76,31 +76,55 @@ int main(){
     int n;
     cin>>n;
 
-    char type[n];
-    REP(i,n)
-        cin>>type[i];
-
-    dp[0][1]=1;
-    int maxIdt=1;
-    FOR(i,1,n)
-        if(type[i-1]=='f'){
-            FOR(j,1,maxIdt+1){
-                dp[i][j+1]=(dp[i-1][j]-dp[i-1][j-1]+dp[i][j]);
-                if(dp[i][j+1]<0)
-                    dp[i][j+1]+=MOD;
-                dp[i][j+1]%=MOD;
-            }
-            ++maxIdt;
+    vi pos,neg,zero,v;
+    int negIdx=-1,negMaxVal=-INF,x;
+    FOR(i,1,n+1){
+        cin>>x;
+        if(x<0 && negMaxVal<x){
+            negIdx=i;
+            negMaxVal=x;
         }
-        else
-            FOR(j,1,maxIdt+1){
-                dp[i][j]=(dp[i-1][maxIdt]-dp[i-1][j-1]+dp[i][j-1]);
-                if(dp[i][j]<0)
-                    dp[i][j]+=MOD;
-                dp[i][j]%=MOD;
-            }
 
-    cout<<dp[n-1][maxIdt]<<endl;
+        if(x>0)
+            pos.pb(i);
+        else if(x<0)
+            neg.pb(i);
+        else
+            zero.pb(i);
+    }
+
+    int szN=neg.size(),szP=pos.size(),szZ=zero.size();
+    if(szN&1){
+        REP(i,szZ-1)
+            cout<<1<<" "<<zero[i]<<" "<<zero[i+1]<<endl;
+        if(szZ)
+            cout<<1<<" "<<zero[szZ-1]<<" "<<negIdx<<endl;
+        if(szZ!=n-1)
+            cout<<2<<" "<<negIdx<<endl;
+        neg.erase(find(all(neg),negIdx));
+
+        for(int x : pos)
+            v.pb(x);
+        for(int x : neg)
+            v.pb(x);
+    }
+    else{
+        if(szZ){
+            REP(i,szZ-1)
+                cout<<1<<" "<<zero[i]<<" "<<zero[i+1]<<endl;
+            if(szZ!=n)
+                cout<<2<<" "<<zero[szZ-1]<<endl;
+        }
+
+        for(int x : pos)
+            v.pb(x);
+        for(int x : neg)
+            v.pb(x);
+    }
+
+    int sz=v.size();
+    REP(i,sz-1)
+        cout<<1<<" "<<v[i]<<" "<<v[i+1]<<endl;
 
     return 0;
 }

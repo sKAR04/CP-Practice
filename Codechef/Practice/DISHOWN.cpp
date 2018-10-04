@@ -54,8 +54,63 @@ typedef long long ll;
 #define E empty()
 
 //Variables and Functions required
-inline void solve(){
+int dishes[10010],rep[10010],sz[10010],maxIdx[10010];
 
+inline int getRep(int cur){
+    while(cur!=rep[cur])
+        cur=rep[cur];
+    return cur;
+}
+
+inline void setUnion(int x,int y){
+    if(sz[x]>sz[y]){
+        sz[x]+=sz[y];
+        rep[y]=x;
+    }
+    else{
+        sz[y]+=sz[x];
+        rep[x]=y;
+    }
+}
+
+inline void solve(){
+    int n;
+    cin>>n;
+
+    FOR(i,1,n+1){
+        cin>>dishes[i];
+        maxIdx[i]=rep[i]=i;
+        sz[i]=1;
+    }
+
+    int q;
+    cin>>q;
+
+    while(q--){
+        int type;
+        cin>>type;
+
+        if(!type){
+            int x,y;
+            cin>>x>>y;
+
+            int repX=getRep(x),repY=getRep(y);
+            if(maxIdx[repX]==maxIdx[repY])
+                cout<<"Invalid query!"<<endl;
+            else if(dishes[maxIdx[repX]]!=dishes[maxIdx[repY]]){
+                setUnion(repX,repY);
+                if(dishes[maxIdx[repX]]<dishes[maxIdx[repY]])
+                    maxIdx[repX]=maxIdx[repY];
+                else
+                    maxIdx[repY]=maxIdx[repX];
+            }
+        }
+        else{
+            int x;
+            cin>>x;
+            cout<<maxIdx[getRep(x)]<<endl;
+        }
+    }
 }
 //Main function
 int main(){

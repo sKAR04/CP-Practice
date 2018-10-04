@@ -22,14 +22,14 @@ typedef long long ll;
 
 //Constants
 #define PI   3.141592653593
-#define MOD  1000000007
+#define MOD  1000000007LL
 #define EPS  0.000000001
 #define INF  0X3f3f3f3f
 
 //loops
-#define REP(i,n) 	    for(ll i=0;i<(n);++i)
-#define FOR(i,a,b)      for(ll i=(a);i<(b);++i)
-#define DFOR(i,a,b)     for(ll i=(a);i>=(b);--i)
+#define REP(i,n) 	    for(int i=0;i<(n);++i)
+#define FOR(i,a,b)      for(int i=(a);i<(b);++i)
+#define DFOR(i,a,b)     for(int i=(a);i>=(b);--i)
 
 //vectors
 #define vi vector<int>
@@ -67,7 +67,51 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-int dp[5010][5010];
+vi adj[100010];
+bool color[100010];
+ll dp[100010][2];
+
+ll power(ll base,ll exp){
+    if(!exp)
+        return 1;
+    else{
+        ll ans=power(base,exp/2);
+        ans=(ans*ans)%MOD;
+        if(exp&1)
+            ans=(ans*base)%MOD;
+        return ans;
+    }
+}
+
+void dfs(int cur,int par){
+    bool isLeaf=true;
+
+    ll prod=1LL;
+    for(int ch : adj[cur])
+        if(ch!=par){
+            isLeaf=false;
+            dfs(ch,cur);
+            prod=(prod*((dp[ch][0]+dp[ch][1])%MOD))%MOD;
+        }
+
+    if(isLeaf){
+        if(color[cur])
+            dp[cur][0]=1;
+        else
+            dp[cur][1]=1;
+    }
+    else{
+        if(color[cur])
+            dp[cur][0]=prod;
+        else{
+            dp[cur][1]=prod;
+            ll sum=0;
+            for(int ch : adj[cur])
+                sum=(sum+(dp[ch][0]*power(dp[ch][0]+dp[ch][1],MOD-2LL))%MOD)%MOD;
+            dp[cur][0]=(prod*sum)%MOD;
+        }
+    }
+}
 //Main function
 int main(){
     IOS;
@@ -76,31 +120,18 @@ int main(){
     int n;
     cin>>n;
 
-    char type[n];
+    FOR(i,1,n){
+        int v;
+        cin>>v;
+        adj[v].pb(i);
+        adj[i].pb(v);
+    }
     REP(i,n)
-        cin>>type[i];
+        cin>>color[i];
 
-    dp[0][1]=1;
-    int maxIdt=1;
-    FOR(i,1,n)
-        if(type[i-1]=='f'){
-            FOR(j,1,maxIdt+1){
-                dp[i][j+1]=(dp[i-1][j]-dp[i-1][j-1]+dp[i][j]);
-                if(dp[i][j+1]<0)
-                    dp[i][j+1]+=MOD;
-                dp[i][j+1]%=MOD;
-            }
-            ++maxIdt;
-        }
-        else
-            FOR(j,1,maxIdt+1){
-                dp[i][j]=(dp[i-1][maxIdt]-dp[i-1][j-1]+dp[i][j-1]);
-                if(dp[i][j]<0)
-                    dp[i][j]+=MOD;
-                dp[i][j]%=MOD;
-            }
+    dfs(0,0);
 
-    cout<<dp[n-1][maxIdt]<<endl;
+    cout<<dp[0][0]<<endl;
 
     return 0;
 }

@@ -22,14 +22,14 @@ typedef long long ll;
 
 //Constants
 #define PI   3.141592653593
-#define MOD  1000000007
+#define MOD  1000000007LL
 #define EPS  0.000000001
 #define INF  0X3f3f3f3f
 
 //loops
-#define REP(i,n) 	    for(ll i=0;i<(n);++i)
-#define FOR(i,a,b)      for(ll i=(a);i<(b);++i)
-#define DFOR(i,a,b)     for(ll i=(a);i>=(b);--i)
+#define REP(i,n) 	    for(int i=0;i<(n);++i)
+#define FOR(i,a,b)      for(int i=(a);i<(b);++i)
+#define DFOR(i,a,b)     for(int i=(a);i>=(b);--i)
 
 //vectors
 #define vi vector<int>
@@ -67,40 +67,44 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-int dp[5010][5010];
+set<int> adj[200010];
+int sz[200010],pos[200010];
+
+vi ePath;
+void dfs(int cur,int par){
+    pos[cur]=ePath.size();
+    ePath.pb(cur);
+    for(auto it=adj[cur].begin();it!=adj[cur].end();++it)
+        if(*it!=par){
+            dfs(*it,cur);
+            sz[cur]+=sz[*it];
+        }
+    ++sz[cur];
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
-    int n;
-    cin>>n;
+    int n,q;
+    cin>>n>>q;
 
-    char type[n];
-    REP(i,n)
-        cin>>type[i];
+    FOR(i,2,n+1){
+        int p;
+        cin>>p;
+        adj[i].insert(p);
+        adj[p].insert(i);
+    }
+    dfs(1,0);
 
-    dp[0][1]=1;
-    int maxIdt=1;
-    FOR(i,1,n)
-        if(type[i-1]=='f'){
-            FOR(j,1,maxIdt+1){
-                dp[i][j+1]=(dp[i-1][j]-dp[i-1][j-1]+dp[i][j]);
-                if(dp[i][j+1]<0)
-                    dp[i][j+1]+=MOD;
-                dp[i][j+1]%=MOD;
-            }
-            ++maxIdt;
-        }
-        else
-            FOR(j,1,maxIdt+1){
-                dp[i][j]=(dp[i-1][maxIdt]-dp[i-1][j-1]+dp[i][j-1]);
-                if(dp[i][j]<0)
-                    dp[i][j]+=MOD;
-                dp[i][j]%=MOD;
-            }
+    REP(i,q){
+        int u,k;
+        cin>>u>>k;
 
-    cout<<dp[n-1][maxIdt]<<endl;
-
+        int ans=-1;
+        if(sz[u]>=k)
+            ans=ePath[pos[u]+k-1];
+        cout<<ans<<endl;
+    }
     return 0;
 }

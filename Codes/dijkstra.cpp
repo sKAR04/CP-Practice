@@ -22,14 +22,14 @@ typedef long long ll;
 
 //Constants
 #define PI   3.141592653593
-#define MOD  1000000007
+#define MOD  1000000007LL
 #define EPS  0.000000001
 #define INF  0X3f3f3f3f
 
 //loops
-#define REP(i,n) 	    for(ll i=0;i<(n);++i)
-#define FOR(i,a,b)      for(ll i=(a);i<(b);++i)
-#define DFOR(i,a,b)     for(ll i=(a);i>=(b);--i)
+#define REP(i,n) 	    for(int i=0;i<(n);++i)
+#define FOR(i,a,b)      for(int i=(a);i<(b);++i)
+#define DFOR(i,a,b)     for(int i=(a);i>=(b);--i)
 
 //vectors
 #define vi vector<int>
@@ -67,40 +67,49 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-int dp[5010][5010];
+int n,m;
+vii adj[100010];
+bool relaxed[100010];
+int dist[100010];
+
+inline void dijkstra(){
+    FOR(i,1,n+1)
+        dist[i]=1e9;
+
+    PQ<pi,vii,greater<pi>> q;
+    dist[1]=0;
+    q.push(mp(0,1));
+    while(!q.E){
+        int cur=q.top().S;
+        q.pop();
+
+        if(!relaxed[cur]){
+            relaxed[cur]=true;
+            for(pi p : adj[cur])
+                if(!relaxed[p.S] && dist[p.S]>dist[cur]+p.F){
+                    dist[p.S]=dist[cur]+p.F;
+                    q.push(mp(dist[p.S],p.S));
+                }
+        }
+    }
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
-    int n;
-    cin>>n;
+    cin>>n>>m;
+    REP(i,m){
+        int v1,v2,w;
+        cin>>v1>>v2>>w;
+        adj[v1].pb(mp(w,v2));
+    }
 
-    char type[n];
-    REP(i,n)
-        cin>>type[i];
+    dijkstra();
 
-    dp[0][1]=1;
-    int maxIdt=1;
-    FOR(i,1,n)
-        if(type[i-1]=='f'){
-            FOR(j,1,maxIdt+1){
-                dp[i][j+1]=(dp[i-1][j]-dp[i-1][j-1]+dp[i][j]);
-                if(dp[i][j+1]<0)
-                    dp[i][j+1]+=MOD;
-                dp[i][j+1]%=MOD;
-            }
-            ++maxIdt;
-        }
-        else
-            FOR(j,1,maxIdt+1){
-                dp[i][j]=(dp[i-1][maxIdt]-dp[i-1][j-1]+dp[i][j-1]);
-                if(dp[i][j]<0)
-                    dp[i][j]+=MOD;
-                dp[i][j]%=MOD;
-            }
-
-    cout<<dp[n-1][maxIdt]<<endl;
+    FOR(i,2,n+1)
+        cout<<dist[i]<<" ";
+    cout<<endl;
 
     return 0;
 }

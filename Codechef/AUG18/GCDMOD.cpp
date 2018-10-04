@@ -23,9 +23,9 @@ typedef long long ll;
 #define INF  0X3f3f3f3f
 
 //loops
-#define REP(i,n) 	    for(int i=0;i<(n);++i)
-#define FOR(i,a,b)      for(int i=(a);i<(b);++i)
-#define DFOR(i,a,b)     for(int i=(a);i>=(b);--i)
+#define REP(i,n) 	    for(ll i=0;i<(n);++i)
+#define FOR(i,a,b)      for(ll i=(a);i<(b);++i)
+#define DFOR(i,a,b)     for(ll i=(a);i>=(b);--i)
 
 //vectors
 #define vi vector<int>
@@ -54,8 +54,60 @@ typedef long long ll;
 #define E empty()
 
 //Variables and Functions required
-inline void solve(){
+ll power(ll base,ll exp){
+    if(!exp)
+        return 1LL;
+    else{
+        ll ans=power(base,exp/2);
+        ans=(ans*ans)%MOD;
 
+        if(exp&1LL)
+            ans=(ans*base)%MOD;
+
+        return ans;
+    }
+}
+
+void solve(){
+    ll a,b,n;
+    cin>>a>>b>>n;
+
+    if(a==b)
+        cout<<(power(a,n)+power(b,n))%MOD<<endl;
+    else{
+        ll diff=a-b,ans=1;
+        ll root=sqrt(b);
+        FOR(i,2,root+2){
+            ll cnt1=0;
+            while(b%i==0){
+                cnt1+=n;
+                b/=i;
+            }
+
+            if(i==2)
+                ++cnt1;
+
+            ll cnt2=0;
+            while(diff%i==0){
+                ++cnt2;
+                diff/=i;
+            }
+            REP(j,min(cnt1,cnt2))
+                ans=(ans*i)%MOD;
+        }
+
+        if(b!=1){
+            ll cnt=0;
+            while(diff%b==0){
+                ++cnt;
+                diff/=b;
+            }
+            REP(j,min(n,cnt))
+                ans=(ans*b)%MOD;
+        }
+
+        cout<<ans%MOD<<endl;
+    }
 }
 //Main function
 int main(){
