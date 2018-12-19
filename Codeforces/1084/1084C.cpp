@@ -74,6 +74,20 @@ int main(){
     IOS;
     TIE;
 
+	string str;
+	cin>>str;
+
+	int len=str.length();
+
+	str="a"+str;
+
+	ll ans=0,lastB=0;
+	FOR(i,1,len+1)
+		if(str[i]==98)
+			lastB=ans;
+		else if(str[i]==97)
+			ans=(ans+lastB+1)%MOD;
+	cout<<ans<<endl;
 
     return 0;
 }

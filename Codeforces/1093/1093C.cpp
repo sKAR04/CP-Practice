@@ -74,6 +74,29 @@ int main(){
     IOS;
     TIE;
 
+	int n;
+	cin>>n;
+
+	ll b[n/2],a[n];
+	REP(i,n/2)
+		cin>>b[i];
+	a[0]=0;
+	a[n-1]=b[0];
+
+	FOR(i,1,n/2){
+		if(b[i]-a[n-i]<a[i-1]){
+			a[i]=a[i-1];
+			a[n-i-1]=b[i]-a[i];
+		}
+		else{
+			a[n-i-1]=a[n-i];
+			a[i]=b[i]-a[n-i];
+		}
+	}
+
+	REP(i,n)
+		cout<<a[i]<<" ";
+	cout<<endl;
 
     return 0;
 }
