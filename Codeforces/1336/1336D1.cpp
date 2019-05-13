@@ -1,6 +1,6 @@
 /*
 ######################################################
-#    I don't know what I'm doing with my life O.O    #
+# Let's see where this is going to lead me shall we? #
 ######################################################
 */
 
@@ -67,13 +67,41 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
-
+const int MAXN=300010;
+vi adj[MAXN];
+int arr[MAXN];
+bool toMove[MAXN];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n,m;
+    cin>>n>>m;
+
+    REP(i,n)
+        cin>>arr[i];
+
+    int v1,v2;
+    REP(i,m){
+        cin>>v1>>v2;
+        adj[v1].pb(v2);
+    }
+
+    toMove[arr[n-1]]=true;
+    int cnt=1,tmp;
+    DFOR(i,n-2,0){
+        tmp=0;
+        for(int ch : adj[arr[i]])
+            if(toMove[ch])
+                ++tmp;
+
+        if(tmp!=cnt){
+            ++cnt;
+            toMove[arr[i]]=true;
+        }
+    }
+    cout<<n-cnt<<endl;
 
     return 0;
 }

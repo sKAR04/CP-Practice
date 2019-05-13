@@ -68,12 +68,57 @@ typedef long long ll;
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
 const int MAXN=0;
+void solve(){
+    ll l,r;
+    cin>>l>>r;
 
+    bool n1[63],n2[63],n[63];
+    REP(i,63){
+        n1[i]=l&1LL;
+        n2[i]=r&1LL;
+        l>>=1LL;
+        r>>=1LL;
+    }
+
+    bool flag=false;
+    DFOR(i,62,0)
+        if(flag)
+            n[i]=1;
+        else{
+            if(n1[i]==n2[i])
+                n[i]=n1[i];
+            else{
+                n[i]=0;
+                flag=true;
+            }
+        }
+
+    int cnt1=0,cnt2=0;
+    REP(i,63)
+        cnt1+=n[i];
+    REP(i,63)
+        cnt2+=n2[i];
+
+    if(cnt2>cnt1)
+        REP(i,63)
+            n[i]=n2[i];
+
+    ll ans=0LL,pow2=1LL;
+    REP(i,63){
+        ans+=(pow2*n[i]);
+        pow2<<=1LL;
+    }
+    cout<<ans<<endl;
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int t;
+    cin>>t;
 
+    while(t--)
+        solve();
     return 0;
 }

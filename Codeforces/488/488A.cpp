@@ -68,12 +68,31 @@ typedef long long ll;
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
 const int MAXN=0;
+bool has8(int n){
+    if(n<0)
+        n*=-1;
+
+    while(n){
+        if(n%10==8)
+            return true;
+        n/=10;
+    }
+    return false;
+}
 
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    int ans=1;
+    while(1)
+        if(has8((ans++)+n))
+            break;
+    cout<<ans-1<<endl;
 
     return 0;
 }

@@ -1,6 +1,6 @@
 /*
 ######################################################
-#    I don't know what I'm doing with my life O.O    #
+# Let's see where this is going to lead me shall we? #
 ######################################################
 */
 
@@ -68,12 +68,35 @@ typedef long long ll;
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
 const int MAXN=0;
+ll pow9[10],maxProd=LLONG_MIN;
+string str;
+
+void findMaxProd(int pos,ll curProd){
+    if(pos==str.length()){
+        maxProd=max(maxProd,curProd);
+        return ;
+    }
+    ll tmpProd=curProd;
+    tmpProd*=(str[pos]-48-1);
+    tmpProd*=pow9[str.length()-pos-1];
+    maxProd=max(maxProd,tmpProd);
+    curProd*=(str[pos]-48);
+    findMaxProd(pos+1,curProd);
+}
 
 //Main function
 int main(){
     IOS;
     TIE;
 
+    cin>>str;
+
+    pow9[0]=1LL;
+    FOR(i,1,10)
+        pow9[i]=pow9[i-1]*9LL;
+    maxProd=pow9[str.length()-1];
+    findMaxProd(0,1LL);
+    cout<<maxProd<<endl;
 
     return 0;
 }

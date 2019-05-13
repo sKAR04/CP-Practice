@@ -74,6 +74,22 @@ int main(){
     IOS;
     TIE;
 
+    ll n,k;
+    cin>>n>>k;
+
+    ll arr[n];
+    REP(i,n)
+        cin>>arr[i];
+    sort(arr,arr+n);
+
+    set<ll> s;
+    int cnt=0;
+    REP(i,n)
+        if(s.find(arr[i])==s.end()){
+            ++cnt;
+            s.insert(arr[i]*k);
+        }
+    cout<<cnt<<endl;
 
     return 0;
 }

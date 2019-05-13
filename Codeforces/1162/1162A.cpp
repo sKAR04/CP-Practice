@@ -1,6 +1,6 @@
 /*
 ######################################################
-#    I don't know what I'm doing with my life O.O    #
+# Let's see where this is going to lead me shall we? #
 ######################################################
 */
 
@@ -74,6 +74,24 @@ int main(){
     IOS;
     TIE;
 
+    int n,h,m;
+    cin>>n>>h>>m;
+
+    int arr[n+10];
+    FOR(i,1,n+1)
+        arr[i]=h;
+
+    int l,r,x;
+    REP(i,m){
+        cin>>l>>r>>x;
+        FOR(j,l,r+1)
+            arr[j]=min(arr[j],x);
+    }
+
+    int ans=0;
+    FOR(i,1,n+1)
+        ans+=(arr[i]*arr[i]);
+    cout<<ans<<endl;
 
     return 0;
 }

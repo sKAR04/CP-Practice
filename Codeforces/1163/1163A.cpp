@@ -74,6 +74,13 @@ int main(){
     IOS;
     TIE;
 
+    int n,m;
+    cin>>n>>m;
+
+    if(m<2)
+        cout<<1<<endl;
+    else
+        cout<<min(n-m,m)<<endl;
 
     return 0;
 }

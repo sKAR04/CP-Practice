@@ -67,13 +67,45 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
+const int MAXN=1e3+10;
+char grid[MAXN][MAXN];
 
+bool isValid(int i,int j){
+    pi foo[] = {mp(i+1,j),mp(i-1,j),mp(i,j-1),mp(i,j+1)};
+    for(pi p : foo)
+        if(grid[p.F][p.S]=='S')
+            return true;
+    return false;
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n,m;
+    cin>>n>>m;
 
+    FOR(i,1,n+1)
+        FOR(j,1,m+1)
+            cin>>grid[i][j];
+
+    bool flag=false;
+    FOR(i,1,n+1)
+        FOR(j,1,m+1)
+            if(grid[i][j]=='.')
+                grid[i][j]='D';
+            else if(grid[i][j]=='W' && isValid(i,j))
+                flag=true;
+
+    if(flag)
+        cout<<"No"<<endl;
+    else{
+        cout<<"Yes"<<endl;
+        FOR(i,1,n+1){
+            FOR(j,1,m+1)
+                cout<<grid[i][j];
+            cout<<endl;
+        }
+    }
     return 0;
 }

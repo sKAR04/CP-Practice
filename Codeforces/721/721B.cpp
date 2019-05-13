@@ -68,11 +68,43 @@ typedef long long ll;
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
 const int MAXN=0;
-
+bool myCmp(string s1,string s2){
+    return s1.length()<s2.length();
+}
 //Main function
 int main(){
     IOS;
     TIE;
+
+    int n,k;
+    cin>>n>>k;
+
+    vector<string> v;
+    string str;
+
+    REP(i,n){
+        cin>>str;
+        v.pb(str);
+    }
+    sort(all(v),myCmp);
+
+    string pass;
+    cin>>pass;
+
+    int idx=0;
+    REP(i,n)
+        if(v[i].length()==pass.length()){
+            idx=i;
+            break;
+        }
+
+    int cnt=0;
+    FOR(i,idx,n)
+        if(v[i].length()==pass.length())
+            ++cnt;
+
+    int minVal=idx+1+(idx/k)*5,maxVal=idx+cnt+((idx+cnt-1)/k)*5;
+    cout<<minVal<<" "<<maxVal<<endl;
 
 
     return 0;

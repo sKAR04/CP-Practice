@@ -74,6 +74,11 @@ int main(){
     IOS;
     TIE;
 
+    int a,b;
+    cin>>a>>b;
+
+    int c=6-max(a,b)+1;
+    cout<<(c/__gcd(c,6))<<"/"<<(6/__gcd(c,6))<<endl;
 
     return 0;
 }

@@ -1,6 +1,6 @@
 /*
 ######################################################
-#    I don't know what I'm doing with my life O.O    #
+# Let's see where this is going to lead me shall we? #
 ######################################################
 */
 
@@ -73,6 +73,11 @@ const int MAXN=0;
 int main(){
     IOS;
     TIE;
+
+    int n,k;
+    cin>>n>>k;
+
+    cout<<min(k-1,n-k)+(n-1)+n+n+1<<endl;
 
 
     return 0;

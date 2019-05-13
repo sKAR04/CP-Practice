@@ -1,6 +1,6 @@
 /*
 ######################################################
-#    I don't know what I'm doing with my life O.O    #
+# Let's see where this is going to lead me shall we? #
 ######################################################
 */
 
@@ -68,12 +68,40 @@ typedef long long ll;
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
 const int MAXN=0;
+int n;
+ll getMinVal(vll v){
+    ll minDiff=LLONG_MAX;
+    FOR(i,1,n)
+        minDiff=min(minDiff,abs(v[i]-v[i-1]));
+    return minDiff;
+}
 
+inline void solve(){
+    cin>>n;
+
+    ll x,y;
+    vll plus,minus;
+    REP(i,n){
+        cin>>x>>y;
+        plus.pb(x+y);
+        minus.pb(x-y);
+    }
+
+    sort(all(plus));
+    sort(all(minus));
+
+    cout<<setprecision(10)<<fixed<<double(min(getMinVal(plus),getMinVal(minus)))/2.0<<endl;
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int t;
+    cin>>t;
+
+    while(t--)
+        solve();
 
     return 0;
 }

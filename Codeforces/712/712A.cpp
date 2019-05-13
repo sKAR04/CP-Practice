@@ -74,6 +74,25 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    int x;
+    vi v;
+    REP(i,n){
+        cin>>x;
+        v.pb(x);
+    }
+    v.pb(0);
+
+    di b;
+    DFOR(i,n-1,0)
+        b.push_front(v[i+1]+v[i]);
+
+    for(int x : b)
+        cout<<x<<" ";
+    cout<<endl;
+
 
     return 0;
 }

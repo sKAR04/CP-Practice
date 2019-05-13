@@ -1,6 +1,6 @@
 /*
 ######################################################
-#    I don't know what I'm doing with my life O.O    #
+# Let's see where this is going to lead me shall we? #
 ######################################################
 */
 
@@ -68,12 +68,42 @@ typedef long long ll;
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
 const int MAXN=0;
+vll burgers,tmp;
 
+ll gcd(ll a,ll b){
+    if(!b)
+        return a;
+    return gcd(b,a%b);
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    ll n,k;
+    cin>>n>>k;
+
+    FOR(i,1,n+1)
+        burgers.pb((i-1)*k+1);
+
+    ll a,b;
+    cin>>a>>b;
+
+    ll prod=n*k;
+    ++a;
+    for(ll x : burgers){
+        tmp.pb((x-b+prod)%prod);
+        tmp.pb((x+b+prod)%prod);
+    }
+
+    ll maxTurns=LLONG_MIN,minTurns=LLONG_MAX;
+    for(ll x : tmp){
+        ll curTurns=prod/gcd(prod,(x-a+prod)%prod);
+        maxTurns=max(maxTurns,curTurns);
+        minTurns=min(minTurns,curTurns);
+        //cout<<x<<" "<<curTurns<<endl;
+    }
+    cout<<minTurns<<" "<<maxTurns<<endl;
 
     return 0;
 }

@@ -1,6 +1,6 @@
 /*
 ######################################################
-#    I don't know what I'm doing with my life O.O    #
+# Let's see where this is going to lead me shall we? #
 ######################################################
 */
 
@@ -67,13 +67,49 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
+const int MAXN=100010;
+vi adj[MAXN],rem;
+bool c[MAXN];
+int root=-1;
 
+void dfs(int cur){
+    bool flag=c[cur];
+    for(int ch : adj[cur])
+        flag&=c[ch];
+
+    if(flag)
+        rem.pb(cur);
+
+    for(int ch : adj[cur])
+        dfs(ch);
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    int p;
+    FOR(i,1,n+1){
+        cin>>p>>c[i];
+        if(p==-1){
+            root=i;
+            continue;
+        }
+
+        adj[p].pb(i);
+    }
+    dfs(root);
+    sort(all(rem));
+
+    if(rem.size())
+        for(int x : rem)
+            cout<<x<<" ";
+    else
+        cout<<-1;
+    cout<<endl;
 
     return 0;
 }

@@ -67,13 +67,44 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
+const int MAXN=1e5+10;
+ll c[MAXN];
+bool vis[MAXN];
+vi adj[MAXN];
 
+ll dfs(int x){
+    vis[x]=true;
+    ll tmp=c[x];
+    for(int ch : adj[x])
+        if(!vis[ch])
+            tmp=min(tmp,dfs(ch));
+
+    return tmp;
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n,m;
+    cin>>n>>m;
+
+    FOR(i,1,n+1)
+        cin>>c[i];
+
+    int u,v;
+    REP(i,m){
+        cin>>u>>v;
+        adj[u].pb(v);
+        adj[v].pb(u);
+    }
+
+    ll ans=0;
+    FOR(i,1,n+1)
+        if(!vis[i])
+            ans+=dfs(i);
+
+    cout<<ans<<endl;
 
     return 0;
 }

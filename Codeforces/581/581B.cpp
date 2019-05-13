@@ -67,13 +67,28 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
-
+const int MAXN=1e5+10;
+int arr[MAXN],ans[MAXN];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    REP(i,n)
+        cin>>arr[i];
+
+    int curMax=0;
+    DFOR(i,n-1,0){
+        ans[i]=max(0,curMax-arr[i]+1);
+        curMax=max(curMax,arr[i]);
+    }
+
+    REP(i,n)
+        cout<<ans[i]<<" ";
+    cout<<endl;
 
     return 0;
 }

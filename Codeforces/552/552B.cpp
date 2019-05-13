@@ -67,13 +67,26 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
-
+const int MAXN=20;
 //Main function
 int main(){
     IOS;
     TIE;
 
+    ll n;
+    cin>>n;
+
+    ll pow10=1LL,ans=0,cnt=1;
+    while(1){
+        if(n>=pow10 && n<pow10*10LL){
+            ans+=(n-pow10+1)*cnt;
+            break;
+        }
+        ans+=9LL*pow10*cnt;
+        pow10*=10LL;
+        ++cnt;
+    }
+    cout<<ans<<endl;
 
     return 0;
 }

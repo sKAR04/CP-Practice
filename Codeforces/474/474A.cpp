@@ -68,12 +68,25 @@ typedef long long ll;
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
 const int MAXN=0;
-
+string keys="qwertyuiopasdfghjkl;zxcvbnm,./";
 //Main function
 int main(){
     IOS;
     TIE;
 
+    char c;
+    cin>>c;
+
+    string str;
+    cin>>str;
+
+    int n=str.length();
+    REP(i,n)
+        if(c=='L')
+            cout<<keys[keys.find(str[i])+1];
+        else
+            cout<<keys[keys.find(str[i])-1];
+    cout<<endl;
 
     return 0;
 }

@@ -68,12 +68,42 @@ typedef long long ll;
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
 const int MAXN=0;
-
+int cnt[10];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n,m;
+    cin>>n>>m;
+
+    vi l1,l2;
+
+    int x,min1=INT_MAX,min2=INT_MAX;
+    REP(i,n){
+        cin>>x;
+        l1.pb(x);
+        ++cnt[x];
+        min1=min(min1,x);
+    }
+
+    REP(i,m){
+        cin>>x;
+        l2.pb(x);
+        ++cnt[x];
+        min2=min(min2,x);
+    }
+
+    REP(i,10)
+        if(cnt[i]>1){
+            cout<<i<<endl;
+            return 0;
+        }
+
+    if(min1>min2)
+        cout<<min2<<min1<<endl;
+    else
+        cout<<min1<<min2<<endl;
 
     return 0;
 }

@@ -67,13 +67,52 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
-
+const int MAXN=2010;
+char seats[MAXN][MAXN];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n,m,k;
+    cin>>n>>m>>k;
+
+    //Fuck my life
+    //I hope this isn't the mistake
+    REP(i,n)
+        REP(j,m)
+            cin>>seats[i][j];
+
+    int ans=0;
+    REP(i,n){
+        int cnt=0;
+        REP(j,m){
+            if(seats[i][j]=='*')
+                cnt=0;
+            else
+                ++cnt;
+
+            if(cnt>=k)
+                ++ans;
+        }
+    }
+
+    REP(j,m){
+        int cnt=0;
+        REP(i,n){
+            if(seats[i][j]=='*')
+                cnt=0;
+            else
+                ++cnt;
+
+            if(cnt>=k)
+                ++ans;
+        }
+    }
+
+    if(k==1)
+        ans>>=1;
+    cout<<ans<<endl;
 
     return 0;
 }

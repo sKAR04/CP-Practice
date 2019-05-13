@@ -74,6 +74,22 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    if(n&1){
+        REP(i,n)
+            cout<<i<<" ";
+        cout<<endl;
+        REP(i,n)
+            cout<<i<<" ";
+        cout<<endl;
+        REP(i,n)
+            cout<<(2*i)%n<<" ";
+        cout<<endl;
+    }
+    else
+        cout<<-1<<endl;
 
     return 0;
 }

@@ -67,13 +67,29 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
-
+const int MAXN=1e5+10;
+map<int,int> cntMap;
+int cnt[MAXN],ptr;
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    int ans=0,x;
+    FOR(i,1,n+1){
+        cin>>x;
+        --cnt[cntMap[x]];
+        ++cnt[cntMap[x]+1];
+        ++cntMap[x];
+        ptr=(ptr>cntMap[x])?ptr:cntMap[x];
+
+        if(ptr==1 || (cnt[ptr]==1 && cnt[ptr-1]==cntMap.size()-1) || (cnt[ptr]==cntMap.size()-1 && cnt[1]==1))
+            ans=i;
+    }
+    cout<<ans<<endl;
 
     return 0;
 }

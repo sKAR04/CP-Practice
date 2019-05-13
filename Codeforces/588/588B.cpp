@@ -74,6 +74,22 @@ int main(){
     IOS;
     TIE;
 
+    ll n;
+    cin>>n;
 
+    if(n<4)
+        cout<<n<<endl;
+    else{
+        ll prod=1LL,tmp=n;
+        for(ll i=2;i<=sqrt(tmp)+1;++i)
+            if(n%i==0){
+                while(n%i==0)
+                    n/=i;
+
+                prod*=i;
+            }
+
+        cout<<prod*n<<endl;
+    }
     return 0;
 }

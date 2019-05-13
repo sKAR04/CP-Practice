@@ -67,13 +67,49 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
+const int MAXN=100010;
+int arr[MAXN];
+int bSearch(int low,int high,int val){
+    int mid=(low+high)>>1;
 
+    if(low<=high){
+        if(arr[mid]>val)
+            return bSearch(low,mid-1,val);
+        else if(arr[mid]==val)
+            return mid;
+        else
+            return bSearch(mid+1,high,val);
+    }
+
+    return mid;
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    FOR(i,1,n+1){
+        cin>>arr[i];
+        arr[i]+=arr[i-1];
+    }
+
+    int q;
+    cin>>q;
+
+    while(q--){
+        int x;
+        cin>>x;
+
+        int pos=bSearch(1,n,x);
+        if(arr[pos]==x)
+            cout<<pos;
+        else
+            cout<<pos+1;
+        cout<<endl;
+    }
 
     return 0;
 }

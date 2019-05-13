@@ -67,13 +67,52 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
+const int MAXN=1e3;
+bool edge[MAXN][MAXN],marked[MAXN];
+int d[MAXN];
+int dijkstra(int n){
+    FOR(i,1,n+1)
+        d[i]=INF;
 
+    d[1]=0;
+    int minDist,minIdx;
+    FOR(foo,1,n+1){
+        minDist=INF;
+        minIdx=-1;
+        FOR(i,1,n+1)
+            if(minDist>=d[i] && !marked[i]){
+                minDist=d[i];
+                minIdx=i;
+            }
+
+        marked[minIdx]=true;
+
+        FOR(i,1,n+1)
+            if(!marked[i] && edge[minIdx][i])
+                d[i]=min(d[i],d[minIdx]+1);
+    }
+
+    return (d[n]>=INF)?-1:d[n];
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n,m;
+    cin>>n>>m;
+
+    int u,v;
+    REP(i,m){
+        cin>>u>>v;
+        edge[u][v]=edge[v][u]=1;
+    }
+
+    if(edge[1][n])
+        FOR(i,1,n+1)
+            FOR(j,i+1,n+1)
+                edge[i][j]=edge[j][i]=!edge[i][j];
+    cout<<dijkstra(n)<<endl;
 
     return 0;
 }

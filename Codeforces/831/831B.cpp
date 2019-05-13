@@ -74,6 +74,24 @@ int main(){
     IOS;
     TIE;
 
+    string s1,s2;
+    cin>>s1>>s2;
+
+    map<char,char> charMap;
+    REP(i,10)
+        charMap[48+i]=48+i;
+    REP(i,26){
+        charMap[s1[i]]=s2[i];
+        charMap[s1[i]-32]=s2[i]-32;
+    }
+
+    string s3;
+    cin>>s3;
+
+    int len=s3.length();
+    REP(i,len)
+        cout<<charMap[s3[i]];
+    cout<<endl;
 
     return 0;
 }

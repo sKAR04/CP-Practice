@@ -74,6 +74,20 @@ int main(){
     IOS;
     TIE;
 
+    ll n,p;
+    cin>>n>>p;
+
+    long double prob[n];
+    ll x,y;
+    REP(i,n){
+        cin>>x>>y;
+        prob[i]=double((((y/p)*p)-(((x+p-1)/p)*p))/p+1)/double(y-x+1LL);
+    }
+
+    long double ans=0.0;
+    REP(i,n)
+        ans+=(prob[i]+prob[(i+1)%n]-prob[i]*prob[(i+1)%n]);
+    cout<<setprecision(20)<<fixed<<ans*2000.0<<endl;
 
     return 0;
 }

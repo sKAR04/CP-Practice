@@ -1,7 +1,7 @@
 /*
-#####################################################
-# I will win.. maybe not immediately but definitely #
-#####################################################
+######################################################
+#    I don't know what I'm doing with my life O.O    #
+######################################################
 */
 
 #include <bits/stdc++.h>
@@ -27,14 +27,15 @@ typedef long long ll;
 #define INF  0X3f3f3f3f
 
 //loops
-#define REP(i,n) 	    for(ll i=0;i<(n);++i)
-#define FOR(i,a,b)      for(ll i=(a);i<(b);++i)
-#define DFOR(i,a,b)     for(ll i=(a);i>=(b);--i)
+#define REP(i,n) 	    for(int i=0;i<(n);++i)
+#define FOR(i,a,b)      for(int i=(a);i<(b);++i)
+#define DFOR(i,a,b)     for(int i=(a);i>=(b);--i)
 
 //vectors
 #define vi vector<int>
 #define vll vector<ll>
-#define vii vector<pair<int,int> >
+#define vii vector<pair<int,int>>
+#define vlll vector<pair<ll,ll>>
 #define pb 	push_back
 
 //pairs
@@ -51,7 +52,6 @@ typedef long long ll;
 #endif
 #define gc getchar
 #define pc putchar
-#define scan getFoo
 
 //If using cin and cout
 #define IOS ios::sync_with_stdio(false)
@@ -59,6 +59,7 @@ typedef long long ll;
 
 //queue
 #define di deque<int>
+#define dll deque<ll>
 #define qi queue<int>
 #define PQ priority_queue
 
@@ -66,45 +67,36 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-int n,m,s;
-vi adj[5050];
-int rep[5010];
-bool vis[5010];
+const int MAXN=1e5+10;
+int arr[MAXN];
 
-void dfs(int i,int x){
-    vis[i]=true;
-    if(rep[i]!=s){
-        rep[i]=x;
-        for(int v : adj[i])
-            if(!vis[v])
-                dfs(v,x);
-    }
+bool myCmp(int i1,int i2){
+    return i1%10>i2%10;
 }
+
 //Main function
 int main(){
     IOS;
     TIE;
 
-    cin>>n>>m>>s;
+    int n,k;
+    cin>>n>>k;
 
-    REP(i,m){
-        int v1,v2;
-        cin>>v1>>v2;
-        adj[v1].pb(v2);
-    }
+    REP(i,n)
+        cin>>arr[i];
+    sort(arr,arr+n,myCmp);
 
-    dfs(s,s);
-
-    FOR(i,1,n+1)
-        if(i!=s && !rep[i]){
-            fill(vis,vis+5010,false);
-            dfs(i,i);
+    int ans=0,rem=0,maxAdd=0;
+    REP(i,n){
+        rem=arr[i]%10;
+        if(rem && k>=10-rem){
+            k-=(10-rem);
+            arr[i]+=(10-rem);
         }
-
-    set<int> cnt;
-    FOR(i,1,n+1)
-        cnt.insert(rep[i]);
-    cout<<cnt.size()-1<<endl;
-
+        ans+=(arr[i]/10);
+        maxAdd+=(100-arr[i]);
+    }
+    ans+=min(k,maxAdd)/10;
+    cout<<ans<<endl;
     return 0;
 }

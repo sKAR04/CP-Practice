@@ -1,7 +1,7 @@
 /*
-######################################################
-#    I don't know what I'm doing with my life O.O    #
-######################################################
+#####################################################
+# I will win.. maybe not immediately but definitely #
+#####################################################
 */
 
 #include <bits/stdc++.h>
@@ -27,9 +27,9 @@ typedef long long ll;
 #define INF  0X3f3f3f3f
 
 //loops
-#define REP(i,n) 	    for(int i=0;i<(n);++i)
-#define FOR(i,a,b)      for(int i=(a);i<(b);++i)
-#define DFOR(i,a,b)     for(int i=(a);i>=(b);--i)
+#define REP(i,n) 	    for(ll i=0;i<(n);++i)
+#define FOR(i,a,b)      for(ll i=(a);i<(b);++i)
+#define DFOR(i,a,b)     for(ll i=(a);i>=(b);--i)
 
 //vectors
 #define vi vector<int>
@@ -67,13 +67,33 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
+const int MAXN=100010;
+bool isNotPrime[MAXN];
 
+inline void sieve(int n){
+    FOR(i,2,n+2)
+        if(!isNotPrime[i])
+            for(ll j=i*i;j<MAXN;j+=i)
+                isNotPrime[j]=true;
+
+    cout<<(n>2?2:1)<<endl;
+    FOR(i,2,n+2)
+        cout<<isNotPrime[i]+1<<" ";
+    cout<<endl;
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    //Well, the mistakes begin.
+    //They already began so...
+    //Son of a....
+    //Missed this shit. Let's hope it passes this time
+    int n;
+    cin>>n;
+
+    sieve(n);
 
     return 0;
 }

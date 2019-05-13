@@ -1,6 +1,6 @@
 /*
 ######################################################
-#    I don't know what I'm doing with my life O.O    #
+# Let's see where this is going to lead me shall we? #
 ######################################################
 */
 
@@ -74,6 +74,23 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    pi arr[n];
+    REP(i,n)
+        cin>>arr[i].F>>arr[i].S;
+
+    int k;
+    cin>>k;
+
+    int chapter=100;
+    REP(i,n)
+        if(k<=arr[i].S){
+            chapter=i;
+            break;
+        }
+    cout<<n-chapter<<endl;
 
     return 0;
 }

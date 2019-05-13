@@ -67,13 +67,26 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
-
+const int MAXN=100;
+ll fib[MAXN];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    fib[0]=1LL;
+    fib[1]=2LL;
+    FOR(i,2,MAXN)
+        fib[i]=fib[i-1]+fib[i-2];
+
+    ll n;
+    cin>>n;
+
+    REP(i,MAXN)
+        if(fib[i]>n){
+            cout<<i-1<<endl;
+            break;
+        }
 
     return 0;
 }

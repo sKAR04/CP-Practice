@@ -67,13 +67,43 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
-
+const int MAXN=1e5+10;
+int firstTime[MAXN],lastTime[MAXN],arr[MAXN],n,k;
+bool check(int p1,int p2){
+    if(p2<1 || p2>n)
+        return false;
+    if(p1==p2)
+        return firstTime[p1]==0;
+    else if(!firstTime[p2] || !firstTime[p1])
+        return true;
+    else
+        return firstTime[p1]>lastTime[p2];
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    cin>>n>>k;
+
+    FOR(i,1,k+1)
+        cin>>arr[i];
+
+    DFOR(i,k,1)
+        if(!lastTime[arr[i]])
+            lastTime[arr[i]]=i;
+
+    FOR(i,1,k+1)
+        if(!firstTime[arr[i]])
+            firstTime[arr[i]]=i;
+
+    firstTime[0]=lastTime[0]=firstTime[n+1]=lastTime[n+1]=INF;
+
+    int ans=0;
+    FOR(i,1,n+1)
+        FOR(j,i-1,i+2)
+            ans+=check(i,j);
+    cout<<ans<<endl;
 
     return 0;
 }

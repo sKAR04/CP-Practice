@@ -1,6 +1,6 @@
 /*
 ######################################################
-#    I don't know what I'm doing with my life O.O    #
+# Let's see where this is going to lead me shall we? #
 ######################################################
 */
 
@@ -74,6 +74,23 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    map<int,int> m;
+    int x;
+    REP(i,n){
+        cin>>x;
+        ++m[x];
+    }
+
+    int ans=0;
+    for(auto it=m.begin();it!=m.end();++it){
+        ans+=(it->S)&1;
+        if(it->S>1)
+            m[it->F+1]+=(it->S)/2;
+    }
+    cout<<ans<<endl;
 
     return 0;
 }

@@ -74,6 +74,27 @@ int main(){
     IOS;
     TIE;
 
+    string str;
+    cin>>str;
+
+    int n=str.length(),n1=0,n2=0;
+    REP(i,n)
+        if(str[i]=='U')
+            ++n1;
+        else if(str[i]=='D')
+            --n1;
+        else if(str[i]=='L')
+            ++n2;
+        else
+            --n2;
+    n1=abs(n1);
+    n2=abs(n2);
+
+    if((n1+n2)&1)
+        cout<<-1;
+    else
+        cout<<(n1+n2)/2;
+    cout<<endl;
 
     return 0;
 }

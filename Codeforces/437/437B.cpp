@@ -67,13 +67,47 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
+const int MAXN=32;
+vi lowBit[32];
 
+int getLowBit(int x){
+    int ans=0;
+    while(true){
+        if(x&1)
+            return ans;
+        x>>=1;
+        ++ans;
+    }
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int sum,limit;
+    cin>>sum>>limit;
+
+    FOR(i,1,limit+1)
+        lowBit[getLowBit(i)].pb(i);
+
+    vi ans;
+    DFOR(i,31,0)
+        for(int x : lowBit[i])
+            if(sum>=(1<<i)){
+                sum-=(1<<i);
+                ans.pb(x);
+            }
+            else
+                break;
+
+    if(sum)
+        cout<<-1<<endl;
+    else{
+        cout<<ans.size()<<endl;
+        for(int x : ans)
+            cout<<x<<" ";
+        cout<<endl;
+    }
 
     return 0;
 }

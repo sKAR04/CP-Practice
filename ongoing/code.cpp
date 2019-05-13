@@ -67,13 +67,49 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
-
+const int MAXN=1e5+10;
 //Main function
 int main(){
     IOS;
     TIE;
 
+    ll n,m;
+    cin>>n>>m;
+
+    ll boys[n],girls[m];
+    ll bMax=LLONG_MIN;
+    REP(i,n){
+        cin>>boys[i];
+        bMax=max(bMax,boys[i]);
+    }
+
+    ll gMin=LLONG_MAX;
+    REP(i,m){
+        cin>>girls[i];
+        gMin=min(gMin,girls[i]);
+    }
+
+    if(gMin<bMax)
+        cout<<-1<<endl;
+    else{
+        ll ans=0LL;
+        sort(boys,boys+n);
+        sort(girls,girls+m);
+
+        DFOR(i,n-2,0)
+            ans+=m*boys[i];
+        FOR(i,1,m)
+            ans+=girls[i];
+
+        if(girls[0]==boys[n-1])
+            ans+=girls[0];
+        else{
+            ans+=boys[n-1];
+            ans-=boys[n-2];
+            ans+=girls[0];
+        }
+        cout<<ans<<endl;
+    }
 
     return 0;
 }

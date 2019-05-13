@@ -68,12 +68,28 @@ typedef long long ll;
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
 const int MAXN=0;
+bool isPrime(int n){
+    if(n==2)
+        return true;
 
+    FOR(i,2,sqrt(n)+1)
+        if(n%i==0)
+            return false;
+    return true;
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    FOR(i,1,1001)
+        if(!isPrime(i*n+1)){
+            cout<<i<<endl;
+            break;
+        }
 
     return 0;
 }

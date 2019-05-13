@@ -67,13 +67,32 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
-
+const int MAXN=1e5+10;
+vi adj[MAXN];
+ll cnt[2];
+bool vis[MAXN];
+void dfs(int cur,int level){
+    ++cnt[level&1];
+    vis[cur]=true;
+    for(int x : adj[cur])
+        if(!vis[x])
+            dfs(x,level+1);
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
 
+    int x,y;
+    REP(i,n-1){
+        cin>>x>>y;
+        adj[x].pb(y);
+        adj[y].pb(x);
+    }
+    dfs(1,0);
+    cout<<cnt[0]*cnt[1]-n+1<<endl;
     return 0;
 }

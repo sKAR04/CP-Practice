@@ -68,12 +68,24 @@ typedef long long ll;
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
 const int MAXN=0;
-
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n,m;
+    cin>>n>>m;
+
+    int x,y,minDiff=INF;
+    REP(i,m){
+        cin>>x>>y;
+        minDiff=min(minDiff,y-x+1);
+    }
+
+    cout<<minDiff<<endl;
+    REP(i,n)
+        cout<<i%minDiff<<" ";
+    cout<<endl;
 
     return 0;
 }

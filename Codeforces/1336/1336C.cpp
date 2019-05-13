@@ -1,6 +1,6 @@
 /*
 ######################################################
-#    I don't know what I'm doing with my life O.O    #
+# Let's see where this is going to lead me shall we? #
 ######################################################
 */
 
@@ -67,13 +67,44 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
-
+const int MAXN=1010;
+vi a[MAXN],b[MAXN];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n,m;
+    cin>>n>>m;
 
+    int tmp;
+    REP(i,n)
+        REP(j,m){
+            cin>>tmp;
+            a[i+j].pb(tmp);
+        }
+
+    REP(i,n)
+        REP(j,m){
+            cin>>tmp;
+            b[i+j].pb(tmp);
+        }
+
+    bool flag=true;
+    REP(i,MAXN){
+        sort(all(a[i]));
+        sort(all(b[i]));
+
+        if(a[i]!=b[i]){
+            flag=false;
+            break;
+        }
+    }
+
+    if(flag)
+        cout<<"YES"<<endl;
+    else
+        cout<<"NO"<<endl;
+        
     return 0;
 }

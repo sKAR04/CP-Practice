@@ -67,13 +67,58 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
+const int MAXN=110;
+int n,m;
+int a[MAXN][MAXN],b[MAXN][MAXN];
 
+bool check(int arr[MAXN][MAXN]){
+    bool flag=true;
+    REP(i,n)
+        FOR(j,1,m)
+            if(arr[i][j-1]>=arr[i][j]){
+                flag=false;
+                break;
+            }
+
+    REP(j,m)
+        FOR(i,1,n)
+            if(arr[i-1][j]>=arr[i][j]){
+                flag=false;
+                break;
+            }
+
+    return flag;
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    cin>>n>>m;
+    REP(i,n)
+        REP(j,m)
+            cin>>a[i][j];
+
+    REP(i,n)
+        REP(j,m)
+            cin>>b[i][j];
+
+    int tmp;
+    REP(i,n)
+        REP(j,m)
+            if(a[i][j]>b[i][j]){
+                tmp=a[i][j];
+                a[i][j]=b[i][j];
+                b[i][j]=tmp;
+            }
+
+    bool flag = check(a)&check(b);
+
+    if(flag)
+        cout<<"Possible";
+    else
+        cout<<"Impossible";
+    cout<<endl;
 
     return 0;
 }

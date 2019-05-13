@@ -1,6 +1,6 @@
 /*
 ######################################################
-#    I don't know what I'm doing with my life O.O    #
+# Let's see where this is going to lead me shall we? #
 ######################################################
 */
 
@@ -67,13 +67,28 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
-
+const int MAXN=1e6+1e5;
+int arr[MAXN];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    int x;
+    REP(i,n){
+        cin>>x;
+        ++arr[x];
+    }
+
+    int ans=0;
+    REP(i,MAXN-1){
+        ans+=(arr[i]&1);
+        arr[i+1]+=(arr[i]>>1);
+    }
+    cout<<ans<<endl;
 
     return 0;
 }

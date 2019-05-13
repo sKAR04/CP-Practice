@@ -1,6 +1,6 @@
 /*
 ######################################################
-#    I don't know what I'm doing with my life O.O    #
+# Let's see where this is going to lead me shall we? #
 ######################################################
 */
 
@@ -74,6 +74,17 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    string str;
+    cin>>str;
+
+    ll ans=0;
+    REP(i,n)
+        if(~(str[i]-48)&1)
+            ans+=(i+1);
+    cout<<ans<<endl;
 
     return 0;
 }

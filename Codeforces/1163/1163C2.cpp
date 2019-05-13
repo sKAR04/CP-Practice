@@ -68,12 +68,48 @@ typedef long long ll;
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
 const int MAXN=0;
-
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    pi p[n];
+    REP(i,n)
+        cin>>p[i].F>>p[i].S;
+
+    map<pi,set<int>> slopeCnt;
+
+    int num,denom,g;
+    REP(i,n)
+        FOR(j,i+1,n){
+            num=p[i].S-p[j].S;
+            denom=p[i].F-p[j].F;
+
+            if(!denom)
+                num=1;
+            else if(!num)
+                denom=1;
+            else{
+                g=__gcd(abs(num),abs(denom));
+                if(denom<0){
+                    num*=-1;
+                    denom*=-1;
+                }
+                num/=g;
+                denom/=g;
+            }
+            slopeCnt[mp(num,denom)].insert(denom*p[i].S-num*p[i].F);
+        }
+
+    ll tot=0,ans=0;
+    for(auto it=slopeCnt.begin();it!=slopeCnt.end();++it)
+        tot+=(it->S.size());
+    for(auto it=slopeCnt.begin();it!=slopeCnt.end();++it)
+        ans+=ll(it->S.size())*ll(tot-it->S.size());
+    cout<<ans/2LL<<endl;
 
     return 0;
 }

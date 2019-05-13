@@ -74,6 +74,40 @@ int main(){
     IOS;
     TIE;
 
+    int n,k;
+    cin>>n>>k;
+
+    string str;
+    cin>>str;
+
+    bool flag=false;
+    int pos1=0,pos2=0;
+
+    REP(i,n)
+        if(str[i]=='G')
+            pos1=i;
+        else if(str[i]=='T')
+            pos2=i;
+
+    int pos=pos1;
+    while(pos>-1 && pos<n){
+        if(pos==pos2)
+            flag=true;
+
+        if(str[pos]=='#')
+            break;
+
+        if(pos1<pos2)
+            pos+=k;
+        else
+            pos-=k;
+    }
+
+    if(flag)
+        cout<<"YES";
+    else
+        cout<<"NO";
+    cout<<endl;
 
     return 0;
 }
