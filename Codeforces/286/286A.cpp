@@ -68,47 +68,30 @@ typedef long long ll;
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
 const int MAXN=1e5+10;
+int p[MAXN];
 //Main function
 int main(){
     IOS;
     TIE;
 
-    ll n,m;
-    cin>>n>>m;
+    int n;
+    cin>>n;
 
-    ll boys[n],girls[m];
-    ll bMax=LLONG_MIN;
-    REP(i,n){
-        cin>>boys[i];
-        bMax=max(bMax,boys[i]);
-    }
-
-    ll gMin=LLONG_MAX;
-    REP(i,m){
-        cin>>girls[i];
-        gMin=min(gMin,girls[i]);
-    }
-
-    if(gMin<bMax)
+    if(n%4==2 || n%4==3)
         cout<<-1<<endl;
     else{
-        ll ans=0LL;
-        sort(boys,boys+n);
-        sort(girls,girls+m);
-
-        DFOR(i,n-2,0)
-            ans+=m*boys[i];
-        FOR(i,1,m)
-            ans+=girls[i];
-
-        if(girls[0]==boys[n-1])
-            ans+=girls[0];
-        else{
-            ans+=boys[n-1];
-            ans-=boys[n-2];
-            ans+=girls[0];
-        }
-        cout<<ans<<endl;
+        if(n&1)
+            p[(n+1)>>1]=(n+1)>>1;
+        FOR(i,1,n+1)
+            if(!p[i]){
+                p[i]=i+1;
+                p[i+1]=n-i+1;
+                p[n-i+1]=n-i;
+                p[n-i]=i;
+            }
+        FOR(i,1,n+1)
+            cout<<p[i]<<" ";
+        cout<<endl;
     }
 
     return 0;

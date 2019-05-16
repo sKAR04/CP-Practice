@@ -67,13 +67,47 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
-
+const int MAXN=1e6+10;
+int open[MAXN];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    string str;
+    cin>>str;
+
+    int n=str.length();
+    stack<int> s;
+    FOR(i,1,n+1)
+        if(str[i-1]=='(')
+            s.push(i);
+        else if(!s.E){
+            open[i]=s.top();
+            s.pop();
+        }
+        else
+            open[i]=-1;
+
+    int maxLen=0,cnt=1,idx=n,curLen;
+    while(idx){
+        while(idx && open[idx]<1)
+            --idx;
+
+        curLen=0;
+        while(idx && open[idx]>0){
+            curLen+=(idx-open[idx]+1);
+            idx=open[idx]-1;
+        }
+
+        if(curLen>maxLen){
+            maxLen=curLen;
+            cnt=1;
+        }
+        else if(curLen==maxLen && curLen)
+            ++cnt;
+    }
+    cout<<maxLen<<" "<<cnt<<endl;
 
     return 0;
 }

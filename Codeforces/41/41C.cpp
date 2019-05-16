@@ -1,7 +1,7 @@
 /*
-#####################################################
-# I will win.. maybe not immediately but definitely #
-#####################################################
+######################################################
+#    I don't know what I'm doing with my life O.O    #
+######################################################
 */
 
 #include <bits/stdc++.h>
@@ -68,10 +68,34 @@ typedef long long ll;
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
 const int MAXN=0;
+string stripChars(string target,string str,char res){
+    int lenTarget=target.length(),len=str.length();
+
+    string ans="";
+    REP(i,lenTarget)
+        if(i+len<=lenTarget && target.substr(i,len)==str){
+            ans+=res;
+            i+=len-1;
+        }
+        else
+            ans+=target[i];
+    return ans;
+}
 //Main function
 int main(){
     IOS;
     TIE;
+
+    string str;
+    cin>>str;
+
+    string ans=stripChars(str.substr(1,str.length()-2),"dot",'.');
+
+    int pos=ans.find("at");
+    ans=ans.substr(0,pos)+"@"+ans.substr(pos+2);
+    ans=str[0]+ans+str[str.length()-1];
+
+    cout<<ans<<endl;
 
     return 0;
 }
