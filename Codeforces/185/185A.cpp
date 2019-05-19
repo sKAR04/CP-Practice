@@ -68,12 +68,59 @@ typedef long long ll;
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
 const int MAXN=0;
+vll mtrx[2],base[2];
+void mul(vll v1[2],vll v2[2]){
+    ll a,b,c,d;
+    a=(v1[0][0]*v2[0][0]+v1[0][1]*v2[1][0])%MOD;
+    b=(v1[0][0]*v2[0][1]+v1[0][1]*v2[1][1])%MOD;
+    c=(v1[1][0]*v2[0][0]+v1[1][1]*v2[1][0])%MOD;
+    d=(v1[1][0]*v2[0][1]+v1[1][1]*v2[1][1])%MOD;
 
+    mtrx[0][0]=a;
+    mtrx[0][1]=b;
+    mtrx[1][0]=c;
+    mtrx[1][1]=d;
+}
+
+void printMtrx(vll mtrx[2]){
+    REP(i,2){
+        REP(j,2)
+            cout<<mtrx[i][j]<<" ";
+        cout<<endl;
+        }
+}
+
+void power(ll n){
+    if(n){
+        power(n/2LL);
+        mul(mtrx,mtrx);
+        if(n&1LL)
+            mul(mtrx,base);
+    }
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    ll n;
+    cin>>n;
 
+    mtrx[0].pb(1);
+    mtrx[0].pb(0);
+    mtrx[1].pb(0);
+    mtrx[1].pb(1);
+
+    base[0].pb(3);
+    base[0].pb(1);
+    base[1].pb(1);
+    base[1].pb(3);
+
+    if(n){
+        power(n);
+        cout<<mtrx[0][0]<<endl;
+    }
+    else
+        cout<<1<<endl;
     return 0;
 }

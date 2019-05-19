@@ -74,6 +74,20 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    int xMax=INT_MIN,xMin=INT_MAX,yMax=INT_MIN,yMin=INT_MAX,x,y;
+    REP(i,n){
+        cin>>x>>y;
+        xMax=max(xMax,x);
+        xMin=min(xMin,x);
+        yMax=max(yMax,y);
+        yMin=min(yMin,y);
+    }
+
+    ll a=max(ll(yMax-yMin),ll(xMax-xMin));
+    cout<<a*a<<endl;
 
     return 0;
 }

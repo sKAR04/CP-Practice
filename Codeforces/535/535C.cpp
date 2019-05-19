@@ -67,13 +67,42 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
-
+const ll MAXN=1e6+10;
+ll a,b,n,l,t,m;
+bool flag;
+ll bSearch(ll low,ll high){
+    ll mid=(low+high)>>1;
+    // db(mid);
+    if(low<=high){
+        ll start=a+(l-1LL)*b,finish=a+(mid-1LL)*b,num=mid-l+1LL;
+        ll sum=((start+finish)*num)/2LL;
+        if(sum<=m*t && finish<=t){
+            flag=true;
+            return bSearch(mid+1,high);
+        }
+        else
+            return bSearch(low,mid-1LL);
+    }
+    else
+        return mid;
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    cin>>a>>b>>n;
+
+    ll ans;
+    while(n--){
+        flag=false;
+        cin>>l>>t>>m;
+        ans=bSearch(l,MAXN);
+        if(flag)
+            cout<<ans<<endl;
+        else
+            cout<<-1<<endl;
+    }
 
     return 0;
 }

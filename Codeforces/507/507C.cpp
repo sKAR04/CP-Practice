@@ -71,9 +71,37 @@ const int MAXN=0;
 
 //Main function
 int main(){
-    IOS;
-    TIE;
+    // IOS;
+    // TIE;
 
+    ll h,n;
+    cin>>h>>n;
+
+    ll ans=1LL;
+    bool flag=false;
+
+    ll l=1,r=(1LL<<h),pow2;
+    // cout<<l<<" "<<r<<endl;
+    // db(ans);
+    while(l<r){
+        --h;
+        ++ans;
+
+        pow2=(1LL<<h);
+        if((flag && n<=r-pow2) || (!flag && n>=l+pow2)){
+            ans+=((1LL<<h+1)-1LL);
+            flag=!flag;
+        }
+
+        if(n<=r-pow2)
+            r=(l+pow2-1LL);
+        else
+            l=(r-pow2+1LL);
+        flag=!flag;
+
+        // cout<<l<<" "<<r<<endl;
+    }
+    cout<<ans-1LL<<endl;
 
     return 0;
 }

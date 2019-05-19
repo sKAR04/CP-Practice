@@ -67,13 +67,35 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
-
+const int MAXN=1e5+10;
+vi v;
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    int x;
+
+    ll sum=0;
+    REP(i,n){
+        cin>>x;
+        sum+=x;
+    }
+
+    ll foo=0,bar=0;
+    REP(i,n-1){
+        cin>>x;
+        foo+=x;
+    }
+    REP(i,n-2){
+        cin>>x;
+        bar+=x;
+    }
+
+    cout<<sum-foo<<endl<<foo-bar<<endl;
 
     return 0;
 }

@@ -74,6 +74,43 @@ int main(){
     IOS;
     TIE;
 
+    vii v1;
+    set<int> sX,sY;
+
+    pi p;
+    REP(i,8){
+        cin>>p.F>>p.S;
+        sX.insert(p.F);
+        sY.insert(p.S);
+        v1.pb(p);
+    }
+    sort(all(v1));
+
+    bool flag=true;
+    if(sX.size()!=3 || sY.size()!=3)
+        flag=false;
+    else{
+        vii v2;
+        auto itX=sX.begin();
+        REP(i,3){
+            auto itY=sY.begin();
+            REP(j,3){
+                if(i!=1 || j!=1)
+                    v2.pb(mp(*itX,*itY));
+                ++itY;
+            }
+            ++itX;
+        }
+        sort(all(v2));
+
+        if(v1!=v2)
+            flag=false;
+    }
+
+    if(flag)
+        cout<<"respectable"<<endl;
+    else
+        cout<<"ugly"<<endl;
 
     return 0;
 }

@@ -67,13 +67,57 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
+const int MAXN=1e5+10;
+vector<string> v;
+string ans="";
+int getType(int idx){
+    if(idx==v.size())
+        return idx;
 
+    if(v[idx]=="int")
+        ans+="int";
+    else{
+        ans+="pair<";
+        idx=getType(idx+1);
+        ans+=",";
+        idx=getType(idx)-1;
+        ans+=">";
+    }
+    return idx+1;
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    string str;
+    while(cin>>str)
+        v.pb(str);
+
+    bool flag=false;
+    int cnt=0,idx=-1;
+    REP(i,v.size())
+        if(cnt>0){
+            idx=i;
+            break;
+        }
+        else if(v[i]=="int")
+            ++cnt;
+        else
+            --cnt;
+
+    if(idx!=-1 || cnt!=1)
+        flag=true;
+
+    getType(0);
+    if(flag)
+        cout<<"Error occurred";
+    else
+        cout<<ans;
+    cout<<endl;
 
     return 0;
 }

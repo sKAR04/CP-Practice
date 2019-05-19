@@ -67,13 +67,28 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
-
+const int MAXN=1e2+10;
+ll pow2[MAXN];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    string str;
+    cin>>str;
+    reverse(all(str));
+
+    int n=str.length();
+
+    pow2[0]=1LL;
+    FOR(i,1,MAXN)
+        pow2[i]=(pow2[i-1]*2LL)%MOD;
+
+    ll ans=0;
+    FOR(i,1,n+1)
+        if(str[i-1]-48)
+            ans=(ans+((pow2[n-i]*pow2[i-1])%MOD*pow2[i-1])%MOD)%MOD;
+    cout<<ans<<endl;
 
     return 0;
 }

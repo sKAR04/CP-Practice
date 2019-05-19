@@ -68,12 +68,32 @@ typedef long long ll;
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
 const int MAXN=0;
-
+vector<string> v;
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    string str;
+    REP(i,n){
+        cin>>str;
+        v.pb(str);
+    }
+
+    int idx;
+    DFOR(i,n-2,0){
+        idx=0;
+        while(idx!=v[i].length() && idx!=v[i+1].length() && v[i][idx]==v[i+1][idx])
+            ++idx;
+        if(idx==v[i].length() || idx==v[i+1].length() || v[i][idx]>v[i+1][idx])
+            v[i]=v[i].substr(0,idx);
+    }
+
+    REP(i,n)
+        cout<<v[i]<<endl;
 
     return 0;
 }

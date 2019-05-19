@@ -74,6 +74,43 @@ int main(){
     IOS;
     TIE;
 
+    string str;
+    cin>>str;
+
+    int n=str.length(),len;
+
+    bool flag=true;
+    vector<string> ans;
+    if(str[0]!='@' && str[n-1]!='@'){
+        string tmp="";
+        REP(i,n)
+            if(str[i]=='@'){
+                ans.pb(tmp);
+                tmp="";
+            }
+            else
+                tmp+=str[i];
+        ans.pb(tmp);
+
+        if(tmp.length()==str.length())
+            flag=false;
+
+        len=ans.size();
+        FOR(i,1,len-1)
+            if(ans[i].length()<2)
+                flag=false;
+    }
+    else
+        flag=false;
+
+    if(flag){
+        cout<<ans[0];
+        FOR(i,1,len-1)
+            cout<<"@"<<ans[i][0]<<","<<ans[i].substr(1);
+        cout<<"@"<<ans[len-1]<<endl;
+    }
+    else
+        cout<<"No solution"<<endl;
 
     return 0;
 }

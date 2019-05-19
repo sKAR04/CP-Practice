@@ -74,6 +74,24 @@ int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    int arr[n];
+    REP(i,n)
+        cin>>arr[i];
+
+    int gcd=arr[0],maxVal=arr[0];
+    REP(i,n){
+        gcd=__gcd(gcd,arr[i]);
+        maxVal=max(maxVal,arr[i]);
+    }
+
+    if((maxVal/gcd-n)&1)
+        cout<<"Alice";
+    else
+        cout<<"Bob";
+    cout<<endl;
 
     return 0;
 }

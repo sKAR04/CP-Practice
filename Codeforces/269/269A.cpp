@@ -68,12 +68,32 @@ typedef long long ll;
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
 const int MAXN=0;
+int getMax(int x,int y){
+    int cnt=0,tmp=y;
+    while(y){
+        y/=4;
+        ++cnt;
+    }
 
+    if((1<<(2*cnt-2))==tmp)
+        --cnt;
+    return x+cnt+(cnt==0);
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int n;
+    cin>>n;
+
+    int ans=INT_MIN;
+    pi p;
+    REP(i,n){
+        cin>>p.F>>p.S;
+        ans=max(ans,getMax(p.F,p.S));
+    }
+    cout<<ans<<endl;
 
     return 0;
 }

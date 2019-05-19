@@ -67,13 +67,31 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
-
+const int MAXN=5e4+10;
+int t[MAXN][10];
+int dp[MAXN][10];
 //Main function
 int main(){
     IOS;
     TIE;
 
+    int m,n;
+    cin>>m>>n;
+
+    FOR(i,1,m+1)
+        FOR(j,1,n+1)
+            cin>>t[i][j];
+
+    FOR(i,1,m+1)
+        dp[i][1]=dp[i-1][1]+t[i][1];
+
+    FOR(j,2,n+1)
+        FOR(i,1,m+1)
+            dp[i][j]=max(dp[i-1][j],dp[i][j-1])+t[i][j];
+
+    FOR(i,1,m+1)
+        cout<<dp[i][n]<<" ";
+    cout<<endl;
 
     return 0;
 }

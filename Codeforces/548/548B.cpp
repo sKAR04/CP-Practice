@@ -67,13 +67,50 @@ typedef long long ll;
 #define E empty()
 
 //Declare all variables and methods needed between this comment and the next one(OCD lol)
-const int MAXN=0;
+const int MAXN=510;
+bool state[MAXN][MAXN];
+int maxVal[MAXN];
+int n,m,q;
 
+void computeRow(int row){
+    int cnt=0,maxCnt=0;
+    FOR(j,1,m+1){
+        cnt+=state[row][j];
+        if(state[row][j])
+            maxCnt=max(maxCnt,cnt);
+        else
+            cnt=0;
+    }
+    maxVal[row]=maxCnt;
+}
+
+int getMax(){
+    int ans=INT_MIN;
+    FOR(i,1,n+1)
+        ans=max(ans,maxVal[i]);
+    return ans;
+}
 //Main function
 int main(){
     IOS;
     TIE;
 
+    cin>>n>>m>>q;
+
+    FOR(i,1,n+1)
+        FOR(j,1,m+1)
+            cin>>state[i][j];
+
+    FOR(i,1,n+1)
+        computeRow(i);
+
+    int x,y;
+    while(q--){
+        cin>>x>>y;
+        state[x][y]=!state[x][y];
+        computeRow(x);
+        cout<<getMax()<<endl;
+    }
 
     return 0;
 }
