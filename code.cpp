@@ -85,7 +85,7 @@ int main(){
                 tmp+=(a[i+j]==b[j]);
         ans=max(ans,tmp);
     }
-    cout<<m-tmp<<endl;
-    
+    cout<<m-ans<<endl;
+
     return 0;
 }

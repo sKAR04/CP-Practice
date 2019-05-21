@@ -1,0 +1,10 @@
+#!/bin/bash
+proceed="N"
+read -p "Continue? (Y/N): " proceed
+
+if [ $proceed == 'Y' ]
+then
+	git add .
+	git commit -m "$1"
+	git push origin master
+fi
