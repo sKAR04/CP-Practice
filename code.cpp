@@ -74,6 +74,18 @@ int main(){
     IOS;
     TIE;
 
+    string a,b;
+    cin>>a>>b;
 
+    int n=a.length(),m=b.length(),ans=0,tmp;
+    REP(i,n){
+        tmp=0;
+        REP(j,m)
+            if(i+j<n)
+                tmp+=(a[i+j]==b[j]);
+        ans=max(ans,tmp);
+    }
+    cout<<m-tmp<<endl;
+    
     return 0;
 }
